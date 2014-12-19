@@ -1,0 +1,26 @@
+{
+  "name": "FlyingChat",
+  "version": "0.0.1",
+  "description": "Online chat system",
+  "main": "index.js",
+  "scripts": {
+    "test": "none"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hstarorg/FlyingChat.git"
+  },
+  "keywords": [
+    "Chat",
+    "socket.io"
+  ],
+  "author": "Jay.M.Hu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hstarorg/FlyingChat/issues"
+  },
+  "homepage": "https://github.com/hstarorg/FlyingChat",
+  "devDependencies": {
+    "gulp": "^3.8.10"
+  }
+}
