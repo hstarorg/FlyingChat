@@ -1,3 +1,6 @@
+# Customs
+./idea
+
 # Logs
 logs
 *.log
@@ -39,7 +42,8 @@ node_modules
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
