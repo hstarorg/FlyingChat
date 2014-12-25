@@ -3,6 +3,11 @@ html
   head
     meta(charset="UTF-8")
     title= title
+    link(rel='stylesheet', href='/vendor/bootstrap/css/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    block headPartialSection
   body
     block content
+    script(src="/vendor/jquery/jquery-1.11.2.js")
+    script(src="/vendor/bootstrap/js/bootstrap.js")
+    block footPartialSection

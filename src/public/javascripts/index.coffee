@@ -61,12 +61,12 @@ $(() ->
     socket.emit('new message', message)
 
   # Log a message
-  log = -(message, options) ->
+  log = (message, options) ->
     $el = $('<li>').addClass('log').text(message)
     addMessageElement($el, options)
 
   # Adds the visual chat message to the message list
-  addChatMessage (data, options) ->
+  addChatMessage = (data, options) ->
     # Don't fade the message in if there is an 'X was typing'
     $typingMessages = getTypingMessages(data)
     options = options || {}
@@ -87,13 +87,13 @@ $(() ->
     addMessageElement($messageDiv, options)
 
   # Adds the visual chat typing message
-  addChatTyping (data) ->
+  addChatTyping = (data) ->
     data.typing = true
     data.message = 'is typing'
     addChatMessage(data)
 
   # Removes the visual chat typing message
-  removeChatTyping (data) ->
+  removeChatTyping = (data) ->
     getTypingMessages(data).fadeOut(->
       $(this).remove()
     )

@@ -1,0 +1,76 @@
+body{
+    background: red;
+    background: url(../images/bg1.jpg);
+    position: fixed;
+}
+.login{
+    background: #000000;
+}
+.modal-dialog{
+    position: absolute;
+    width: 328px;
+    top: 50%;
+    left: 50%;
+    /*margin: -182px 0 0 -164px;*/
+    border: 1px solid #484848;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+.modal-content{
+    background: rgba(0,0,0,0.86);
+    padding: 10px 10px 0;
+    text-align: center;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    position: relative;
+    background-color: white;
+    border: 1px solid #999999;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 6px;
+    -webkit-box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+    box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+    background-clip: padding-box;
+    outline: 0;
+    box-sizing: border-box;
+}
+.modal-body{
+    position: relative;
+    padding: 15px;
+    font-family: "proxima-nova", Helvetica, Tahoma, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased !important;
+}
+.glyph{
+    position: absolute;
+    top: -47px;
+    left: 50%;
+    margin-left: -40px;
+}
+
+.glyph:after {
+    position: absolute;
+    content: "";
+    width: 20px;
+    height: 1px;
+    top: 50%;
+    left: 50%;
+    background: black;
+    margin-top: -1px;
+    margin-left: -10px;
+    z-index: 1;
+}
+
+.modal-content form{
+    margin: 40px 0 20px;
+}
+.form-control{
+    font-size: 16px;
+    color: white;
+    background: rgba(0,0,0,0.32);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.btn-primary{
+    color: black;
+    background: #fec600;
+    border: 1px solid #fec600;
+}

@@ -11,6 +11,7 @@ var replace = require('gulp-replace');
 var argv = require('yargs').argv;
 var connect = require('gulp-connect');
 var open = require('gulp-open');
+var jade = require('gulp-jade');
 
 /**
  * Clean dist folder
@@ -29,7 +30,7 @@ gulp.task('coffee', ['clean'], function() {
        // .pipe(replace("port_for_argv", port))
         .pipe(coffee({bare: true}).on('error', gutil.log))
         .pipe(gulp.dest('./dist/'))
-        .pipe(notify({message: "Compiler coffee complete."}));
+       // .pipe(notify({message: "Compiler coffee complete."}));
 });
 
 /**
@@ -38,7 +39,15 @@ gulp.task('coffee', ['clean'], function() {
 gulp.task('copy', ['clean'], function() {
     return gulp.src(['./src/**/*.*','!./src/**/*.coffee', './src/public/verder/**/*'])
         .pipe(gulp.dest('./dist/'))
-        .pipe(notify({message: "Copy file complete."}));
+       // .pipe(notify({message: "Copy file complete."}));
+});
+
+gulp.task('jade', ['clean'], function(){
+    gulp.src('./src/views/*.jade')
+        .pipe(jade({
+            client: true
+        }))
+        .pipe(gulp.dest('./dist/'))
 });
 
 /**
