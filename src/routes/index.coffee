@@ -16,4 +16,10 @@ router.get('/login', (req, res) ->
   })
 )
 
+router.post('/login', (req, res) ->
+  console.log(res)
+  res.send('Success')
+  res.end()
+)
+
 module.exports = router

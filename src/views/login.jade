@@ -5,8 +5,44 @@ extends layout
 block headPartialSection
    link(rel='stylesheet', href='/stylesheets/login.css')
 block content
-   .panel(class="panel-success")
-      .panel-heading Login
-      .panel-body
-         form
+   .bg-div(id="divBg")
+   .container
+      div(class="col-xs-4 col-xs-offset-4 login-container")
+         .panel(class="panel-success")
+            .panel-heading
+               b Sign in
+            .panel-body
+               form(method="post")
+                  .input-group
+                     span.input-group-addon &nbsp;&nbsp;&nbsp;Account
+                     input.form-control(type="text",name="account",required="required",placeholder="Type your account.")
+                  .input-group
+                     span.input-group-addon Password
+                     input.form-control(type="password",name="password",required="required",placeholder="Type your password.")
+                  .form-group(class="text-center")
+                     button(class="btn btn-success col-xs-12") Sign in
+
+block footPartialSection
+   script.
+      var $bg = $('#divBg');
+      var globalImgIndex = 1;
+      var randomBodyBackgroundImage = function(){
+         var imgIndex = globalImgIndex
+         while(globalImgIndex ===imgIndex){
+            imgIndex = Math.floor(Math.random()*10%4)
+         }
+         globalImgIndex = imgIndex;
+         $bg.animate({opacity: 0.05}, 3000, function(){
+            $bg.css('background', 'url(../images/bg' + globalImgIndex + '.jpg)')
+            $bg.animate({opacity: 1}, 3000, function(){
+               setTimeout(function(){
+                  randomBodyBackgroundImage();
+               },5000)
+            });
+         });
+      };
+      // 随机图片
+      $(function(){
+         randomBodyBackgroundImage();
+      });
 
