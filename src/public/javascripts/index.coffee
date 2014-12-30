@@ -23,10 +23,13 @@ $(() ->
   $currentInput = $usernameInput.focus()
 
   socket = io();
+  dateFormat = (n) ->
+    ns = '000' + n
+    ns.substr(ns.length-2)
 
   getNow = ->
     d = new Date()
-    d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+    dateFormat(d.getHours())+ ':' + dateFormat(d.getMinutes()) + ':' + dateFormat(d.getSeconds());
 
   addParticipantsMessage = (data) ->
     message = ''
@@ -59,7 +62,6 @@ $(() ->
       addChatMessage({
         username: username
         message: message
-        createTime: (new Date()).toLocaleTimeString()
       });
 
     # tell server to execute 'new message' and send along one parameter
@@ -84,7 +86,7 @@ $(() ->
     .css('color', getUsernameColor(data.username))
     $messageBodyDiv = $('<span class="messageBody">')
     .text(data.message)
-    typingClass = data.typing ? 'typing' : ''
+    typingClass = if data.typing then 'typing' else ''
     $messageDiv = $('<li class="message"/>')
     .data('username', data.username)
     .addClass(typingClass)
@@ -115,16 +117,16 @@ $(() ->
       options = {}
     if typeof options.fade is 'undefined'
       options.fade = true
-      if typeof options.prepend is 'undefined'
-        options.prepend = false
-      # Apply options
-      if options.fade
-        $el.hide().fadeIn(FADE_TIME)
-      if options.prepend
-        $messages.prepend($el)
-      else
-        $messages.append($el)
-      $messages[0].scrollTop = $messages[0].scrollHeight
+    if typeof options.prepend is 'undefined'
+      options.prepend = false
+    # Apply options
+    if options.fade
+      $el.hide().fadeIn(FADE_TIME)
+    if options.prepend
+      $messages.prepend($el)
+    else
+      $messages.append($el)
+    $messages[0].scrollTop = $messages[0].scrollHeight
 
   # Prevents input from having injected markup
   cleanInput = (input) ->
@@ -199,7 +201,7 @@ $(() ->
   socket.on('login', (data) ->
     connected = true
     # Display the welcome message
-    message = "Welcome to Socket.IO Chat – "
+    message = "Welcome to Flying Chat – "
     log(message, {
       prepend: true
     })

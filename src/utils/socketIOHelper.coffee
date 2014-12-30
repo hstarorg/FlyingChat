@@ -3,7 +3,6 @@ module.exports = {
     usernames = {}
     numUsers = 0
     io.on('connection', (socket) ->
-      console.log('connection')
       addedUser = false
       # when the client emits 'new message', this listens and executes
       socket.on('new message', (data) ->
@@ -11,7 +10,6 @@ module.exports = {
         socket.broadcast.emit('new message', {
           username: socket.username
           message: data
-          createTime: (new Date()).toLocaleTimeString()
         })
       )
 
@@ -23,6 +21,7 @@ module.exports = {
         usernames[username] = username
         ++numUsers
         addedUser = true
+        console.log(numUsers)
         socket.emit('login', {
           numUsers: numUsers
         })
@@ -53,6 +52,7 @@ module.exports = {
         if addedUser
           delete usernames[socket.username]
         --numUsers
+        numUsers = 0 if numUsers < 0
         # echo globally that this client has left
         socket.broadcast.emit('user left', {
           username: socket.username,
