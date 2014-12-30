@@ -11,6 +11,7 @@ module.exports = {
         socket.broadcast.emit('new message', {
           username: socket.username
           message: data
+          createTime: (new Date()).toLocaleTimeString()
         })
       )
 

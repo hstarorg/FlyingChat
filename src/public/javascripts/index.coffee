@@ -24,6 +24,10 @@ $(() ->
 
   socket = io();
 
+  getNow = ->
+    d = new Date()
+    d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+
   addParticipantsMessage = (data) ->
     message = ''
     if data.numUsers is 1
@@ -55,6 +59,7 @@ $(() ->
       addChatMessage({
         username: username
         message: message
+        createTime: (new Date()).toLocaleTimeString()
       });
 
     # tell server to execute 'new message' and send along one parameter
@@ -75,7 +80,7 @@ $(() ->
       $typingMessages.remove()
 
     $usernameDiv = $('<span class="username"/>')
-    .text(data.username)
+    .text('(' + getNow() + ')' + data.username)
     .css('color', getUsernameColor(data.username))
     $messageBodyDiv = $('<span class="messageBody">')
     .text(data.message)
@@ -208,13 +213,13 @@ $(() ->
 
   # Whenever the server emits 'user joined', log it in the chat body
   socket.on('user joined', (data) ->
-    log(data.username + ' joined')
+    log(data.username + ' joined at ' + getNow())
     addParticipantsMessage(data)
   )
 
   # Whenever the server emits 'user left', log it in the chat body
   socket.on('user left', (data) ->
-    log(data.username + ' left')
+    log(data.username + ' left at ' + getNow())
     addParticipantsMessage(data)
     removeChatTyping(data)
   )
