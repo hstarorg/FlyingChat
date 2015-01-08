@@ -4,6 +4,7 @@ favicon = require('serve-favicon')
 logger = require('morgan')
 cookieParser = require('cookie-parser')
 bodyParser = require('body-parser')
+session = require('express-session')
 
 routeConfig = require('./../routes/routeConfig')
 
@@ -18,6 +19,11 @@ app.set('view engine', 'jade')
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(session({
+    resave: false # don't save session if unmodified
+    saveUninitialized: false # don't create session until something stored
+    secret: 'jay.m.hu, very secret'
+}))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../public')))
 
@@ -39,7 +45,7 @@ if app.get('env') is 'development'
     app.use((err, req, res, next) ->
         res.status(err.status || 500)
         res.render('error', {
-            message: err.message
+            message: err.message + ' --Debug!!!'
             error: err
         })
     )

@@ -1,7 +1,13 @@
 module.exports = {
   initSocketIO: (io) ->
+
+    getUserNum = ->
+      num = 0
+      for p of usernames
+        num++
+      num
+
     usernames = {}
-    numUsers = 0
     io.on('connection', (socket) ->
       addedUser = false
       # when the client emits 'new message', this listens and executes
@@ -19,16 +25,14 @@ module.exports = {
         socket.username = username
         # add the client's username to the global list
         usernames[username] = username
-        ++numUsers
         addedUser = true
-        console.log(numUsers)
         socket.emit('login', {
-          numUsers: numUsers
+          numUsers: getUserNum()
         })
         # echo globally (all clients) that a person has connected
         socket.broadcast.emit('user joined', {
           username: socket.username
-          numUsers: numUsers
+          numUsers: getUserNum()
         })
       )
 
@@ -51,12 +55,12 @@ module.exports = {
         # remove the username from global usernames list
         if addedUser
           delete usernames[socket.username]
-        --numUsers
-        numUsers = 0 if numUsers < 0
+        if socket.username is undefined
+          return
         # echo globally that this client has left
         socket.broadcast.emit('user left', {
           username: socket.username,
-          numUsers: numUsers
+          numUsers: getUserNum()
         })
       )
     )
