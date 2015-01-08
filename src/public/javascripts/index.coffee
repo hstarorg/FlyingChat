@@ -1,26 +1,27 @@
 $(() ->
-  FADE_TIME = 150 # ms
-  TYPING_TIMER_LENGTH = 400 # ms
+
   COLORS = [
     '#e21400', '#91580f', '#f8a700', '#f78b00',
     '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
     '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
   ]
+
+  FADE_TIME = 150 # ms
+  TYPING_TIMER_LENGTH = 400 # ms
+
   # Initialize varibles
   $window = $(window)
-  $usernameInput = $('.usernameInput') # Input for username
   $messages = $('.messages'); # Messages area
   $inputMessage = $('.inputMessage'); # Input message input box
 
-  $loginPage = $('.login.page'); # The login page
-  $chatPage = $('.chat.page'); # The chatroom page
 
   # Prompt for setting a username
-  username = ''
+  username = $('#username').val()
   connected = false
   typing = false
+  myColor  = COLORS[Math.floor(Math.random() * COLORS.length)]
   lastTypingTime = undefined
-  $currentInput = $usernameInput.focus()
+  $currentInput = $inputMessage.focus()
 
   socket = io();
   dateFormat = (n) ->
@@ -39,18 +40,6 @@ $(() ->
       message += "there are " + data.numUsers + " participants"
     log(message)
 
-  # Sets the client's username
-  setUsername = () ->
-    username = cleanInput($usernameInput.val().trim())
-    # If the username is valid
-    if username
-      $loginPage.fadeOut()
-      $chatPage.show()
-      $loginPage.off('click')
-      $currentInput = $inputMessage.focus()
-      # Tell the server your username
-      socket.emit('add user', username)
-
   # Sends a chat message
   sendMessage = () ->
     message = $inputMessage.val()
@@ -62,6 +51,7 @@ $(() ->
       addChatMessage({
         username: username
         message: message
+        color: myColor
       });
 
     # tell server to execute 'new message' and send along one parameter
@@ -83,7 +73,7 @@ $(() ->
 
     $usernameDiv = $('<span class="username"/>')
     .text('(' + getNow() + ')' + data.username)
-    .css('color', getUsernameColor(data.username))
+    .css('color', data.color)
     $messageBodyDiv = $('<span class="messageBody">')
     .text(data.message)
     typingClass = if data.typing then 'typing' else ''
@@ -154,15 +144,6 @@ $(() ->
       $(this).data('username') is data.username
     )
 
-  # Gets the color of a username through our hash function
-  getUsernameColor = (username) ->
-    # Compute hash code
-    hash = 7;
-    for i in username
-      hash = username.charCodeAt(i) + (hash << 5) - hash
-    # Calculate color
-    index = Math.abs(hash % COLORS.length)
-    return COLORS[index]
 
   # Keyboard events
 
@@ -182,12 +163,6 @@ $(() ->
 
   $inputMessage.on('input', () ->
     updateTyping()
-  )
-
-  # Click events
-  # Focus input when clicking anywhere on login page
-  $loginPage.click(() ->
-    $currentInput.focus()
   )
 
   # Focus input when clicking on the message input's border
@@ -235,4 +210,9 @@ $(() ->
   socket.on('stop typing', (data) ->
     removeChatTyping(data)
   )
+
+  socket.emit('add user', {
+    username: username,
+    color: myColor
+  });
 )

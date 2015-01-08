@@ -15,11 +15,13 @@ block content
                form(method="post")
                   .input-group
                      span.input-group-addon &nbsp;&nbsp;&nbsp;Account
-                     input.form-control(type="text",name="account",required="required",placeholder="Type your account.")
+                     input.form-control(type="text",name="account",required="required",placeholder="Type your account.",value=loginName)
                   .input-group
                      span.input-group-addon Password
                      input.form-control(type="password",name="password",required="required",placeholder="Type your password.")
                   .form-group(class="text-center")
+                     if errmsg
+                        span(style="color:red")=errmsg
                      button(class="btn btn-success col-xs-12") Sign in
 
 block footPartialSection

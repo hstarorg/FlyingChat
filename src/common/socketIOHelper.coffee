@@ -16,13 +16,16 @@ module.exports = {
         socket.broadcast.emit('new message', {
           username: socket.username
           message: data
+          color: socket.color
         })
       )
 
       # when the client emits 'add user', this listens and executes
-      socket.on('add user', (username) ->
+      socket.on('add user', (userObj) ->
+        username = userObj.username
         # we store the username in the socket session for this client
         socket.username = username
+        socket.color = userObj.color
         # add the client's username to the global list
         usernames[username] = username
         addedUser = true

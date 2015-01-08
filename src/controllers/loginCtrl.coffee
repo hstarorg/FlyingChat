@@ -1,10 +1,11 @@
 dbKit = require('./../common/dbKit')
 
 exports.login = (req, res, next) ->
-  res.render('user/login', {
+  model = {
     title: 'FlyingChat -- Login'
     pretty: true
-  })
+  }
+  res.render('user/login', model)
 # 登录控制
 exports.postLogin = (req, res, next) ->
   username = req.body.account
@@ -15,12 +16,19 @@ exports.postLogin = (req, res, next) ->
       next(err)
     else
       if row is undefined
-        res.send('登录失败，账户/密码不匹配!')
+        model = {
+          loginName: username
+          title: 'FlyingChat -- Login'
+          pretty: true
+          errmsg: 'Invalid account or password!'
+        }
+        res.render('user/login', model)
       # 登录成功！
       else
         req.session.user_id = row.UserId
         req.session.user = {
           LoginName: row.LoginName
+          UserNick: row.UserNick
         }
         res.redirect('/')
   )
