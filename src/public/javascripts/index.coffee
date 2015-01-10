@@ -6,6 +6,13 @@ $(() ->
     '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
   ]
 
+  # 未读消息数
+  unreadMsgCount = 0
+  originalTitle = document.title
+  notifyTitle = ''
+  notifyInterval = undefined
+  allowNotify = false
+
   FADE_TIME = 150 # ms
   TYPING_TIMER_LENGTH = 400 # ms
 
@@ -185,17 +192,20 @@ $(() ->
 
   # Whenever the server emits 'new message', update the chat body
   socket.on('new message', (data) ->
+    regNotify('message')
     addChatMessage(data)
   )
 
   # Whenever the server emits 'user joined', log it in the chat body
   socket.on('user joined', (data) ->
+    regNotify('joined', data.username)
     log(data.username + ' joined at ' + getNow())
     addParticipantsMessage(data)
   )
 
   # Whenever the server emits 'user left', log it in the chat body
   socket.on('user left', (data) ->
+    regNotify('left', data.username)
     log(data.username + ' left at ' + getNow())
     addParticipantsMessage(data)
     removeChatTyping(data)
@@ -215,4 +225,35 @@ $(() ->
     username: username,
     color: myColor
   });
+
+  regNotify = (type, username) ->
+    if !window.pageIsActive
+      allowNotify = true
+      if type is 'left'
+        notifyTitle = "【#{username} 离开聊天！】"
+      else if type is 'joined'
+        notifyTitle = "【#{username} 加入聊天！】"
+      else if type is 'message'
+        unreadMsgCount++
+        notifyTitle = "【您有#{unreadMsgCount}条未读消息！】"
+      browserNotify()
+
+  # 浏览器标题通知
+  browserNotify = ->
+    if !notifyInterval and allowNotify
+      isNotify = true
+      notifyInterval = setInterval(->
+        document.title = if isNotify then notifyTitle else originalTitle
+        isNotify = !isNotify
+      , 100)
+
+  window.pageActiveChanged = ->
+    if window.pageIsActive
+      document.title = originalTitle
+      clearInterval(notifyInterval) if notifyInterval
+      allowNotify = false
+      notifyInterval = undefined
+      unreadMsgCount = 0
+    else
+      browserNotify()
 )
