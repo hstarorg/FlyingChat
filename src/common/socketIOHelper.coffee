@@ -1,3 +1,5 @@
+dbKit = require('./dbKit')
+
 module.exports = {
   initSocketIO: (io) ->
 
@@ -12,6 +14,15 @@ module.exports = {
       addedUser = false
       # when the client emits 'new message', this listens and executes
       socket.on('new message', (data) ->
+        # 想消息存入数据库
+        dbKit.executeSql('INSERT INTO [ChatMessage]([UserId],[UserNick],[MsgContent],[CreationDate]) VALUES(?,?,?,?)', [
+            0
+            socket.username
+            data
+            (new Date()).valueOf()
+          ], (err)->
+          console.log(err) if err
+        )
         # we tell the client to execute 'new message'
         socket.broadcast.emit('new message', {
           username: socket.username
