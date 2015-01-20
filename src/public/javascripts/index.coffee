@@ -256,4 +256,5 @@ $(() ->
       unreadMsgCount = 0
     else
       browserNotify()
+  document.body.onload = window.on_page_loaded;
 )
