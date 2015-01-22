@@ -2,6 +2,10 @@ extends layout
 block headPartialSection
   link(rel='stylesheet', href='/stylesheets/style.css')
 block content
+  #bg
+    div(class="form-control")
+      input(type="password",id="lock_password")
+      button(type="button",onclick="unlock();") Unlock
   input(type="hidden",value=nick,id="username")
   ul.pages
     li(class="char page")
@@ -12,5 +16,7 @@ block content
   script(src="/socket.io/socket.io.js")
   script(src="/javascripts/browser-tab-status.js")
   script(src="/javascripts/browser-tab-close.js")
+  script(src="/javascripts/mousetrap.min.js")
+  script(src="/javascripts/mousetrap-global-bind.min.js")
   script(src="/javascripts/index.js")
 

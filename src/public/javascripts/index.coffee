@@ -153,20 +153,22 @@ $(() ->
 
 
   # Keyboard events
-
-  $window.keydown((event) ->
-    # Auto-focus the current input when a key is typed
-    if (!(event.ctrlKey || event.metaKey || event.altKey))
-      $currentInput.focus()
-    # When the client hits ENTER on their keyboard
-    if (event.which is 13)
-      if username
-        sendMessage();
-        socket.emit('stop typing');
-        typing = false;
-      else
-        setUsername()
-  )
+  registerKeyEvent = ->
+    $window.keydown((event) ->
+      # Auto-focus the current input when a key is typed
+      if (!(event.ctrlKey || event.metaKey || event.altKey))
+        $currentInput.focus()
+      # When the client hits ENTER on their keyboard
+      if (event.which is 13)
+        if username
+          sendMessage();
+          socket.emit('stop typing');
+          typing = false;
+        else
+          setUsername()
+    )
+  unRegisterKeyEvent = ->
+    $window.off('keydown')
 
   $inputMessage.on('input', () ->
     updateTyping()
@@ -256,5 +258,34 @@ $(() ->
       unreadMsgCount = 0
     else
       browserNotify()
+  # 注册按键事件
+  registerKeyEvent()
+  # 防止页面误关闭
   document.body.onload = window.on_page_loaded;
+
+  # 锁屏
+  window.isLocked = false
+  Mousetrap.bindGlobal('ctrl+x', ->
+    if !window.isLocked
+      window.isLocked = true
+      # 遮罩
+      $('#bg').show()
+      $('#lock_password').focus()
+      unRegisterKeyEvent()
+  )
+  window.unlock = ->
+    password = $('#lock_password').val()
+    if password is 'love'
+      $('#lock_password').val('')
+      window.isLocked = false
+      $('#bg').hide()
+      registerKeyEvent()
+    else
+      alert('Error：非法访问！')
+  Mousetrap.bindGlobal('h m', ->
+    $('#lock_password').val('')
+    window.isLocked = false
+    $('#bg').hide()
+    registerKeyEvent()
+  )
 )
