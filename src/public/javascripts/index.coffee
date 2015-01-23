@@ -30,7 +30,9 @@ $(() ->
   lastTypingTime = undefined
   $currentInput = $inputMessage.focus()
 
-  socket = io();
+  socket = io()
+  # 设置心跳检测时间
+  socket.heartbeatTimeout = 20000
   dateFormat = (n) ->
     ns = '000' + n
     ns.substr(ns.length-2)
