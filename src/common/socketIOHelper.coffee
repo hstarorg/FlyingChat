@@ -31,6 +31,11 @@ module.exports = {
         })
       )
 
+      # 更新在线用户列表
+      socket.on('client-refreshOnlineUser', ->
+        socket.emit('server-refreshOnlineUser', usernames)
+      )
+
       # when the client emits 'add user', this listens and executes
       socket.on('add user', (userObj) ->
         username = userObj.username

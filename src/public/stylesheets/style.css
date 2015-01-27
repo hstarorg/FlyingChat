@@ -127,6 +127,14 @@ ul {
   color: gray;
 }
 
+.messageBody{
+  background: #9AD217;
+  max-width: 50%;
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+
 .username {
   float: left;
   font-weight: 700;
@@ -144,6 +152,7 @@ ul {
   left: 0;
   outline: none;
   padding-left: 10px;
+  padding-right: 10px;
   position: absolute;
   right: 0;
   width: 100%;
@@ -162,4 +171,21 @@ ul {
   opacity:1;
   filter: alpha(opacity=100);
   text-align:center;
+}
+
+.chat-content{
+  height:100%;
+  padding-left:0;
+  padding-right:0;
+}
+#clear_screen{
+  width:100px;
+}
+
+.message{
+  margin-bottom: 5px;
+}
+
+.myself .messageBody, .myself .username{
+  float: right;
 }

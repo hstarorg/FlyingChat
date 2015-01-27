@@ -7,16 +7,28 @@ block content
       input(type="password",id="lock_password")
       button(type="button",onclick="unlock();") Unlock
   input(type="hidden",value=nick,id="username")
-  ul.pages
-    li(class="char page")
-      .chatArea
-        ul.messages
-      input.inputMessage(placeholder="Type here...")
+  div(class="col-xs-9 chat-content")
+    ul.pages
+      li(class="char page")
+        .chatArea
+          ul.messages
+        input.inputMessage(placeholder="Type here...")
+  div(class="col-xs-3")
+    .panel(class="panel-info" style="margin-top:10px;")
+      .panel-heading Online List
+      .panel-body
+        ul.nav(id="ul_userList")
+
+    .panel(class="panel-info")
+      .panel-heading Control Panel
+      .panel-body
+        div(class="text-center")
+          button(class="btn btn-danger btn-sm",id="clear_screen") Clear
   script(src="/vendor/jquery/jquery-1.11.2.js")
   script(src="/socket.io/socket.io.js")
   script(src="/javascripts/vendor/browser-tab-status.js")
-  script(src="/javascripts/verdor/browser-tab-close.js")
-  script(src="/javascripts/verdor/mousetrap.min.js")
-  script(src="/javascripts/verdor/mousetrap-global-bind.min.js")
+  script(src="/javascripts/vendor/browser-tab-close.js")
+  script(src="/javascripts/vendor/mousetrap.min.js")
+  script(src="/javascripts/vendor/mousetrap-global-bind.min.js")
   script(src="/javascripts/index.js")
 

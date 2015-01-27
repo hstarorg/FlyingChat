@@ -61,6 +61,7 @@ $(() ->
         username: username
         message: message
         color: myColor
+        mySelf: true
       });
 
     # tell server to execute 'new message' and send along one parameter
@@ -90,6 +91,9 @@ $(() ->
     .data('username', data.username)
     .addClass(typingClass)
     .append($usernameDiv, $messageBodyDiv)
+    if data.mySelf
+      $messageDiv.addClass('myself')
+      $messageDiv.append('<div class="clearfix"></div>')
     addMessageElement($messageDiv, options)
 
   # Adds the visual chat typing message
@@ -230,6 +234,22 @@ $(() ->
     color: myColor
   });
 
+  # -更新在线人员信息--------------------------------------------------------------
+  socket.on('server-refreshOnlineUser', (data) ->
+    $users = []
+    for p of data when data.hasOwnProperty(p)
+      $users.push('<li>' + p + '</li>')
+    $('#ul_userList').html($users.join(''))
+  )
+
+  refreshOnLineUser = ->
+    socket.emit('client-refreshOnlineUser')
+
+  setInterval(->
+    refreshOnLineUser()
+  , 5000)
+  refreshOnLineUser()
+
   regNotify = (type, username) ->
     if !window.pageIsActive
       allowNotify = true
@@ -290,4 +310,13 @@ $(() ->
     $('#bg').hide()
     registerKeyEvent()
   )
+
+  # 页面初始化事件
+  $(->
+    $('#clear_screen').on('click', ->
+      # 清屏
+      $('.messages').empty()
+    )
+  )
+
 )
