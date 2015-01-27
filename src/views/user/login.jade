@@ -5,7 +5,6 @@ extends ../layout
 block headPartialSection
    link(rel='stylesheet', href='/stylesheets/login.css')
 block content
-   .bg-div(id="divBg")
    .container
       div(class="col-xs-4 col-xs-offset-4 login-container")
          .panel(class="panel-success")
@@ -25,26 +24,15 @@ block content
                      button(class="btn btn-success col-xs-12") Sign in
 
 block footPartialSection
+   script(src="/javascripts/vendor/jquery.backstretch.min.js")
    script.
-      var $bg = $('#divBg');
-      var globalImgIndex = 1;
-      var randomBodyBackgroundImage = function(){
-         var imgIndex = globalImgIndex
-         while(globalImgIndex ===imgIndex){
-            imgIndex = Math.floor(Math.random()*10%4)
-         }
-         globalImgIndex = imgIndex;
-         $bg.animate({opacity: 0.05}, 3000, function(){
-            $bg.css('background', 'url(../images/bg' + globalImgIndex + '.jpg)')
-            $bg.animate({opacity: 1}, 3000, function(){
-               setTimeout(function(){
-                  randomBodyBackgroundImage();
-               },5000)
-            });
-         });
-      };
-      // 随机图片
-      $(function(){
-         randomBodyBackgroundImage();
+      $.backstretch([
+         '/images/bg0.jpg',
+         '/images/bg1.jpg',
+         '/images/bg2.jpg',
+         '/images/bg3.jpg'
+      ], {
+         fade: 2000,
+         duration: 5000
       });
 

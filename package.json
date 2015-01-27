@@ -23,7 +23,7 @@
   "dependencies": {
     "body-parser": "~1.8.1",
     "cookie-parser": "~1.3.3",
-    "debug": "~2.0.0",
+    "debug": "^2.1.1",
     "express": "~4.9.0",
     "express-session": "^1.10.0",
     "jade": "~1.6.0",
@@ -35,15 +35,14 @@
     "sqlite3": "^3.0.4"
   },
   "devDependencies": {
+    "coffee-script": "^1.8.0",
     "del": "^1.1.0",
     "gulp": "^3.8.10",
     "gulp-coffee": "^2.2.0",
-    "gulp-connect": "^2.2.0",
-    "gulp-jade": "^0.10.0",
+    "gulp-imagemin": "^2.1.0",
     "gulp-nodemon": "^1.0.4",
-    "gulp-notify": "^2.1.0",
     "gulp-open": "^0.3.1",
-    "gulp-replace": "^0.5.0",
+    "gulp-run-sequence": "^0.3.2",
     "gulp-util": "^3.0.1",
     "yargs": "^1.3.3"
   }
