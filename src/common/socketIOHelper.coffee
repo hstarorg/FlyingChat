@@ -39,6 +39,17 @@ module.exports = {
       # when the client emits 'add user', this listens and executes
       socket.on('add user', (userObj) ->
         username = userObj.username
+        # 处理同时在线问题，如果发现有另外的同名用户在线，那么踢下线
+        hasUser = false
+        if usernames[username]
+          for userSocket in io.sockets.sockets
+            if userSocket.username is username
+              # 踢下线
+              hasUser = true
+              userSocket.emit('forced logout')
+              userSocket.leave()
+
+
         # we store the username in the socket session for this client
         socket.username = username
         socket.color = userObj.color

@@ -198,6 +198,11 @@ $(() ->
     addParticipantsMessage(data)
   )
 
+  socket.on('forced logout', ->
+    socket.disconnect()
+    alert('你已被强制下线！')
+  )
+
   # Whenever the server emits 'new message', update the chat body
   socket.on('new message', (data) ->
     regNotify('message')
