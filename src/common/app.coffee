@@ -1,13 +1,19 @@
 express = require('express')
 path = require('path')
 favicon = require('serve-favicon')
-logger = require('morgan')
+morganLogger = require('morgan')
 cookieParser = require('cookie-parser')
 bodyParser = require('body-parser')
 session = require('express-session')
+log4js = require('log4js')
+log4js.configure(path.join(__dirname, '../config/log4jsConfig.json'), {
+      reloadSecs: 60
+      cwd: path.join(__dirname, '../../src/')
+  }
+)
+logger = log4js.getLogger()
 
 routeConfig = require('./../routes/routeConfig')
-
 app = express()
 
 # view engine setup
@@ -16,7 +22,7 @@ app.set('view engine', 'jade')
 
 # uncomment after placing your favicon in /public
 # app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'))
+app.use(morganLogger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(session({
@@ -59,6 +65,9 @@ app.use((err, req, res, next) ->
         error: {}
     })
 )
-
+process.on('uncaughtException', (err) ->
+    console.log(err.message)
+    logger.error(err.message)
+)
 
 module.exports = app

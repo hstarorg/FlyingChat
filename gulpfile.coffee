@@ -6,21 +6,30 @@ gutil = require('gulp-util')
 del = require('del')
 nodemon = require('gulp-nodemon')
 argv = require('yargs').argv
-open = require('gulp-open')
 imagemin = require('gulp-imagemin')
+browserSync = require('browser-sync')
+reload = browserSync.reload
 
 # 处理参数
 isDebug = not (argv.r || false)
 
+# --入口任务-----------------------------------------------------------------
 gulp.task('default', ->
   runSequence(
-    'clean'
-    if isDebug then ['coffee', 'copy'] else ['coffee', 'copy', 'imagemin']
-    ['serve', 'serve_watch']
-    'open'
+    'build'
+    'serve'
+    'watch'
   )
 )
-# -----------------------------------------
+# --构建相关任务---------------------------------------
+gulp.task('build', (callback) ->
+  runSequence(
+    'clean'
+    ['coffee', 'copy', 'imagemin']
+    callback
+  )
+
+)
 
 gulp.task('clean', (callback)->
   del(['./dist/'], callback)
@@ -32,12 +41,6 @@ gulp.task('coffee', ->
   .pipe(gulp.dest('./dist/'))
 )
 
-gulp.task('imagemin', ->
-  gulp.src('./src/public/images/*.jpg')
-  .pipe(imagemin({progressive: true}))
-  .pipe(gulp.dest('./dist/public/images/'))
-)
-
 gulp.task('copy', ->
   gulp.src([
     './src/**/*.*'
@@ -47,6 +50,15 @@ gulp.task('copy', ->
   .pipe(gulp.dest('./dist/'))
 )
 
+gulp.task('imagemin', ->
+  gulpStream = gulp.src('./src/public/images/*.jpg')
+  if not isDebug
+    gulpStream.pipe(imagemin({progressive: true}))
+  gulpStream.pipe(gulp.dest('./dist/public/images/'))
+  gulpStream
+)
+
+# --启动程序,打开浏览器任务----------------------------------------------------
 nodemon_instance = undefined
 gulp.task('serve', ->
   if not nodemon_instance
@@ -61,22 +73,40 @@ gulp.task('serve', ->
     nodemon_instance.emit("restart")
 )
 
-gulp.task('serve_watch', ->
-  gulp.watch('./src/**/*', ['restart'])
+
+
+# --监视任务------------------------------------------------
+gulp.task('watch', ->
+  browserSync({
+    proxy: 'localhost:3000'
+    port: 8888
+    #files: ['./src/public/**/*']
+    open: true
+    notify: true
+    reloadDelay: 2000
+  })
+
+  gulp.watch('./src/**/*.jade', ['reload-jade'])
+  gulp.watch('./src/**/*.coffee', ['reload-coffee'])
 )
 
-gulp.task('restart', ->
+gulp.task('reload-jade', (callback) ->
   runSequence(
-    'clean'
-    ['coffee', 'copy', 'imagemin']
-    ['serve']
+    'copy'
+    'bs-reload'
+    callback
   )
 )
 
-gulp.task('open', ->
-  options = {
-    url: 'http://localhost:3000'
-  }
-  gulp.src('./dist/index.js') # An actual file must be specified or gulp will overlook the task.
-  .pipe(open('', options))
+gulp.task('reload-coffee', (callback) ->
+  runSequence(
+    'coffee'
+    'serve'
+    'bs-reload'
+    callback
+  )
+)
+
+gulp.task('bs-reload', ->
+  browserSync.reload()
 )
