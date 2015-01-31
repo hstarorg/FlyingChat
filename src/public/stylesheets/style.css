@@ -146,16 +146,16 @@ ul {
 /* Input */
 
 .inputMessage {
-  border: 10px solid #000;
-  bottom: 0;
-  height: 60px;
-  left: 0;
-  outline: none;
-  padding-left: 10px;
-  padding-right: 10px;
-  position: absolute;
-  right: 0;
-  width: 100%;
+  /*border: 10px solid #000;*/
+  /*bottom: 0;*/
+  /*height: 60px;*/
+  /*left: 0;*/
+  /*outline: none;*/
+  /*padding-left: 10px;*/
+  /*padding-right: 10px;*/
+  /*position: absolute;*/
+  /*right: 0;*/
+  /*width: 100%;*/
 }
 
 #bg{
@@ -185,7 +185,40 @@ ul {
 .message{
   margin-bottom: 5px;
 }
+*{
+  outline: none;
+}
 
 .myself .messageBody, .myself .username{
   float: right;
+}
+
+/*Msg-Panel style*/
+.msg-panel{
+  margin: 10px 15px 20px 15px;
+  border:1px solid #ebccd1;
+  border-radius: 4px;
+  font-size: 12px;
+  background: #f5f5f5;
+}
+.msg-panel .msg-heading{
+  margin-top: -15px;
+  color: white;
+  z-index: 100;
+}
+
+.msg-panel .heading{
+  margin-left: 5px;
+  border-radius: 4px;
+  padding: 2px 5px 0 5px;
+}
+
+.msg-panel .msg-time,.msg-panel .msg-title{
+  padding: 2px 5px 0 5px;
+}
+.msg-panel .msg-body{
+  font-family: 微软雅黑;
+  clear: both;
+  font-size:14px;
+  padding:5px 10px;
 }

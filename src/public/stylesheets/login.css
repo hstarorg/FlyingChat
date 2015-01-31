@@ -8,6 +8,9 @@
     bottom: 0;
 }
 .login-container{
+    max-width: 350px;
+    min-width: 150px;
+    margin:0 auto;
     margin-top:20%;
 }
 .login-container .input-group{

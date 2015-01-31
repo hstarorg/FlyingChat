@@ -18,7 +18,8 @@ $(() ->
 
   # Initialize varibles
   $window = $(window)
-  $messages = $('.messages'); # Messages area
+  $msgTemplate = $('#msgTemplate')
+  $messages = $('.chat-content'); # Messages area
   $inputMessage = $('.inputMessage'); # Input message input box
 
 
@@ -94,7 +95,11 @@ $(() ->
     if data.mySelf
       $messageDiv.addClass('myself')
       $messageDiv.append('<div class="clearfix"></div>')
-    addMessageElement($messageDiv, options)
+    $msgDiv = $msgTemplate.clone().removeClass('hide')
+    $msgDiv.find('.msg-time').text(getNow())
+    $msgDiv.find('.msg-title').text(data.username)
+    $msgDiv.find('.msg-body').html(data.message)
+    addMessageElement($msgDiv, options)
 
   # Adds the visual chat typing message
   addChatTyping = (data) ->

@@ -97,7 +97,10 @@ gulp.task('browserSync', ->
 
 # --监视任务------------------------------------------------
 gulp.task('watch', ->
-  gulp.watch('./src/**/*.jade', ['reload-jade'])
+  gulp.watch([
+    './src/**/*.*'
+    '!./src/**/*.coffee'
+  ], ['reload-jade'])
   gulp.watch('./src/**/*.coffee', ['reload-coffee'])
 )
 
