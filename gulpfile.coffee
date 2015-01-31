@@ -1,5 +1,5 @@
 gulp = require('gulp')
-runSequence = require('gulp-run-sequence')
+runSequence = require('run-sequence')
 
 coffee = require('gulp-coffee')
 gutil = require('gulp-util')
@@ -14,11 +14,12 @@ reload = browserSync.reload
 isDebug = not (argv.r || false)
 
 # --入口任务-----------------------------------------------------------------
-gulp.task('default', ->
+gulp.task('default', (callback)->
   runSequence(
     'build'
     'serve'
-    'watch'
+    ['browserSync', 'watch']
+    callback
   )
 )
 # --构建相关任务---------------------------------------
@@ -60,7 +61,8 @@ gulp.task('imagemin', ->
 
 # --启动程序,打开浏览器任务----------------------------------------------------
 nodemon_instance = undefined
-gulp.task('serve', ->
+gulp.task('serve', (callback)->
+  called = false
   if not nodemon_instance
     nodemon_instance = nodemon({
       script: './dist/index.js'
@@ -69,23 +71,32 @@ gulp.task('serve', ->
     .on('restart', ->
       console.log('restart server......................')
     )
+    .on('start', ->
+      if not called
+        called = true
+        callback()
+    )
   else
     nodemon_instance.emit("restart")
+    callback()
+  nodemon_instance
+)
+
+gulp.task('browserSync', ->
+  browserSync({
+    proxy: 'localhost:3000'
+    port: 8888
+  #files: ['./src/public/**/*']
+    open: true
+    notify: true
+    reloadDelay: 500 # 延迟刷新
+  })
 )
 
 
 
 # --监视任务------------------------------------------------
 gulp.task('watch', ->
-  browserSync({
-    proxy: 'localhost:3000'
-    port: 8888
-    #files: ['./src/public/**/*']
-    open: true
-    notify: true
-    reloadDelay: 2000
-  })
-
   gulp.watch('./src/**/*.jade', ['reload-jade'])
   gulp.watch('./src/**/*.coffee', ['reload-coffee'])
 )

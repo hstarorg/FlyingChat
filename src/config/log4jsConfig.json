@@ -2,12 +2,12 @@
 "appenders": [
   {
     "type": "dateFile",
-    "filename": "/logs/log_file.log",
+    "filename": "./logs/log_file.log",
     "category": "info"
   },
   {
     "type": "dateFile",
-    "filename": "/logs/error_file.log",
+    "filename": "./logs/error_file.log",
     "category": "errors"
   },
   {
