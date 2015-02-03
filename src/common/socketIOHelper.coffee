@@ -47,7 +47,7 @@ module.exports = {
               # 踢下线
               hasUser = true
               userSocket.emit('forced logout')
-              userSocket.leave()
+              userSocket.disconnect()
 
 
         # we store the username in the socket session for this client

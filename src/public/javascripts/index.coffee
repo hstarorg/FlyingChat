@@ -31,7 +31,8 @@ $(() ->
   lastTypingTime = undefined
   $currentInput = $inputMessage.focus()
 
-  socket = io()
+ # socket = io()
+  socket = io.connect(this.address)
   # 设置心跳检测时间
   socket.heartbeatTimeout = 20000
   dateFormat = (n) ->
@@ -42,16 +43,10 @@ $(() ->
     d = new Date()
     dateFormat(d.getHours())+ ':' + dateFormat(d.getMinutes()) + ':' + dateFormat(d.getSeconds());
 
-  addParticipantsMessage = (data) ->
-    message = ''
-    if data.numUsers is 1
-      message += "there's 1 participant"
-    else
-      message += "there are " + data.numUsers + " participants"
-    log(message)
-
   # Sends a chat message
   sendMessage = () ->
+    socket.emit('stop typing');
+    typing = false;
     message = $inputMessage.val()
     # Prevent markup from being injected into the message
     message = cleanInput(message)
@@ -70,8 +65,11 @@ $(() ->
 
   # Log a message
   log = (message, options) ->
-    $el = $('<li>').addClass('log').text(message)
-    addMessageElement($el, options)
+    $msgDiv = $msgTemplate.clone().removeClass('hide')
+    $msgDiv.find('.msg-time').text(getNow())
+    $msgDiv.find('.msg-title').text('系统消息')
+    $msgDiv.find('.msg-body').html(message)
+    addMessageElement($msgDiv, options)
 
   # Adds the visual chat message to the message list
   addChatMessage = (data, options) ->
@@ -81,23 +79,11 @@ $(() ->
     if $typingMessages.length isnt 0
       options.fade = false
       $typingMessages.remove()
-
-    $usernameDiv = $('<span class="username"/>')
-    .text('(' + getNow() + ')' + data.username)
-    .css('color', data.color)
-    $messageBodyDiv = $('<span class="messageBody">')
-    .text(data.message)
-    typingClass = if data.typing then 'typing' else ''
-    $messageDiv = $('<li class="message"/>')
-    .data('username', data.username)
-    .addClass(typingClass)
-    .append($usernameDiv, $messageBodyDiv)
-    if data.mySelf
-      $messageDiv.addClass('myself')
-      $messageDiv.append('<div class="clearfix"></div>')
     $msgDiv = $msgTemplate.clone().removeClass('hide')
     $msgDiv.find('.msg-time').text(getNow())
-    $msgDiv.find('.msg-title').text(data.username)
+    $msgTitle = $msgDiv.find('.msg-title')
+    $msgTitle.parent().removeClass('label-danger').addClass('label-info')
+    $msgTitle.text(data.username)
     $msgDiv.find('.msg-body').html(data.message)
     addMessageElement($msgDiv, options)
 
@@ -171,12 +157,7 @@ $(() ->
         $currentInput.focus()
       # When the client hits ENTER on their keyboard
       if (event.which is 13)
-        if username
-          sendMessage();
-          socket.emit('stop typing');
-          typing = false;
-        else
-          setUsername()
+        sendMessage();
     )
   unRegisterKeyEvent = ->
     $window.off('keydown')
@@ -196,15 +177,15 @@ $(() ->
   socket.on('login', (data) ->
     connected = true
     # Display the welcome message
-    message = "Welcome to Flying Chat – "
+    console.log(data)
+    message = "欢迎进入飞聊 – 当前用户数：#{data.numUsers}"
     log(message, {
       prepend: true
     })
-    addParticipantsMessage(data)
   )
 
   socket.on('forced logout', ->
-    socket.disconnect()
+    # socket.disconnect()
     alert('你已被强制下线！')
   )
 
@@ -217,15 +198,13 @@ $(() ->
   # Whenever the server emits 'user joined', log it in the chat body
   socket.on('user joined', (data) ->
     regNotify('joined', data.username)
-    log(data.username + ' joined at ' + getNow())
-    addParticipantsMessage(data)
+    log(data.username + ' joined at ' + getNow() + "当前用户数：#{data.numUsers}")
   )
 
   # Whenever the server emits 'user left', log it in the chat body
   socket.on('user left', (data) ->
     regNotify('left', data.username)
-    log(data.username + ' left at ' + getNow())
-    addParticipantsMessage(data)
+    log(data.username + ' left at ' + getNow() + "当前用户数：#{data.numUsers}")
     removeChatTyping(data)
   )
 
@@ -326,6 +305,11 @@ $(() ->
     $('#clear_screen').on('click', ->
       # 清屏
       $('.messages').empty()
+    )
+
+    $('#btnSend').on('click', ->
+      # 发送消息
+      sendMessage()
     )
   )
 )
