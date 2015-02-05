@@ -5,7 +5,7 @@ indexCtrl = require('./../controllers/indexCtrl')
 
 ### GET home page. ###
 router.get('/',
- # filters.authorize,
+  filters.authorize,
   indexCtrl.index
 )
 

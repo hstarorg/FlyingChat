@@ -45,6 +45,9 @@ $(() ->
 
   # Sends a chat message
   sendMessage = () ->
+    message = $inputMessage.val()
+    if not message
+      return
     socket.emit('stop typing');
     typing = false;
     message = $inputMessage.val()
@@ -67,7 +70,7 @@ $(() ->
   log = (message, options) ->
     $msgDiv = $msgTemplate.clone().removeClass('hide')
     $msgDiv.find('.msg-time').text(getNow())
-    $msgDiv.find('.msg-title').text('系统消息')
+    $msgDiv.find('.msg-title').text('System Info')
     $msgDiv.find('.msg-body').html(message)
     addMessageElement($msgDiv, options)
 
@@ -80,6 +83,12 @@ $(() ->
       options.fade = false
       $typingMessages.remove()
     $msgDiv = $msgTemplate.clone().removeClass('hide')
+    if data.typing
+      $msgDiv.addClass('typing').data('username',data.username)
+    # 如果是自己的消息，那么放右边
+    else if data.mySelf
+      $msgDiv.addClass('pull-right')
+      $msgDiv.find('.msg-heading .heading').removeClass('pull-left').addClass('pull-right')
     $msgDiv.find('.msg-time').text(getNow())
     $msgTitle = $msgDiv.find('.msg-title')
     $msgTitle.parent().removeClass('label-danger').addClass('label-info')
@@ -144,7 +153,7 @@ $(() ->
 
   # Gets the 'X is typing' messages of a user
   getTypingMessages = (data) ->
-    $('.typing.message').filter((i) ->
+    $('.msg-panel.typing').filter((i) ->
       $(this).data('username') is data.username
     )
 
@@ -198,13 +207,13 @@ $(() ->
   # Whenever the server emits 'user joined', log it in the chat body
   socket.on('user joined', (data) ->
     regNotify('joined', data.username)
-    log(data.username + ' joined at ' + getNow() + "当前用户数：#{data.numUsers}")
+    log(data.username + " 加入聊天，当前用户数：#{data.numUsers}")
   )
 
   # Whenever the server emits 'user left', log it in the chat body
   socket.on('user left', (data) ->
     regNotify('left', data.username)
-    log(data.username + ' left at ' + getNow() + "当前用户数：#{data.numUsers}")
+    log(data.username + " 离开聊天，当前用户数：#{data.numUsers}")
     removeChatTyping(data)
   )
 

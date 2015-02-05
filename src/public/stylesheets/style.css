@@ -173,11 +173,7 @@ ul {
   text-align:center;
 }
 
-.chat-content{
-  height:100%;
-  padding-left:0;
-  padding-right:0;
-}
+
 #clear_screen{
   width:100px;
 }
@@ -193,10 +189,22 @@ ul {
   float: right;
 }
 
+.chat-body{
+  margin-top: 20px;
+}
+
+.chat-content{
+  padding-left:0;
+  padding-right:0;
+  height:600px;
+  overflow-y: auto;
+}
+
 /*Msg-Panel style*/
 .msg-panel{
   margin: 10px 15px 20px 15px;
-  border:1px solid #ebccd1;
+  border:1px solid orange;
+  width: 50%;
   border-radius: 4px;
   font-size: 12px;
   background: #f5f5f5;

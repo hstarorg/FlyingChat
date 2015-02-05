@@ -3,11 +3,11 @@ block headPartialSection
   link(rel='stylesheet', href='/stylesheets/style.css')
 block content
   //消息体界面
-  .msg-panel(class="hide",id="msgTemplate")
+  .msg-panel(class="hide",id="msgTemplate",style="clear:both;")
     .msg-heading
       span(class="heading label-danger pull-left")
         i(class="glyphicon glyphicon-info-sign")
-        span.msg-title 系统消息
+        span.msg-title System Info
       span(class="heading label-default pull-left")
         i(class="glyphicon glyphicon-time")
         span.msg-time 00:00:00
@@ -18,16 +18,12 @@ block content
       input(type="password",id="lock_password")
       button(type="button",onclick="unlock();") Unlock
   // 标准界面
-  .container
+  .container(class="chat-body")
     div.row
       div(class="col-xs-9")
         .panel(class="panel-danger")
           .panel-heading Chat room
           .panel-body(class="chat-content")
-            ul.pages
-              li(class="char page")
-                .chatArea
-                  ul.messages
 
         .panel(class="panel-danger")
           .panel-body
