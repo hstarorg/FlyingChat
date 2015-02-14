@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 app = require('./common/app')
 appConfig = require('./config/appConfig')
-socketIO = require('./common/socketIOHelper')
+socketIO = require('./common/socketIO')
 
 http = require('http').Server(app)
 

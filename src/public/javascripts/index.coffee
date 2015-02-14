@@ -313,7 +313,7 @@ $(() ->
   $(->
     $('#clear_screen').on('click', ->
       # 清屏
-      $('.messages').empty()
+      $('.panel-body.chat-content').empty()
     )
 
     $('#btnSend').on('click', ->
