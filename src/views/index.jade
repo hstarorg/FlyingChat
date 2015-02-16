@@ -2,6 +2,7 @@ extends layout
 block headPartialSection
   link(rel='stylesheet', href='/stylesheets/style.css')
 block content
+  audio(src="/audios/notice.wav",id="notice") 您的浏览器不支持 audio 标签。
   //消息体界面
   .msg-panel(class="hide",id="msgTemplate",style="clear:both;")
     .msg-heading
@@ -55,9 +56,9 @@ block content
   input(type="hidden",value=nick,id="username")
   script(src="/vendor/jquery/jquery-1.11.2.js")
   script(src="/socket.io/socket.io.js")
-  script(src="/javascripts/vendor/browser-tab-status.js")
-  script(src="/javascripts/vendor/browser-tab-close.js")
-  script(src="/javascripts/vendor/mousetrap.min.js")
-  script(src="/javascripts/vendor/mousetrap-global-bind.min.js")
+  script(src="/vendor/plugins/browser-tab-status.js")
+  script(src="/vendor/plugins/browser-tab-close.js")
+  script(src="/vendor/plugins/mousetrap.min.js")
+  script(src="/vendor/plugins/mousetrap-global-bind.min.js")
   script(src="/javascripts/index.js")
 

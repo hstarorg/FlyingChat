@@ -3,6 +3,12 @@ dbKit = require('./dbKit')
 module.exports = {
   initSocketIO: (io) ->
 
+#    io.configure( ->
+#      io.set('authorization', (handshakeData, callback) ->
+#        callback(null, true)
+#      )
+#    )
+
     # 使用session
 #    io.set('authorization', (handshakeData, accept) ->
 #      if handshakeData.headers.cookie

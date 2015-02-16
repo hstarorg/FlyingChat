@@ -12,6 +12,7 @@ $(() ->
   notifyTitle = ''
   notifyInterval = undefined
   allowNotify = false
+  noticeObj = document.getElementById('notice')
 
   FADE_TIME = 150 # ms
   TYPING_TIMER_LENGTH = 400 # ms
@@ -66,8 +67,13 @@ $(() ->
     # tell server to execute 'new message' and send along one parameter
     socket.emit('new message', message)
 
+  # 声音提示
+  notify = ->
+    noticeObj && noticeObj.play()
+
   # Log a message
   log = (message, options) ->
+    notify()
     $msgDiv = $msgTemplate.clone().removeClass('hide')
     $msgDiv.find('.msg-time').text(getNow())
     $msgDiv.find('.msg-title').text('System Info')
@@ -201,6 +207,7 @@ $(() ->
   # Whenever the server emits 'new message', update the chat body
   socket.on('new message', (data) ->
     regNotify('message')
+    notify()
     addChatMessage(data)
   )
 
