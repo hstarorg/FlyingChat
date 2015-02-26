@@ -229,4 +229,5 @@ ul {
   clear: both;
   font-size:14px;
   padding:5px 10px;
+  word-break: break-all;
 }

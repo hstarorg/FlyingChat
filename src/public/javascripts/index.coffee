@@ -188,11 +188,20 @@ $(() ->
 
   # Socket events
 
+  # 监视断线
+  socket.on('disconnect', (err) ->
+    console.log(err)
+    socket = io.connect(this.address)
+    socket.emit('add user', {
+      username: username,
+      color: myColor
+    })
+  )
+
   # Whenever the server emits 'login', log the login message
   socket.on('login', (data) ->
     connected = true
     # Display the welcome message
-    console.log(data)
     message = "欢迎进入飞聊 – 当前用户数：#{data.numUsers}"
     log(message, {
       prepend: true
