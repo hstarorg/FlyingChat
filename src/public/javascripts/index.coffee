@@ -204,7 +204,7 @@ $(() ->
     # Display the welcome message
     message = "欢迎进入飞聊 – 当前用户数：#{data.numUsers}"
     log(message, {
-      prepend: true
+      #prepend: true
     })
   )
 
