@@ -6,6 +6,8 @@ gutil = require('gulp-util')
 del = require('del')
 nodemon = require('gulp-nodemon')
 argv = require('yargs').argv
+rename = require('gulp-rename')
+merge = require('gulp-merge')
 imagemin = require('gulp-imagemin')
 browserSync = require('browser-sync')
 reload = browserSync.reload
@@ -16,39 +18,56 @@ isDebug = not (argv.r || false)
 # --入口任务-----------------------------------------------------------------
 gulp.task('default', (callback)->
   runSequence(
-    'build'
+    ['clean']
+    ['coffee-server', 'copy-server', 'copy-client', 'coffee-client', 'copy-views']
     'serve'
     ['browserSync', 'watch']
     callback
   )
 )
 # --构建相关任务---------------------------------------
-gulp.task('build', (callback) ->
-  runSequence(
-    'clean'
-    ['coffee', 'copy', 'imagemin']
-    callback
-  )
-
-)
-
 gulp.task('clean', (callback)->
   del(['./dist/'], callback)
 )
 
-gulp.task('coffee', ->
-  gulp.src('./src/**/*.coffee')
+gulp.task('coffee-server', ->
+  gulp.src([
+    './src/**/*.coffee'
+    '!./src/public/**/*.coffee'
+    '!./src/views/**'
+  ])
   .pipe(coffee({bare: true}).on('error', gutil.log))
   .pipe(gulp.dest('./dist/'))
 )
 
-gulp.task('copy', ->
+gulp.task('copy-server', ->
   gulp.src([
-    './src/**/*.*'
-    '!./src/public/images/**.*'
-    '!./src/**/*.coffee'
-    './src/public/verder/**/*'])
+    './src/config*/*.json'
+    './src/database*/*.*'
+  ])
   .pipe(gulp.dest('./dist/'))
+)
+
+gulp.task('copy-client', ->
+  gulp.src([
+    './src/public*/**/*'
+    '!./src/public*/**/*.coffee'
+  ])
+  .pipe(gulp.dest('./dist/'))
+)
+
+gulp.task('coffee-client', ->
+  gulp.src([
+    './src/public*/**/*.coffee'
+  ])
+  .pipe(coffee({bare: true}).on('error', gutil.log))
+  .pipe(gulp.dest('./dist/'))
+)
+
+gulp.task('copy-views', ->
+  gulp.src('./src/views/**/*.html')
+  .pipe(rename({extname: '.vash'}))
+  .pipe(gulp.dest('./dist/views'))
 )
 
 gulp.task('imagemin', ->
@@ -100,21 +119,21 @@ gulp.task('watch', ->
   gulp.watch([
     './src/**/*.*'
     '!./src/**/*.coffee'
-  ], ['reload-jade'])
-  gulp.watch('./src/**/*.coffee', ['reload-coffee'])
+  ], ['reload-client'])
+  gulp.watch('./src/**/*.coffee', ['reload-server'])
 )
 
-gulp.task('reload-jade', (callback) ->
+gulp.task('reload-client', (callback) ->
   runSequence(
-    'copy'
+    ['copy-client', 'coffee-client', 'copy-views']
     'bs-reload'
     callback
   )
 )
 
-gulp.task('reload-coffee', (callback) ->
+gulp.task('reload-server', (callback) ->
   runSequence(
-    'coffee'
+    ['copy-server', 'coffee-server']
     'serve'
     'bs-reload'
     callback

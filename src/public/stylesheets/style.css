@@ -221,6 +221,10 @@ ul {
   padding: 2px 5px 0 5px;
 }
 
+.msg-panel.pull-right .heading{
+  margin-right: 5px;
+}
+
 .msg-panel .msg-time,.msg-panel .msg-title{
   padding: 2px 5px 0 5px;
 }

@@ -1,0 +1,52 @@
+@html.extend('layout', function(model){
+   @html.block('header', function(){
+      <link rel="stylesheet" href="/stylesheets/login.css" />
+   })
+   @html.block('content', function(){
+      <div class="container">
+         <div class="login-container">
+            <div class="panel panel-success">
+               <div class="panel-heading">
+                  <b>Welcome to Flying Chat! Please sign in</b>
+               </div>
+               <div class="panel-body">
+                  <form method="post">
+                     <div class="input-group">
+                        <span class="input-group-addon">
+                           &nbsp;&nbsp;&nbsp;Account
+                        </span>
+                        <input type="text" class="form-control" name="account" required="required" placeholder="Type your account.">
+                     </div>
+                     <div class="input-group">
+                        <span class="input-group-addon">
+                           Password
+                        </span>
+                        <input type="password" class="form-control" name="password" required="required" placeholder="Type your password.">
+                     </div>
+                     <div class="form-group text-center">
+                        @if(model.errmsg){
+                           <span style="color:red">@model.errmsg</span>
+                        }
+                        <button class="btn btn-success col-xs-12"> Sign in</button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   })
+   @html.block('footer', function(){
+      <script src="/javascripts/vendor/jquery.backstretch.min.js"></script>
+      <script>
+         $.backstretch([
+            '/images/bg0.jpg',
+            '/images/bg1.jpg',
+            '/images/bg2.jpg',
+            '/images/bg3.jpg'
+         ], {
+            fade: 2000,
+            duration: 5000
+         });
+      </script>
+   })
+})

@@ -336,5 +336,15 @@ $(() ->
       # 发送消息
       sendMessage()
     )
+
+    $('#btnImg').on('click', ->
+      # 弹出表情选择层
+      d = dialog({
+        align: 'top',
+        content: '<table><tr><td><img src="/images/gif/1.gif" style="width:30px;height:30px;" /></td></tr></table>',
+        quickClose: true
+      });
+      d.show(document.getElementById('btnImg'));
+    )
   )
 )
