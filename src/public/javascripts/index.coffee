@@ -36,6 +36,8 @@ $(() ->
   socket = io.connect(this.address)
   # 设置心跳检测时间
   socket.heartbeatTimeout = 20000
+
+
   dateFormat = (n) ->
     ns = '000' + n
     ns.substr(ns.length-2)
@@ -259,9 +261,9 @@ $(() ->
   refreshOnLineUser = ->
     socket.emit('client-refreshOnlineUser')
 
-  setInterval(->
-    refreshOnLineUser()
-  , 5000)
+#  setInterval(->
+#    refreshOnLineUser()
+#  , 5000)
   refreshOnLineUser()
 
   regNotify = (type, username) ->

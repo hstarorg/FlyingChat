@@ -20,13 +20,16 @@ db = null
 
 # 连接数据库
 openDb = (fn) ->
-  db = new sqlite3.Database(appConfig.dbFilePath, sqlite3.OPEN_READWRITE, (err)->
-    if err
-      throw err
-    console.log('Connection db successfully!')
-    # 打开数据库成功之后，执行脚本
+  if db is null
+    db = new sqlite3.Database(appConfig.dbFilePath, sqlite3.OPEN_READWRITE, (err)->
+      if err
+        throw err
+      console.log('Connection db successfully!')
+      # 打开数据库成功之后，执行脚本
+      fn()
+    )
+  else
     fn()
-  )
 
 # 执行无返回值sql语句
 exports.executeSql = (sql, params, fn) ->
@@ -34,7 +37,7 @@ exports.executeSql = (sql, params, fn) ->
   openDb(->
     db.run(sql, params, (err)->
       fn(err)
-      db.close()
+     #db.close()
     )
   )
 # 单行记录，单个值查询
@@ -43,7 +46,7 @@ exports.executeScalar = (sql, params, fn) ->
   openDb(->
     db.get(sql, params, (err, row)->
       fn(err, row)
-      db.close()
+     # db.close()
     )
   )
 
@@ -53,7 +56,7 @@ exports.executeQuery = (sql ,params, fn) ->
   openDb(->
     db.all(sql, params, (err, rows)->
       fn(err, rows)
-      db.close()
+     # db.close()
     )
   )
 
@@ -62,7 +65,7 @@ exports.execSql = (sql, fn) ->
   openDb(->
     db.exec(sql, (err)->
       fn(err)
-      db.close()
+     # db.close()
     )
   )
 

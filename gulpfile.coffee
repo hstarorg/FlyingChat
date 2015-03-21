@@ -119,8 +119,13 @@ gulp.task('watch', ->
   gulp.watch([
     './src/**/*.*'
     '!./src/**/*.coffee'
+    './src/public/**/*.*'
   ], ['reload-client'])
-  gulp.watch('./src/**/*.coffee', ['reload-server'])
+
+  gulp.watch([
+    './src/**/*.coffee'
+    '!./src/public/**/*.*'
+  ], ['reload-server'])
 )
 
 gulp.task('reload-client', (callback) ->

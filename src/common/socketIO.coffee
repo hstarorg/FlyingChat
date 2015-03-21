@@ -8,13 +8,6 @@ module.exports = {
 #        callback(null, true)
 #      )
 #    )
-
-    # 使用session
-#    io.set('authorization', (handshakeData, accept) ->
-#      if handshakeData.headers.cookie
-#        handshakeData.cookie = cookie.parse()
-#    )
-
     getUserNum = ->
       num = 0
       for p of usernames
