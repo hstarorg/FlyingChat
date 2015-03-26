@@ -79,7 +79,13 @@
       </div>
     </div>
     <input type="hidden" value=@model.nick id="username">
-    <div id="div_"></div>
+    <div id="div_emoticons" style="display: none;">
+      <div style="width: 400px;">
+        @for(var i = 0; i < 135; i++){
+          <span><img src="images/emoticons/@(i).gif" /></span>
+        }
+      </div>
+    </div>
   })
   @html.block('footer', function(){
     <script src="/socket.io/socket.io.js"></script>

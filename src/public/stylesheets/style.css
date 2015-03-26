@@ -235,3 +235,11 @@ ul {
   padding:5px 10px;
   word-break: break-all;
 }
+
+/*表情包，样式*/
+#div_emoticons span{
+  cursor: pointer;
+}
+#div_emoticons span:hover{
+  border: 1px solid gray;
+}
