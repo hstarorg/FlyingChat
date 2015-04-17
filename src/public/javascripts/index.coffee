@@ -23,7 +23,6 @@ $(() ->
   $messages = $('.chat-content'); # Messages area
   $inputMessage = $('.inputMessage'); # Input message input box
 
-
   # Prompt for setting a username
   username = $('#username').val()
   connected = false
