@@ -2,7 +2,6 @@ dbKit = require('./dbKit')
 
 module.exports = {
   initSocketIO: (io) ->
-
 #    io.configure( ->
 #      io.set('authorization', (handshakeData, callback) ->
 #        callback(null, true)
