@@ -34,11 +34,12 @@
     <div class="container chat-body">
       <div class="row">
         <div class="col-xs-9">
-          <div class="panel panel-danger">
+          <div class="panel panel-danger" style="margin-bottom: 0px;">
             <div class="panel-heading">Chat room</div>
             <div class="panel-body chat-content">
             </div>
           </div>
+          <div id="input_tip" class="label-default text-info">aafdsfsd</div>
           <div class="panel panel-danger">
             <div class="panel-body">
               <div class="input-group">
@@ -79,13 +80,6 @@
       </div>
     </div>
     <input type="hidden" value=@model.nick id="username">
-    <div id="div_emoticons" style="display: none;">
-      <div style="width: 400px;">
-        @for(var i = 0; i < 135; i++){
-          <span><img src="images/emoticons/@(i).gif" /></span>
-        }
-      </div>
-    </div>
   })
   @html.block('footer', function(){
     <script src="/socket.io/socket.io.js"></script>

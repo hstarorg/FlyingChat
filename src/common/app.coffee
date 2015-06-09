@@ -5,10 +5,11 @@ morganLogger = require('morgan')
 cookieParser = require('cookie-parser')
 bodyParser = require('body-parser')
 session = require('express-session')
+# Log
 log4js = require('log4js')
 log4js.configure(path.join(__dirname, '../config/log4jsConfig.json'), {
       reloadSecs: 60
-      cwd: path.join(__dirname, '../../src/')
+      cwd: path.join(__dirname, '../')
   }
 )
 logger = log4js.getLogger()
@@ -23,6 +24,7 @@ app.set('view engine', 'vash')
 # uncomment after placing your favicon in /public
 # app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(morganLogger('dev'))
+app.use(log4js.connectLogger(logger, {level: log4js.levels.INFO}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(session({
@@ -50,6 +52,7 @@ app.use((req, res, next) ->
 if app.get('env') is 'development'
     app.use((err, req, res, next) ->
         res.status(err.status || 500)
+        logger.warn(err.message)
         res.render('error', {
             message: err.message + ' --Debug!!!'
             error: err
@@ -66,7 +69,6 @@ app.use((err, req, res, next) ->
     })
 )
 process.on('uncaughtException', (err) ->
-    console.log(err.message)
     logger.error(err.message)
 )
 

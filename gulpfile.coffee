@@ -19,7 +19,7 @@ isDebug = not (argv.r || false)
 gulp.task('default', (callback)->
   runSequence(
     ['clean']
-    ['coffee-server', 'copy-server', 'copy-client', 'coffee-client', 'copy-views']
+    ['coffee-server', 'copy-server', 'copy-client', 'coffee-client', 'copy-views', 'copy_log_folder']
     'serve'
     ['browserSync', 'watch']
     callback
@@ -28,6 +28,12 @@ gulp.task('default', (callback)->
 # --构建相关任务---------------------------------------
 gulp.task('clean', (callback)->
   del(['./dist/'], callback)
+)
+
+# 创建log文件夹
+gulp.task('copy_log_folder', ->
+  gulp.src('./src/logs*/*.*')
+  .pipe(gulp.dest('./dist/'))
 )
 
 gulp.task('coffee-server', ->
