@@ -8,9 +8,7 @@ nodemon = require('gulp-nodemon')
 argv = require('yargs').argv
 rename = require('gulp-rename')
 merge = require('gulp-merge')
-imagemin = require('gulp-imagemin')
 browserSync = require('browser-sync')
-reload = browserSync.reload
 
 # 处理参数
 isDebug = not (argv.r || false)
@@ -39,8 +37,7 @@ gulp.task('copy_log_folder', ->
 gulp.task('coffee-server', ->
   gulp.src([
     './src/**/*.coffee'
-    '!./src/public/**/*.coffee'
-    '!./src/views/**'
+    '!./src/assets/**/*.coffee'
   ])
   .pipe(coffee({bare: true}).on('error', gutil.log))
   .pipe(gulp.dest('./dist/'))
@@ -56,15 +53,15 @@ gulp.task('copy-server', ->
 
 gulp.task('copy-client', ->
   gulp.src([
-    './src/public*/**/*'
-    '!./src/public*/**/*.coffee'
+    './src/assets*/**/*'
+    '!./src/assets*/**/*.coffee'
   ])
   .pipe(gulp.dest('./dist/'))
 )
 
 gulp.task('coffee-client', ->
   gulp.src([
-    './src/public*/**/*.coffee'
+    './src/assets*/**/*.coffee'
   ])
   .pipe(coffee({bare: true}).on('error', gutil.log))
   .pipe(gulp.dest('./dist/'))
@@ -74,14 +71,6 @@ gulp.task('copy-views', ->
   gulp.src('./src/views/**/*.html')
   .pipe(rename({extname: '.vash'}))
   .pipe(gulp.dest('./dist/views'))
-)
-
-gulp.task('imagemin', ->
-  gulpStream = gulp.src('./src/public/images/*.jpg')
-  if not isDebug
-    gulpStream.pipe(imagemin({progressive: true}))
-  gulpStream.pipe(gulp.dest('./dist/public/images/'))
-  gulpStream
 )
 
 # --启动程序,打开浏览器任务----------------------------------------------------
@@ -125,12 +114,12 @@ gulp.task('watch', ->
   gulp.watch([
     './src/**/*.*'
     '!./src/**/*.coffee'
-    './src/public/**/*.*'
+    './src/assets/**/*.*'
   ], ['reload-client'])
 
   gulp.watch([
     './src/**/*.coffee'
-    '!./src/public/**/*.*'
+    '!./src/assets/**/*.*'
   ], ['reload-server'])
 )
 

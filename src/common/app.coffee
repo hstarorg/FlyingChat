@@ -33,7 +33,7 @@ app.use(session({
     secret: 'jay.m.hu, very secret'
 }))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, '../public')))
+app.use(express.static(path.join(__dirname, '../assets')))
 
 # register routes
 routeConfig.registerRoutes(app)

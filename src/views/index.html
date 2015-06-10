@@ -1,7 +1,6 @@
 @html.extend('layout', function(model){
   @html.block('header', function(){
-    <link rel="stylesheet" href="/stylesheets/ui-dialog.css" />
-    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
   })
   @html.block('content', function(){
     <audio src="/audios/notice.wav" id="notice">
@@ -39,7 +38,7 @@
             <div class="panel-body chat-content">
             </div>
           </div>
-          <div id="input_tip" class="label-default text-info">aafdsfsd</div>
+          <!--<div id="input_tip" class="label-default text-info">aafdsfsd</div>-->
           <div class="panel panel-danger">
             <div class="panel-body">
               <div class="input-group">
@@ -83,12 +82,11 @@
   })
   @html.block('footer', function(){
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/vendor/plugins/browser-tab-status.js"></script>
-    <script src="/vendor/plugins/browser-tab-close.js"></script>
-    <script src="/vendor/plugins/mousetrap.min.js"></script>
-    <script src="/vendor/plugins/mousetrap-global-bind.min.js"></script>
-    <script src="/vendor/plugins/dialog-min.js"></script>
-    <script src="/vendor/plugins/jquery.backstretch.min.js"></script>
+    <script src="/plugins/browser-tab-status.js"></script>
+    <script src="/plugins/browser-tab-close.js"></script>
+    <script src="/plugins/mousetrap.min.js"></script>
+    <script src="/plugins/mousetrap-global-bind.min.js"></script>
+    <script src="/plugins/jquery.backstretch.min.js"></script>
     <script>
       $.backstretch([
         '/images/bg00.jpg'
@@ -97,6 +95,6 @@
         duration: 5000
       });
     </script>
-    <script src="/javascripts/index.js"></script>
+    <script src="/js/index.js"></script>
   })
 })
