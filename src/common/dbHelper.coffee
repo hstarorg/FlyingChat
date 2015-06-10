@@ -15,13 +15,13 @@
   });
 ###
 sqlite3 = require('sqlite3').verbose()
-appConfig = require('./../config/appConfig')
+config = require('./../config')
 db = null
 
 # 连接数据库
 openDb = (fn) ->
   if db is null
-    db = new sqlite3.Database(appConfig.dbFilePath, sqlite3.OPEN_READWRITE, (err)->
+    db = new sqlite3.Database(config.dbFilePath, sqlite3.OPEN_READWRITE, (err)->
       if err
         throw err
       console.log('Connection db successfully!')
@@ -32,7 +32,7 @@ openDb = (fn) ->
     fn()
 
 # 执行无返回值sql语句
-exports.executeSql = (sql, params, fn) ->
+executeSql = (sql, params, fn) ->
   params = params || []
   openDb(->
     db.run(sql, params, (err)->
@@ -41,7 +41,7 @@ exports.executeSql = (sql, params, fn) ->
     )
   )
 # 单行记录，单个值查询
-exports.executeScalar = (sql, params, fn) ->
+executeScalar = (sql, params, fn) ->
   params = params || []
   openDb(->
     db.get(sql, params, (err, row)->
@@ -51,7 +51,7 @@ exports.executeScalar = (sql, params, fn) ->
   )
 
 # 执行结果集查询，返回结果数组
-exports.executeQuery = (sql ,params, fn) ->
+executeQuery = (sql ,params, fn) ->
   params = params || []
   openDb(->
     db.all(sql, params, (err, rows)->
@@ -61,11 +61,19 @@ exports.executeQuery = (sql ,params, fn) ->
   )
 
 # 执行SQL命令，无参数
-exports.execSql = (sql, fn) ->
+execSql = (sql, fn) ->
   openDb(->
     db.exec(sql, (err)->
       fn(err)
      # db.close()
     )
   )
+
+# 导出
+module.exports = {
+  executeSql: executeSql
+  executeScalar: executeScalar
+  executeQuery: executeQuery
+  execSql: execSql
+}
 
