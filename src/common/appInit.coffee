@@ -5,16 +5,13 @@ favicon = require('serve-favicon')
 cookieParser = require('cookie-parser')
 bodyParser = require('body-parser')
 session = require('express-session')
-memoryStore = require('./memoryStore')
-log4js = require('log4js')
 
+memoryStore = require('./memoryStore')
+logFactory = require('./../lib/logFactory')
 routeConfig = require('./../routes/routeConfig')
 config = require('./../config')
 
-log4js.configure(config.log4jsConfig, {
-  cwd: path.join(__dirname, '../')
-})
-errorLogger = log4js.getLogger('errorLogger')
+errorLogger = logFactory.errLogger
 
 # 初始化app
 setViewEngine = (app) ->
@@ -23,7 +20,6 @@ setViewEngine = (app) ->
   app.set('env', config.env)
 
 setMiddleware = (app) ->
-  app.use(log4js.connectLogger(log4js.getLogger('normalLogger'), {level: log4js.levels.INFO}))
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(session({
