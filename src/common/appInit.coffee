@@ -12,7 +12,6 @@ routeConfig = require('./../routes/routeConfig')
 config = require('./../config')
 
 errorLogger = logFactory.errLogger
-
 # 初始化app
 setViewEngine = (app) ->
   app.set('views', path.join(__dirname, '../views'))
@@ -35,7 +34,7 @@ setMiddleware = (app) ->
 setErrorHandle = (app) ->
   # 404 Error
   app.use((req, res, next) ->
-    err = new Error('Page not found.')
+    err = new Error('Page not found.' + req.url)
     err.status = 404
     next(err)
   )
