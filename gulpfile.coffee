@@ -1,3 +1,9 @@
+###
+  当前使用npm run gulp来启动。
+  如果要直接执行gulp命令，那么就必须要新建一个gulpfile.js,并输入以下内容：
+  require('coffee-script/register');
+  require('./gulpfile.coffee');
+###
 gulp = require('gulp')
 runSequence = require('run-sequence')
 
