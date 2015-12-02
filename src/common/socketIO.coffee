@@ -1,4 +1,4 @@
-dbKit = require('./dbKit')
+dbKit = require('./dbHelper')
 
 module.exports = {
   initSocketIO: (io) ->

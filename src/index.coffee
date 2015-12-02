@@ -1,15 +1,18 @@
-#!/usr/bin/env node
-app = require('./common/app')
-appConfig = require('./config/appConfig')
-socketIO = require('./common/socketIO')
-
+#! Define
+app = require('express')()
 http = require('http').Server(app)
-
-# 初始化Socket.io
 io = require('socket.io')(http)
-socketIO.initSocketIO(io)
+
+config = require('./config')
+appInit = require('./common/appInit')
+socketIOInit = require('./common/socketIO')
+
+#! Init
+appInit.init(app)
+socketIOInit.initSocketIO(io)
 
 # 启动服务器
-server = http.listen(appConfig.port, () ->
-  console.log('Express server listening on port ' + server.address().port)
+server = http.listen(config.port, ->
+  console.log('Express server listening on port ' + server.address().port + '...')
+  console.log('FlyingChat start successfully.')
 )

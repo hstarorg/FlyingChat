@@ -78,4 +78,6 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+
+# HBuilder project file
 *.project

@@ -1,16 +1,16 @@
-dbKit = require('./../common/dbKit')
+dbHelper = require('./../common/dbHelper')
 
-exports.login = (req, res, next) ->
+getLogin = (req, res, next) ->
   model = {
     title: 'FlyingChat -- Login'
     pretty: true
   }
   res.render('user/login', model)
-# 登录控制
-exports.postLogin = (req, res, next) ->
+
+postLogin = (req, res, next) ->
   username = req.body.account
   password = req.body.password
-  dbKit.executeScalar('SELECT * FROM User  WHERE LoginName=? AND LoginPassword=?',[
+  dbHelper.executeScalar('SELECT * FROM User  WHERE LoginName=? AND LoginPassword=?',[
       username, password], (err, row) ->
     if err
       next(err)
@@ -23,7 +23,7 @@ exports.postLogin = (req, res, next) ->
           errmsg: 'Invalid account or password!'
         }
         res.render('user/login', model)
-      # 登录成功！
+        # 登录成功！
       else
         req.session.user_id = row.UserId
         req.session.user = {
@@ -32,3 +32,10 @@ exports.postLogin = (req, res, next) ->
         }
         res.redirect('/')
   )
+
+# 导出
+module.exports = {
+  login: getLogin
+  postLogin: postLogin
+}
+

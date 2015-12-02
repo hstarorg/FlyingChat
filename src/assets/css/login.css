@@ -1,0 +1,18 @@
+.bg-div{
+    background-color: #b2dba1;
+    background-image: url(../images/bg1.jpg);
+    position: fixed;
+    left:0;
+    right: 0;
+    top:0;
+    bottom: 0;
+}
+.login-container{
+    max-width: 350px;
+    min-width: 150px;
+    margin:0 auto;
+    margin-top:10%;
+}
+.login-container .input-group{
+    margin-bottom: 10px;
+}

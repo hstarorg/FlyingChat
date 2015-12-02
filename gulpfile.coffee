@@ -1,3 +1,9 @@
+###
+  当前使用npm run gulp来启动。
+  如果要直接执行gulp命令，那么就必须要新建一个gulpfile.js,并输入以下内容：
+  require('coffee-script/register');
+  require('./gulpfile.coffee');
+###
 gulp = require('gulp')
 runSequence = require('run-sequence')
 
@@ -8,9 +14,7 @@ nodemon = require('gulp-nodemon')
 argv = require('yargs').argv
 rename = require('gulp-rename')
 merge = require('gulp-merge')
-imagemin = require('gulp-imagemin')
 browserSync = require('browser-sync')
-reload = browserSync.reload
 
 # 处理参数
 isDebug = not (argv.r || false)
@@ -19,7 +23,7 @@ isDebug = not (argv.r || false)
 gulp.task('default', (callback)->
   runSequence(
     ['clean']
-    ['coffee-server', 'copy-server', 'copy-client', 'coffee-client', 'copy-views']
+    ['coffee-server', 'copy-server', 'copy-client', 'coffee-client', 'copy-views', 'copy_log_folder']
     'serve'
     ['browserSync', 'watch']
     callback
@@ -30,11 +34,16 @@ gulp.task('clean', (callback)->
   del(['./dist/'], callback)
 )
 
+# 创建log文件夹
+gulp.task('copy_log_folder', ->
+  gulp.src('./src/logs*/*.*')
+  .pipe(gulp.dest('./dist/'))
+)
+
 gulp.task('coffee-server', ->
   gulp.src([
     './src/**/*.coffee'
-    '!./src/public/**/*.coffee'
-    '!./src/views/**'
+    '!./src/assets/**/*.coffee'
   ])
   .pipe(coffee({bare: true}).on('error', gutil.log))
   .pipe(gulp.dest('./dist/'))
@@ -50,15 +59,15 @@ gulp.task('copy-server', ->
 
 gulp.task('copy-client', ->
   gulp.src([
-    './src/public*/**/*'
-    '!./src/public*/**/*.coffee'
+    './src/assets*/**/*'
+    '!./src/assets*/**/*.coffee'
   ])
   .pipe(gulp.dest('./dist/'))
 )
 
 gulp.task('coffee-client', ->
   gulp.src([
-    './src/public*/**/*.coffee'
+    './src/assets*/**/*.coffee'
   ])
   .pipe(coffee({bare: true}).on('error', gutil.log))
   .pipe(gulp.dest('./dist/'))
@@ -68,14 +77,6 @@ gulp.task('copy-views', ->
   gulp.src('./src/views/**/*.html')
   .pipe(rename({extname: '.vash'}))
   .pipe(gulp.dest('./dist/views'))
-)
-
-gulp.task('imagemin', ->
-  gulpStream = gulp.src('./src/public/images/*.jpg')
-  if not isDebug
-    gulpStream.pipe(imagemin({progressive: true}))
-  gulpStream.pipe(gulp.dest('./dist/public/images/'))
-  gulpStream
 )
 
 # --启动程序,打开浏览器任务----------------------------------------------------
@@ -119,12 +120,12 @@ gulp.task('watch', ->
   gulp.watch([
     './src/**/*.*'
     '!./src/**/*.coffee'
-    './src/public/**/*.*'
+    './src/assets/**/*.*'
   ], ['reload-client'])
 
   gulp.watch([
     './src/**/*.coffee'
-    '!./src/public/**/*.*'
+    '!./src/assets/**/*.*'
   ], ['reload-server'])
 )
 
