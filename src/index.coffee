@@ -5,11 +5,11 @@ io = require('socket.io')(http)
 
 config = require('./config')
 appInit = require('./common/appInit')
-socketIOInit = require('./common/socketIO')
+socketIO = require('./common/socketIO')
 
 #! Init
 appInit.init(app)
-socketIOInit.initSocketIO(io)
+socketIO.initSocketIO(io)
 
 # 启动服务器
 server = http.listen(config.port, ->

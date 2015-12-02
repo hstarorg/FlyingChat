@@ -7,11 +7,10 @@ bodyParser = require('body-parser')
 session = require('express-session')
 
 memoryStore = require('./memoryStore')
-logFactory = require('./../lib/logFactory')
+logger = require('./logger')
 routeConfig = require('./../routes/routeConfig')
 config = require('./../config')
 
-errorLogger = logFactory.errLogger
 # 初始化app
 setViewEngine = (app) ->
   app.set('views', path.join(__dirname, '../views'))
@@ -42,7 +41,7 @@ setErrorHandle = (app) ->
   isPrd = app.get('env') is 'prd'
   app.use((err, req, res, next) ->
     res.status(err.status || 500)
-    errorLogger.info(err.message)
+    logger.info(err.message)
     res.render('error', {
       isPrd: isPrd
       message: err.message
@@ -52,7 +51,7 @@ setErrorHandle = (app) ->
 
   # 处理进程异常
   process.on('uncaughtException', (err) ->
-    errorLogger.error(err.message)
+    logger.error(err.message)
   )
 
 # 导出模块

@@ -24,7 +24,7 @@ gulp.task('default', (callback)->
   runSequence(
     ['clean']
     ['coffee-server', 'copy-server', 'copy-client', 'coffee-client', 'copy-views', 'copy_log_folder']
-    'serve'
+    ['serve']
     ['browserSync', 'watch']
     callback
   )
@@ -51,7 +51,6 @@ gulp.task('coffee-server', ->
 
 gulp.task('copy-server', ->
   gulp.src([
-    './src/config*/*.json'
     './src/database*/*.*'
   ])
   .pipe(gulp.dest('./dist/'))
@@ -109,6 +108,7 @@ gulp.task('browserSync', ->
   #files: ['./src/public/**/*']
     open: true
     notify: true
+    ghostMode: false
     reloadDelay: 500 # 延迟刷新
   })
 )

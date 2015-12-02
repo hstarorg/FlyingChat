@@ -21,7 +21,7 @@ db = null
 # 连接数据库
 openDb = (fn) ->
   if db is null
-    db = new sqlite3.Database(config.dbFilePath, sqlite3.OPEN_READWRITE, (err)->
+    db = new sqlite3.Database(config.dbFilePath + 'FlyingChat.db', sqlite3.OPEN_READWRITE, (err)->
       if err
         throw err
       console.log('Connection db successfully!')

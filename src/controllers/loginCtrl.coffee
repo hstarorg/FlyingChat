@@ -1,4 +1,4 @@
-dbHelper = require('./../common/dbHelper')
+db = require('./../common/db')
 
 getLogin = (req, res, next) ->
   model = {
@@ -10,12 +10,14 @@ getLogin = (req, res, next) ->
 postLogin = (req, res, next) ->
   username = req.body.account
   password = req.body.password
-  dbHelper.executeScalar('SELECT * FROM User  WHERE LoginName=? AND LoginPassword=?',[
-      username, password], (err, row) ->
-    if err
-      next(err)
-    else
-      if row is undefined
+  db.users.findOne({
+      LoginName: username,
+      LoginPassword: password
+    }, (err, user) ->
+      if err
+        next(err)
+        return
+      if user is undefined
         model = {
           loginName: username
           title: 'FlyingChat -- Login'
@@ -23,13 +25,13 @@ postLogin = (req, res, next) ->
           errmsg: 'Invalid account or password!'
         }
         res.render('user/login', model)
-        # 登录成功！
       else
-        req.session.user_id = row.UserId
+        req.session.user_id = user.UserId
         req.session.user = {
-          LoginName: row.LoginName
-          UserNick: row.UserNick
+          LoginName: user.LoginName
+          UserNick: user.UserNick
         }
+        console.log(req.session)
         res.redirect('/')
   )
 

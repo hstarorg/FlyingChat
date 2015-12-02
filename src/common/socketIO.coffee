@@ -1,4 +1,4 @@
-dbKit = require('./dbHelper')
+db = require('./db')
 
 module.exports = {
   initSocketIO: (io) ->
@@ -18,14 +18,14 @@ module.exports = {
       addedUser = false
       # when the client emits 'new message', this listens and executes
       socket.on('new message', (data) ->
-        # 想消息存入数据库
-        dbKit.executeSql('INSERT INTO [ChatMessage]([UserId],[UserNick],[MsgContent],[CreationDate]) VALUES(?,?,?,?)', [
-            0
-            socket.username
-            data
-            (new Date()).valueOf()
-          ], (err)->
-          console.log(err) if err
+        # 将消息存入数据库
+        db.messages.insert({
+            UserId: 0
+            UserNick: socket.username
+            MsgContent: data
+            CreationDate: (new Date()).valueOf()
+          }, (err, newDoc) ->
+            console.log(err) if err
         )
         # we tell the client to execute 'new message'
         socket.broadcast.emit('new message', {
@@ -47,7 +47,7 @@ module.exports = {
         hasUser = false
         if usernames[username]
           for userSocket in io.sockets.sockets
-            if userSocket.username is username
+            if userSocket? and userSocket.username is username
               # 踢下线
               hasUser = true
               userSocket.emit('forced logout')
