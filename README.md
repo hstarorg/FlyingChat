@@ -1,5 +1,4 @@
 FlyingChat
 ==========
 
-FlyingChatÊÇÒ»¸ö»ùÓÚSocket.ioÊµÏÖµÄ¶àÈËÁÄÌìÊÒ,ºóÆÚÖ§³ÖPCºÍÒÆ¶¯¶Ë¡£
-
+FlyingChatæ˜¯åŸºäºWebSocketçš„WEBèŠå¤©å·¥å…·ï¼Œæ”¯æŒç§èŠå’Œç¾¤èŠã€‚
