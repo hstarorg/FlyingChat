@@ -1,18 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <!-- Required meta tags always come first -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
   <title>FlyingChat - enjoy the chat.</title>
+  <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/login.css">
 </head>
+
 <body>
-  <div class="container">
-    <form class="form-h">
-      <div class="form-group">
-        <inpit type="text" class="form-control">
+  <div class="container ">
+    <div class="row login-container">
+      <div class="col-xs-12 col-md-6 col-md-offset-3 text-center login-header">
+        <img src="/images/bg0.jpg" alt="">
       </div>
-    </form>
+      <div class="col-xs-12 col-md-6 col-md-offset-3">
+        <form class="login-body">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-user"></i>
+              </div>
+              <input type="text" class="form-control" placeholder="user name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-lock"></i>
+              </div>
+              <input type="password" class="form-control" placeholder="password" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="has-success">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"> Remember user name
+                </label>
+              </div>
+            </div>
+            <a href="#">Forgot password</a>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success-outline btn-block">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+  <script src="/assets/jquery/jquery.js"></script>
   <script src="/assets/bootstrap/js/bootstrap.js"></script>
 </body>
+
 </html>
