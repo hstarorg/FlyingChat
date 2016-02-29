@@ -82,3 +82,4 @@ $RECYCLE.BIN/
 # HBuilder project file
 *.project
 typings/
+bower_components/

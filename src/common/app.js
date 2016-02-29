@@ -10,7 +10,7 @@ var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, './../web/')));
+app.use(express.static(path.join(__dirname, './../client/')));
 
 //404
 app.use((req, res, next) => {
