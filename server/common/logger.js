@@ -1,10 +1,9 @@
 'use strict';
 
-var path = require('path')
-var fs = require('fs')
-var winston = require('winston')
-
-var config = require('./../config')
+var path = require('path');
+var fs = require('fs');
+var winston = require('winston');
+var config = require('./../config');
 
 if (!fs.existsSync(config.logFilePath)) {
   fs.mkdirSync(config.logFilePath);
