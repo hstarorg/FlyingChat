@@ -9,7 +9,7 @@ nickName string
 password string 
 photoUrl string
 createdTime date
-isDisabled bool  --逻辑删除
+isEnable bool  --逻辑删除
 ```
 ### 讨论组（群聊）实体
 ```javascript

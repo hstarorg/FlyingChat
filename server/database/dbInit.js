@@ -9,23 +9,13 @@ db.users.loadDatabase();
 
 // User list
 var users = [{
-  UserId: 1,
-  LoginName: 'humin',
-  LoginPassword: 'jay',
-  UserNick: '神仙哥哥',
-  CreationDate: new Date().valueOf(),
-  CreationUser: 1,
-  ModifiedDate: new Date().valueOf(),
-  ModifiedUser: 1
-}, {
-  UserId: 2,
-  LoginName: 'fei',
-  LoginPassword: 'fei',
-  UserNick: '神仙姐姐',
-  CreationDate: new Date().valueOf(),
-  CreationUser: 1,
-  ModifiedDate: new Date().valueOf(),
-  ModifiedUser: 1
+  userId: 1,
+  userName: 'humin',
+  password: 'jay',
+  nickName: '神仙哥哥',
+  photoUrl: '',
+  createdTime: Date.now(),
+  isEnable: true,
 }];
 db.users.insert(users, (err, newDocs) => {
   if (err) {

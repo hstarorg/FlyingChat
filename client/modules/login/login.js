@@ -13,8 +13,16 @@
       console.log(self.user);
       self.$http.post(`${FC.apiHost}/login`, self.user)
         .then(res => {
-          self.$rootScope.isLogged = true;
-          self.$state.go('main');
+          if (res.data === true) {
+            var token = res.headers('x-token');
+            FC.token = token;
+            self.$rootScope.isLogged = true;
+            self.$state.go('main');
+          } else {
+            alert(res.data.message);
+          }
+        }, res => {
+          alert(res.data.message)
         });
     }
   }
