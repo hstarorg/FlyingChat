@@ -3,18 +3,39 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
   <title>FlyingChat - 朋友无处不在~</title>
-
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/angular/angular-csp.css">
+  <link rel="stylesheet" href="modules/login/login.css">
+  <link rel="stylesheet" href="modules/main/main.css">
 </head>
 
 <body>
-  <div ms-controller="flyingchat-app" ms-src="{{@path}}">
-    <div ms-src="@path"></div>
-    {{@path}}
+  <div ui-view>
   </div>
-  <script src="assets/avalon2/avalon.js"></script>
-  <script src="js/index.js"></script>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="assets/layer/layer.js"></script>
+  <script src="assets/jquery.backstretch/jquery.backstretch.js"></script>
+  <script src="assets/jquery.nicescroll/jquery.nicescroll.js"></script>
+
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="core/config.js"></script>
+  <script src="modules/app.js"></script>
+  <script src="modules/login/login.js"></script>
+  <script src="modules/main/main.js"></script>
+  <script src="modules/main/chat.js"></script>
+  <script src="core/bootstrap.js"></script>
+  <script>
+    var imgs =  ['http://pic.4j4j.cn/upload/pic/20121122/6bdb4205f2.jpg', 
+     'http://www.xiaoxiongbizhi.com/wallpapers/1920_1200_85/3/p/3pe10v2jbv.jpg',
+     'http://image.tianjimedia.com/uploadImages/2012/191/315V22A8QZ90.jpg'];
+     $.backstretch(imgs, {duration: 10000});
+  </script>
 </body>
 
 </html>

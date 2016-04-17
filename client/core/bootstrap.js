@@ -1,0 +1,1 @@
+angular.bootstrap(document, ['flayingchat-app'], {strictDi: true});

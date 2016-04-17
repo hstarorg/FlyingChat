@@ -1,0 +1,77 @@
+<div class="main-page">
+  <div class="app-navbar app-navbar-right">
+    <div class="user-info" style="height:150px;">
+      AAA
+    </div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs nav-justified" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+          <i class="fa fa-user"></i> Contact
+        </a>
+      </li>
+      <li role="presentation">
+        <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+          <i class="fa fa-group"></i> Group
+        </a>
+      </li>
+      <li role="presentation">
+        <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">
+          <i class="fa fa-cogs"></i> Settings
+        </a>
+      </li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="home">
+        <div class="contact-panel" ng-repeat="user in main.users" ng-click="main.openChat(user.id)">
+          <div class="contact-photo">
+            <img src="" alt="">
+          </div>
+          <div class="contact-info">
+            <span class="contact-name">{{user.nickName}}</span>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane fade in" id="profile">.fdfds..</div>
+      <div role="tabpanel" class="tab-pane" id="messages">.dfsafd..</div>
+      <div role="tabpanel" class="tab-pane" id="settings">.fdsfsdaaaaaaaaaaaaaaaaa..</div>
+    </div>
+  </div>
+</div>
+<script type="text/ng-template" id="chat-template">
+  <div class="chat-page" ng-controller="ChatCtrl as chat" ng-init="chat.userId = userId; chat.layerId = layerId;">
+    <div class="chat-container">
+      {{chat.userId}} AAA {{chat.layerId}}
+      fdfds <br> fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds
+      <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds
+      <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>fdfds <br>
+    </div>
+    <div class="chat-toolbar">
+      <div class="chat-toolbar-icons">
+        <a href="">
+          <i class="fa fa-lock"></i>
+        </a>
+      </div>
+      <div class="chat-toolbar-input">
+        <textarea class="form-control" rows="3" style="resize:none"
+         ng-model="chat.message" ng-keydown="chat.onTextareaKeydown($event);"></textarea>
+      </div>
+      <div class="chat-toolbar-btn pull-right">
+        <button class="btn btn-default btn-sm" ng-click="chat.closeChat();">Close</button>
+        <div class="btn-group dropup btn-group-sm">
+          <button type="button" class="btn btn-danger" ng-click="chat.sendMessage();">Send <i class="fa fa-send"></i></button>
+          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+          <ul class="dropdown-menu">
+            <li ng-class="{active: chat.sendType === 'enter'}" ng-click="chat.changeSendType('enter')"><a href="#">Enter</a></li>
+            <li ng-class="{active: chat.sendType === 'ctrl&enter'}" ng-click="chat.changeSendType('ctrl&enter')"><a href="#">Ctrl + Enter</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</script>

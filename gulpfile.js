@@ -47,7 +47,7 @@ gulp.task('client.serve', done => {
 });
 
 gulp.task('client.watch', (done) => {
-  gulp.watch('client/index.html', gulp.series('client.copy'));
+  gulp.watch('client/**/*', gulp.series('client.copy'));
   done();
 });
 
