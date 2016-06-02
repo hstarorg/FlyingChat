@@ -1,11 +1,10 @@
 {
-  "name": "FlyingChat",
+  "name": "flyingchat",
   "version": "0.5.0",
   "description": "Online chat system",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/startup",
-    "gulp": "gulp --require coffee-script/register"
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
@@ -22,22 +21,16 @@
   },
   "homepage": "https://github.com/hstarorg/FlyingChat",
   "dependencies": {
-    "body-parser": "~1.14.2",
-    "connect-history-api-fallback": "^1.2.0",
+    "body-parser": "^1.15.1",
     "express": "^4.13.4",
-    "morgan": "~1.6.1",
     "nedb": "^1.7.4",
     "node-rsa": "^0.3.2",
     "socket.io": "^1.4.5",
     "winston": "^2.2.0"
   },
   "devDependencies": {
-    "browser-sync": "^2.11.1",
-    "del": "^2.2.0",
     "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-concat": "^2.6.0",
     "gulp-develop-server": "^0.5.1",
-    "gulp-notify": "^2.2.0",
-    "yargs": "^3.32.0"
+    "gulp-notify": "^2.2.0"
   }
 }
