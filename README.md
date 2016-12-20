@@ -4,11 +4,13 @@ FlyingChat是基于Express和Socket.io搭建的聊天服务Server。
 
 # How to run?
 
-First, you should use ``git clone https://github.com/hstarorg/FlyingChat.git`` to download project.
+```bash
+# Clone the project
+git clone git clone https://github.com/hstarorg/FlyingChat.git
 
-Second, use ``npm i`` initial dependencies.
+# Initial dependencies
+npm i
 
-Three, use ``npm run start`` start the server.
-
-# How to use?
-
+# Run
+npm run dev
+```
