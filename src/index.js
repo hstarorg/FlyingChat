@@ -1,20 +1,51 @@
-'use strict';
+const http = require('http');
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const template = require('art-template-plus');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const passport = require('passport');
 
-let http = require('http');
-let path = require('path');
+const logger = require('./common/logger');
+const config = require('./config');
+const auth = require('./common/auth');
+const ioBiz = require('./bizs/ioBiz');
 
-let express = require('express');
-let bodyParser = require('body-parser');
+template.config('base', '');
+template.config('extname', '.html');
+template.config('escape', true);
 
-let logger = require('./common/logger');
-let config = require('./config');
-let ioBiz = require('./bizs/ioBiz');
+const app = express();
+app.disable('x-powered-by');
 
-let app = express();
-app.use(bodyParser.json());
+// config view engine
+app.engine('html', template.__express);
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'html');
+
+// Load middlewares
+app.use(morgan('dev'));
+app.use(helmet());
+app.use(bodyParser.json({ limit: '2mb' }));
 app.use(bodyParser.urlencoded({ extended: false }));
-// 配置路由
-let apiRouter = require('./routes/api');
+app.use(cookieParser());
+app.use(session({
+  secret: config.sessionSecret,
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+auth.init(passport);
+// config routes
+const apiRouter = require('./routes/api');
+const appRouter = require('./routes/app');
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/', appRouter);
 app.use('/api/v1', apiRouter);
 
 // Error 404
@@ -38,7 +69,7 @@ let io = require('socket.io')(httpServer);
 ioBiz.init(io);
 
 // 启动服务器
-let serverInstance = httpServer.listen(config.port, _ => {
-  logger.info('Express server listening on port ' + serverInstance.address().port + '...');
+let server = httpServer.listen(config.port, _ => {
+  logger.info('Express server listening on port ' + server.address().port + '...');
   logger.info('FlyingChat start successfully.');
 });

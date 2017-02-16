@@ -1,7 +1,5 @@
-'use strict';
-
-var db = require('./../common/db');
-var cryptoHelper = require('./../common/cryptoHelper');
+const db = require('./../common/db');
+const util = require('./../common/util');
 
 var doLogin = (req, res, next) => {
   var user = req.body;
@@ -17,7 +15,7 @@ var doLogin = (req, res, next) => {
     }
     //写入token和过期时间
     var expirationTime = Date.now() + 1000 * 60 * 60 * 12; //12小时后过期
-    var token = cryptoHelper.rsaPrivateEncrypt(`${user.userName}_${expirationTime}`);
+    var token = util.rsaPrivateEncrypt(`${user.userName}_${expirationTime}`);
     db.users.update({ _id: user._id }, { $set: { token: token, expirationTime: expirationTime } }, {}, (err, numReplaced) => {
       if (err) {
         return next(err);
@@ -29,5 +27,5 @@ var doLogin = (req, res, next) => {
 };
 
 module.exports = {
-  doLogin: doLogin
+  doLogin
 };

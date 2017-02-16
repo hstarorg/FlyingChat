@@ -4,7 +4,7 @@
   "description": "Online chat system",
   "main": "index.js",
   "scripts": {
-    "dev": "gulp4"
+    "dev": "gulp4 dev"
   },
   "repository": {
     "type": "git",
@@ -21,17 +21,23 @@
   },
   "homepage": "https://github.com/hstarorg/FlyingChat",
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0",
+    "art-template-plus": "^0.2.0",
+    "body-parser": "^1.16.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.1",
+    "express-session": "^1.15.1",
+    "helmet": "^3.4.0",
     "nedb": "^1.8.0",
     "node-rsa": "^0.4.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "socket.io": "^1.7.2",
-    "winston": "^2.3.0"
+    "winston": "^2.3.1"
   },
   "devDependencies": {
     "gulp-develop-server": "^0.5.2",
     "gulp4": "^4.0.1",
     "notifier": "^0.1.7",
-    "shelljs": "^0.7.5"
+    "shelljs": "^0.7.6"
   }
 }

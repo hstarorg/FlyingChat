@@ -1,15 +1,13 @@
-'use strict';
-
-var path = require('path');
-var fs = require('fs');
-var winston = require('winston');
-var config = require('./../config');
+const fs = require('fs');
+const path = require('path');
+const winston = require('winston');
+const config = require('./../config');
 
 if (!fs.existsSync(config.logFilePath)) {
   fs.mkdirSync(config.logFilePath);
 }
 
-var logger = new (winston.Logger)({
+const logger = new (winston.Logger)({
   transports: [
     new winston.transports.File({
       name: 'info-file',
