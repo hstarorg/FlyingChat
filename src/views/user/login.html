@@ -1,12 +1,14 @@
 {{layout '../shared/layout'}}
+<!--分隔符-->
+{{section 'footer'}}
+<script src="static/js/login-page.js"></script>
+{{/section}}
 
-<h1>This is login page</h1>
-<form action="/user/login" method="POST">
+<div class="login-div">
   <input type="text" name="username">
   <br>
   <input type="password" name="password">
   <br>
 
   <button type="submit" class="btn btn-default">Login</button>
-
-</form>
+</div>

@@ -3,11 +3,16 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <base href="/">
+  <title>{{title}} :: Flying Chat</title>
+  <link rel="stylesheet" href="static/css/assets.css">
+  {{renderSection 'header'}}
 </head>
 
 <body>
   {{renderBody}}
+  <script src="static/js/assets.js"></script>
+  {{renderSection 'footer'}}
 </body>
 
 </html>

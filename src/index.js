@@ -8,6 +8,7 @@ const template = require('art-template-plus');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const passport = require('passport');
+const compression = require('compression');
 
 const logger = require('./common/logger');
 const config = require('./config');
@@ -38,13 +39,17 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+if (config.enableGzip) {
+  let gzipOptions = config.gzipOptions || {};
+  app.use(compression(gzipOptions));
+}
 app.use(passport.initialize());
 app.use(passport.session());
 auth.init(passport);
 // config routes
 const apiRouter = require('./routes/api');
 const appRouter = require('./routes/app');
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use('/', appRouter);
 app.use('/api/v1', apiRouter);
 
