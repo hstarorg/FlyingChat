@@ -17,8 +17,12 @@
     const vm = new Vue({
       el: document.querySelector('.page-main'),
       data: {
-        user: {
-          nickname: '幻'
+        chatMain: {
+          user: {
+            nickname: '幻',
+            remark: 'Love wife, love coding...'
+          },
+          tabName: 'friend'
         }
       },
       method: {

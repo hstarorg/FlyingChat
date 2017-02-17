@@ -9,113 +9,110 @@
 <script src="static/js/index-page.js"></script>
 [[/section]]
 <div class="page-main">
+  <!-- 主窗体 -->
   <div class="layui-layer layui-layer-page layui-box layui-layim layer-anim-02 chat-main">
-
     <div class="layui-layer-title" style="cursor: move;">​</div>
-    <div id="layui-layim" class="layui-layer-content" style="height: 410px;">
+    <div class="layui-layer-content" style="height: 410px;">
       <div class="layui-layim-main">
         <div class="layui-layim-info">
-          <div class="layui-layim-user">{{user.nickname}}</div>
+          <div class="layui-layim-user">{{chatMain.user.nickname}}</div>
           <div class="layui-layim-status"><span class="layui-icon layim-status-online" layim-event="status" lay-type="show"></span>
             <ul class="layui-anim layim-menu-box">
               <li class="layim-this" layim-event="status" lay-type="online"><i class="layui-icon"></i><cite class="layui-icon layim-status-online"></cite>在线</li>
               <li layim-event="status" lay-type="hide"><i class="layui-icon"></i><cite class="layui-icon layim-status-hide"></cite>隐身</li>
             </ul>
           </div>
-          <input class="layui-layim-remark" placeholder="编辑签名" value="在深邃的编码世界，做一枚轻盈的纸飞机">
+          <input class="layui-layim-remark" placeholder="编辑签名" v-model="chatMain.user.remark">
         </div>
         <ul class="layui-unselect layui-layim-tab">
-          <li class="layui-icon layim-this" title="联系人" layim-event="tab" lay-type="friend"></li>
-          <li class="layui-icon" title="群组" layim-event="tab" lay-type="group"></li>
-          <li class="layui-icon" title="历史会话" layim-event="tab" lay-type="history"></li>
+          <li class="layui-icon" :class="{'layim-this': chatMain.tabName === 'friend'}" @click="chatMain.tabName = 'friend'" title="联系人"></li>
+          <li class="layui-icon" :class="{'layim-this': chatMain.tabName === 'group'}" @click="chatMain.tabName = 'group'" title="群组"></li>
         </ul>
-        <ul class="layui-unselect layim-tab-content layim-list-friend layui-show">
+        <ul class="layui-unselect layim-tab-content layim-list-friend" :class="{'layui-show': chatMain.tabName === 'friend'}">
           <li>
-            <h5 layim-event="spread" lay-type="undefined"><i class="layui-icon"></i><span>前端码屌</span><em>(<cite class="layim-count"> 5</cite>)</em></h5>
-            <ul class="layui-layim-list ">
-              <li layim-event="chat" data-type="friend" data-index="0" id="layim-friend100001"><img src="http://tp1.sinaimg.cn/1571889140/180/40030060651/1"><span>贤心</span>
+            <h5>
+              <i class="layui-icon"></i><span>我的好友</span><em>(<cite class="layim-count"> 1</cite>)</em>
+            </h5>
+            <ul class="layui-layim-list layui-show">
+              <li>
+                <img src="http://tp1.sinaimg.cn/1571889140/180/40030060651/1"><span>胖胖</span>
                 <p>这些都是测试数据，实际使用请严格按照该格式返回</p>
               </li>
-              <li layim-event="chat" data-type="friend" data-index="0" id="layim-friend108101"><img src="http://tva3.sinaimg.cn/crop.0.0.512.512.180/8693225ajw8f2rt20ptykj20e80e8weu.jpg"><span>Z_子晴</span>
-                <p>微电商达人</p>
-              </li>
-              <li layim-event="chat" data-type="friend" data-index="0" id="layim-friend102101"><img src="http://tp2.sinaimg.cn/1833062053/180/5643591594/0"><span>Lemon_CC</span>
-                <p></p>
-              </li>
-              <li layim-event="chat" data-type="friend" data-index="0" id="layim-friend168168"><img src="http://tp4.sinaimg.cn/2145291155/180/5601307179/1"><span>马小云</span>
-                <p>让天下没有难写的代码</p>
-              </li>
-              <li layim-event="chat" data-type="friend" data-index="0" id="layim-friend666666"><img src="http://tp2.sinaimg.cn/1783286485/180/5677568891/1"><span>徐小峥</span>
-                <p>代码在囧途，也要写到底</p>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <h5 layim-event="spread" lay-type="undefined"><i class="layui-icon"></i><span>网红</span><em>(<cite class="layim-count"> 5</cite>)</em></h5>
-            <ul class="layui-layim-list ">
-              <li layim-event="chat" data-type="friend" data-index="1" id="layim-friend121286"><img src="http://tp1.sinaimg.cn/1241679004/180/5743814375/0"><span>罗玉凤</span>
-                <p>在自己实力不济的时候，不要去相信什么媒体和记者。他们不是善良的人，有时候候他们的采访对当事人而言就是陷阱</p>
-              </li>
-              <li layim-event="chat" data-type="friend" data-index="1" id="layim-friend100001222"><img src="http://tva1.sinaimg.cn/crop.0.0.180.180.180/86b15b6cjw1e8qgp5bmzyj2050050aa8.jpg"><span>长泽梓Azusa</span>
-                <p>我是日本女艺人长泽あずさ</p>
-              </li>
-              <li layim-event="chat" data-type="friend" data-index="1" id="layim-friend12123454"><img src="http://tp1.sinaimg.cn/5286730964/50/5745125631/0"><span>大鱼_MsYuyu</span>
-                <p>我瘋了！這也太準了吧 超級笑點低</p>
-              </li>
-              <li layim-event="chat" data-type="friend" data-index="1" id="layim-friend10034001"><img src="http://tp4.sinaimg.cn/1665074831/180/5617130952/0"><span>谢楠</span>
-                <p></p>
-              </li>
-              <li layim-event="chat" data-type="friend" data-index="1" id="layim-friend3435343"><img src="http://tp2.sinaimg.cn/2518326245/180/5636099025/0"><span>柏雪近在它香</span>
-                <p></p>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <h5 layim-event="spread" lay-type="undefined"><i class="layui-icon"></i><span>我心中的女神</span><em>(<cite class="layim-count"> 2</cite>)</em></h5>
-            <ul class="layui-layim-list ">
-              <li layim-event="chat" data-type="friend" data-index="2" id="layim-friend76543"><img src="http://tp3.sinaimg.cn/1223762662/180/5741707953/0"><span>林心如</span>
-                <p>我爱贤心</p>
-              </li>
-              <li layim-event="chat" data-type="friend" data-index="2" id="layim-friend4803920"><img src="http://tp4.sinaimg.cn/1345566427/180/5730976522/0"><span>佟丽娅</span>
-                <p>我也爱贤心吖吖啊</p>
-              </li>
             </ul>
           </li>
         </ul>
-        <ul class="layui-unselect layim-tab-content">
+        <ul class="layui-unselect layim-tab-content" :class="{'layui-show': chatMain.tabName === 'group'}">
           <li>
-            <ul class="layui-layim-list layui-show layim-list-group">
-              <li layim-event="chat" data-type="group" data-index="0" id="layim-group101"><img src="http://tva1.sinaimg.cn/crop.0.0.200.200.50/006q8Q6bjw8f20zsdem2mj305k05kdfw.jpg"><span>前端群</span>
-                <p></p>
-              </li>
-              <li layim-event="chat" data-type="group" data-index="1" id="layim-group102"><img src="http://tva2.sinaimg.cn/crop.0.0.199.199.180/005Zseqhjw1eplix1brxxj305k05kjrf.jpg"><span>Fly社区官方群</span>
-                <p></p>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        <ul class="layui-unselect layim-tab-content">
-          <li>
-            <ul class="layui-layim-list layui-show layim-list-history">
-              <li layim-event="chat" data-type="history" data-index="friend1008612" id="layim-history1008612"><img src="http://tva3.sinaimg.cn/crop.0.0.180.180.180/7f5f6861jw1e8qgp5bmzyj2050050aa8.jpg"><span>小闲</span>
+            <ul class="layui-layim-list layim-list-group layui-show">
+              <li>
+                <img src="http://tva1.sinaimg.cn/crop.0.0.200.200.50/006q8Q6bjw8f20zsdem2mj305k05kdfw.jpg">
+                <span>吃货</span>
                 <p></p>
               </li>
             </ul>
-          </li>
-        </ul>
-        <ul class="layui-unselect layim-tab-content">
-          <li>
-            <ul class="layui-layim-list layui-show" id="layui-layim-search"></ul>
           </li>
         </ul>
         <ul class="layui-unselect layui-layim-tool">
-          <li class="layui-icon layim-tool-search" layim-event="search" title="搜索"></li>
-          <li class="layui-icon layim-tool-msgbox" layim-event="msgbox" title="消息盒子"><span class="layui-anim layui-anim-loop layer-anim-05">5</span></li>
-          <li class="layui-icon layim-tool-find" layim-event="find" title="查找"></li>
-          <li class="layui-icon layim-tool-skin" layim-event="skin" title="更换背景"></li>
           <li class="layui-icon layim-tool-about" layim-event="about" title="关于"></li>
         </ul>
-        <div class="layui-layim-search"><input><label class="layui-icon" layim-event="closeSearch">ဇ</label></div>
       </div>
-    </div><span class="layui-layer-setwin"><a class="layui-layer-ico layui-layer-close layui-layer-close1" href="javascript:;"></a></span></div>
+    </div>
+    <span class="layui-layer-setwin">
+      <a class="layui-layer-ico layui-layer-close layui-layer-close1" href="javascript:;"></a>
+    </span>
+  </div>
+  <!-- 对话窗体 -->
+  <div class="layui-layer layui-layer-page layui-box layui-layim-chat layer-anim" id="layui-layer13" type="page" times="13"
+    showtime="0" contype="string" style="z-index: 19891027; width: 600px; top: 56.5px; left: 648px; min-width: 500px; min-height: 420px; background-image: url(&quot;http://res.layui.com/layui/build/css/modules/layim/skin/3.jpg&quot;);">
+    <div class="layui-layer-title" style="cursor: move;">​</div>
+    <div id="layui-layim-chat" class="layui-layer-content">
+      <ul class="layui-unselect layim-chat-list">
+        <li class="layim-chatlist-friend1008612 layim-this" layim-event="tabChat"><img src="http://tva3.sinaimg.cn/crop.0.0.180.180.180/7f5f6861jw1e8qgp5bmzyj2050050aa8.jpg"><span>胖胖</span>
+          <i class="layui-icon" layim-event="closeChat">ဇ</i>
+        </li>
+      </ul>
+      <div class="layim-chat-box">
+        <div class="layim-chat layim-chat-friend layui-show">
+          <div class="layui-unselect layim-chat-title">
+            <div class="layim-chat-other"><img src="http://tva3.sinaimg.cn/crop.0.0.180.180.180/7f5f6861jw1e8qgp5bmzyj2050050aa8.jpg">
+              <span class="layim-chat-username" layim-event=""> 胖胖 </span>
+              <p class="layim-chat-status"></p>
+            </div>
+          </div>
+          <div class="layim-chat-main">
+            <ul>
+              <li>第一条信息</li>
+            </ul>
+          </div>
+          <div class="layim-chat-footer">
+            <div class="layui-unselect layim-chat-tool">
+              <span class="layui-icon layim-tool-face" title="选择表情"></span>
+              <span class="layui-icon layim-tool-image" title="上传图片"><input type="file" name="file"></span>
+              <span class="layui-icon layim-tool-image" title="发送文件"><input type="file" name="file"></span>
+              <span class="layui-icon layim-tool-code" title="代码"></span>
+              <span class="layim-tool-log"><i class="layui-icon"></i>聊天记录</span>
+            </div>
+            <div class="layim-chat-textarea"><textarea></textarea></div>
+            <div class="layim-chat-bottom">
+              <div class="layim-chat-send">
+                <span class="layim-send-close">关闭</span>
+                <span class="layim-send-btn">发送</span>
+                <span class="layim-send-set"><em class="layui-edge"></em></span>
+                <ul class="layui-anim layim-menu-box">
+                  <li class="layim-this"><i class="layui-icon"></i>按Enter键发送消息</li>
+                  <li><i class="layui-icon"></i>按Ctrl+Enter键发送消息</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="layui-layer-setwin">
+      <a class="layui-layer-min" href="javascript:;"><cite></cite></a>
+      <a class="layui-layer-ico layui-layer-max" href="javascript:;"></a>
+      <a class="layui-layer-ico layui-layer-close layui-layer-close1" href="javascript:;"></a>
+    </span>
+    <span class="layui-layer-resize"></span>
+</div>
 </div>
