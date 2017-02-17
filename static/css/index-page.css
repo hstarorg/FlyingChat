@@ -1,0 +1,9 @@
+.chat-main {
+  z-index: 19891015;
+  width: 260px;
+  height: 520px;
+  top: auto !important;
+  left: auto !important;
+  right: 0;
+  bottom: 0;
+}

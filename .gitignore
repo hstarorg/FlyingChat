@@ -1,6 +1,7 @@
 # Customs
 .idea/
 dist/
+.vscode/
 
 # Logs
 # logs

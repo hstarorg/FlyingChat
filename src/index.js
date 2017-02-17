@@ -18,6 +18,8 @@ const memoryStore = require('./common/memoryStore');
 
 template.config('base', '');
 template.config('extname', '.html');
+template.config('openTag', '[[');
+template.config('closeTag', ']]');
 template.config('escape', true);
 
 const app = express();

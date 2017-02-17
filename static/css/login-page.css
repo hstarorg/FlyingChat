@@ -1,0 +1,13 @@
+  .layui-tab {
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 400px;
+    border-radius: 10px;
+    background: #fff;
+    padding: 0px 60px 20px 0;
+  }
+  
+  .red-star::after {
+    content: '*';
+    color: red;
+  }

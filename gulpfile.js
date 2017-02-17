@@ -73,7 +73,8 @@ gulp.task('assets.js', () => {
 gulp.task('assets.css', () => {
   return gulp.src([
     './node_modules/normalize.css/normalize.css',
-    './static/vendor/layui/css/layui.css'
+    './static/vendor/layui/css/layui.css',
+    './static/vendor/layui/css/layim.css'
   ])
     .pipe(concat('assets.css', { newLine: '\n\n' }))
     .pipe(gulp.dest('dist/static/css'));
@@ -100,7 +101,12 @@ gulp.task('app.js', () => {
     .pipe(gulp.dest('dist/static/js'));
 });
 
-gulp.task('app', gulp.parallel('app.js'));
+gulp.task('app.css', () => {
+  return gulp.src('static/css/*.css')
+    .pipe(gulp.dest('dist/static/css'));
+});
+
+gulp.task('app', gulp.parallel('app.js', 'app.css'));
 
 gulp.task('watch', done => {
   gulp.watch([
@@ -109,7 +115,8 @@ gulp.task('watch', done => {
     '!src/database/**/*'
   ], gulp.series('copy', 'restart', notify('服务已重新启动！')));
   gulp.watch([
-    'static/js/*.js'
+    'static/js/*.js',
+    'static/css/*.css'
   ], gulp.series('app'));
   done();
 });
