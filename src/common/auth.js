@@ -9,7 +9,13 @@ const userLogin = (username, password) => {
     })
     .then(user => {
       if (user) {
-        return user;
+        return {
+          _id: user._id,
+          userId: user.userId,
+          nickname: user.nickname,
+          username: user.username,
+          emailAddress: user.emailAddress
+        };
       }
       return Promise.reject('账户名密码不正确！');
     });

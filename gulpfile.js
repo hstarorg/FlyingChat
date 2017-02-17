@@ -63,7 +63,8 @@ gulp.task('assets.js', () => {
     './static/vendor/jquery.backstretch.min.js',
     './static/vendor/layui/layui.all.js',
     './static/vendor/j-browser-tab.min.js',
-    './node_modules/vue/dist/vue.min.js'
+    './node_modules/vue/dist/vue.min.js',
+    './node_modules/socket.io-client/dist/socket.io.min.js'
   ])
     .pipe(concat('assets.js', { newLine: ';' }))
     .pipe(gulp.dest('dist/static/js'));

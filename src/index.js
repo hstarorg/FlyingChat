@@ -14,6 +14,7 @@ const logger = require('./common/logger');
 const config = require('./config');
 const auth = require('./common/auth');
 const ioBiz = require('./bizs/ioBiz');
+const memoryStore = require('./common/memoryStore');
 
 template.config('base', '');
 template.config('extname', '.html');
@@ -35,6 +36,8 @@ app.use(bodyParser.json({ limit: '2mb' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
+  store: memoryStore,
+  name: config.sessionName,
   secret: config.sessionSecret,
   resave: false,
   saveUninitialized: false

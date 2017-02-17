@@ -1,7 +1,7 @@
 const passport = require('passport');
 
 const getHomePage = (req, res, next) => {
-  res.render('home/index');
+  res.render('home/index', { title: 'Home' });
 };
 
 const getLoginPage = (req, res, next) => {

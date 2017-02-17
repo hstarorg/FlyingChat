@@ -5,6 +5,7 @@ module.exports = {
   dbFolder: path.join(__dirname, './database/'),
   logFilePath: path.join(__dirname, './logs/'),
   sessionSecret: 'abcafdafafdasfdasfsa',
+  sessionName: 'sssid',
   enableGzip: true,
   gzipOptions: {}
 };

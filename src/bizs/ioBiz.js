@@ -1,20 +1,33 @@
-'use strict';
+const cookie = require('cookie');
+const session = require('express-session');
+const config = require('./../config');
+const memoryStore = require('./../common/memoryStore');
+let io;
+const init = _io => {
+  io = _io;
+  initSocketIO();
+};
 
-var _io;
+const initSocketIO = () => {
+  io.use((socket, next) => {
+    let cookieObj = cookie.parse(socket.handshake.headers.cookie);
+    const sid = ((cookieObj[config.sessionName] || '').split('.')[0] || '').replace('s:', '');
+    memoryStore.getSession(sid)
+      .then(user => {
+        if (!user) {
+          return next(new Error('not authorized'));
+        }
+        socket.handshake.user = user;
+        next();
+      });
+  });
 
-var initIoBiz = () => {
-  //客户端连接时
-  _io.on('connection', (socket) => {
-    console.log(socket.request.headers)
+  io.on('connection', socket => {
+    console.log(socket.handshake.user);
   });
 };
 
-var init = (io) => {
-  _io = io;
-  initIoBiz();
-};
-
 module.exports = {
-  init: init,
-  getIo: () => _io
+  init,
+  getIO: () => io
 };
