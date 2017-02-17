@@ -8,6 +8,8 @@ const init = _io => {
   initSocketIO();
 };
 
+const userMap = new Map();
+
 const initSocketIO = () => {
   io.use((socket, next) => {
     let cookieObj = cookie.parse(socket.handshake.headers.cookie);
@@ -23,7 +25,12 @@ const initSocketIO = () => {
   });
 
   io.on('connection', socket => {
-    console.log(socket.handshake.user);
+    let user = socket.handshake.user;
+    userMap.set(user.userId, socket);
+    socket.join('default', err => {
+      console.error(err);
+      io.to('default').emit('msg', { userId: socket.handshake.user.userId, message: 'hello', time: Date.now() });
+    });
   });
 };
 
