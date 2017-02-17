@@ -28,32 +28,34 @@
     </ul>
     <div class="layui-tab-content">
       <div class="layui-tab-item layui-show">
-        <div class="login-div layui-form">
-          <div class="layui-form-item">
-            <label class="layui-form-label">账户名</label>
-            <div class="layui-input-block">
-              <input type="text" style="display: none;">
-              <input type="text" autocomplete="off" placeholder="请输入账户名" class="layui-input" v-model="user.username">
+        <form @submit.prevent="doLogin()">
+          <div class="login-div layui-form">
+            <div class="layui-form-item">
+              <label class="layui-form-label">账户名</label>
+              <div class="layui-input-block">
+                <input type="text" style="display: none;">
+                <input type="text" autocomplete="off" placeholder="请输入账户名" class="layui-input" v-model="user.username">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">密码</label>
+              <div class="layui-input-block">
+                <input type="password" autocomplete="off" placeholder="请输入密码" class="layui-input" v-model="user.password">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">记住我</label>
+              <div class="layui-input-block">
+                <layui-switch v-model="rememberMe"></layui-switch>
+              </div>
+            </div>
+            <div class="layui-form-item" style="text-align: center;">
+              <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal layui-btn-radius" style="width: 100%;">登录</button>
+              </div>
             </div>
           </div>
-          <div class="layui-form-item">
-            <label class="layui-form-label">密码</label>
-            <div class="layui-input-block">
-              <input type="password" autocomplete="off" placeholder="请输入密码" class="layui-input" v-model="user.password">
-            </div>
-          </div>
-          <div class="layui-form-item">
-            <label class="layui-form-label">记住我</label>
-            <div class="layui-input-block">
-              <layui-switch v-model="rememberMe"></layui-switch>
-            </div>
-          </div>
-          <div class="layui-form-item" style="text-align: center;">
-            <div class="layui-input-block">
-              <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" style="width: 100%;" @click="doLogin()">登录</button>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
       <div class="layui-tab-item">
         <div class="layui-form-item">

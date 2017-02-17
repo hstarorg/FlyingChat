@@ -5,15 +5,17 @@
       <div @click="toggleStatus()" class="layui-unselect layui-form-switch" :class="{'layui-form-onswitch': checked}"><i></i></div>
       `,
       props: {
-        value: { type: Boolean, default: false }
+        value: null
       },
       data() {
         return {
           checked: false
         }
       },
-      mounted() {
-        this.checked = this.value || false;
+      watch: {
+        value(newVal) {
+          this.checked = newVal;
+        }
       },
       methods: {
         toggleStatus() {
@@ -28,15 +30,23 @@
     const request = (method, url, data, options) => {
       let ajaxOpt = Object.assign({
         contentType: 'application/json',
-        dataType: 'json'
+        processData: false
       }, options || {}, {
           method,
           url,
-          data
+          data: JSON.stringify(data)
         });
       return $.ajax(ajaxOpt)
         .then(res => {
-          return { res: res, data: res.data }
+          let data = res.data ? JSON.parse(res.data) : res.data;
+          return { res, data }
+        })
+        .catch(res => {
+          if (res.status === 500) {
+            let data = JSON.parse(res.responseText);
+            layer.msg('Error:' + data.message);
+          }
+          return Promise.reject(res);
         });
     };
     window.ajax = {

@@ -1,13 +1,17 @@
 const LocalStrategy = require('passport-local').Strategy;
+const db = require('./db');
 const config = require('./../config');
 
 const userLogin = (username, password) => {
   return Promise.resolve()
     .then(() => {
-      if (username === 'admin') {
-        return { userId: 1, username: 'Jay' };
+      return db.findOne('users', { password, $or: [{ username: username }, { userId: +username }] });
+    })
+    .then(user => {
+      if (user) {
+        return user;
       }
-      return Promise.reject('err');
+      return Promise.reject('账户名密码不正确！');
     });
 };
 

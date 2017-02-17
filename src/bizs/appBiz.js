@@ -11,12 +11,11 @@ const getLoginPage = (req, res, next) => {
 const doLogin = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     // 登录成功后，会产生user对象
-    console.log(err, user, info);
     if (err) { return next(err); }
-    if (!user) { return res.redirect('/user/login'); }
-    req.logIn(user, (err, b) => {
+    if (!user) { return next(info); }
+    req.logIn(user, err => {
       if (err) { return next(err); }
-      return res.redirect('/');
+      return res.end();
     });
   })(req, res, next);
 };

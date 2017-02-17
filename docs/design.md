@@ -10,7 +10,7 @@ type MsgObj {
 }
 ```
 
-### 用户信息记录
+### 用户信息记录(users)
 ```
 {
   userId: number, // 用户编号，从1000开始
@@ -25,7 +25,7 @@ type MsgObj {
 }
 ```
 
-### 讨论组（群聊）实体
+### 讨论组（群聊）实体(groups)
 ```
 {
   groupId: string, // 聊天组ID
@@ -40,7 +40,7 @@ type MsgObj {
 }
 ```
 
-### 历史聊天信息存储
+### 历史聊天信息存储(historyMsgs)
 
 ```
 {

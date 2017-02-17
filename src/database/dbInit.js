@@ -1,22 +1,21 @@
-var fs = require('fs');
-
-var Datastore = require('nedb');
-var db = {};
+const Datastore = require('nedb');
+const db = {};
 
 //------------------------------初始化用户列表-------------------------------
-db.users = new Datastore('users.db');
-db.users.loadDatabase();
-
+db.users = new Datastore({ filename: 'users.db', autoload: true });
 // User list
-var users = [{
-  userId: 1,
-  userName: 'humin',
-  password: 'jay',
-  nickName: '神仙哥哥',
-  photoUrl: '',
-  createdTime: Date.now(),
-  isEnable: true,
+const users = [{
+  userId: 1000, // 用户编号，从1000开始
+  nickname: '幻', // 昵称
+  username: 'jay', // 用户名
+  password: 'jay', // 密码
+  emailAddress: 'hm910705@163.com', // 邮箱
+  createDate: Date.now(), // 注册时间
+  isEnable: true, // 是否启用
+  avatorUrl: '', // 头像地址
+  groups: [] // 所在的Group, groupId
 }];
+
 db.users.insert(users, (err, newDocs) => {
   if (err) {
     console.log(err);

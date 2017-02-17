@@ -36,16 +36,13 @@
           if (!this.user.username || !this.user.password) {
             return layer.msg('请输入用户名/密码');
           }
-          $.ajax({
-            method: 'POST',
-            url: `api/v1/login`,
-            data: this.user
-          })
-            .then(result => {
-
-            })
-            .catch()
-          console.log(this.user, this.rememberMe);
+          ajax.post('api/v1/login', this.user)
+            .then(({data}) => {
+              if (this.rememberMe) {
+                window.localStorage.setItem('remember-username', this.user.username);
+              }
+              window.location.href = '';
+            });
         },
         doRegister() {
           alert('register');

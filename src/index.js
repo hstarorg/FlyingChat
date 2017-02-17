@@ -47,11 +47,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 auth.init(passport);
 // config routes
-const apiRouter = require('./routes/api');
 const appRouter = require('./routes/app');
 app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use('/', appRouter);
-app.use('/api/v1', apiRouter);
 
 // Error 404
 app.use((req, res, next) => {
