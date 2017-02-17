@@ -1,7 +1,5 @@
-'use strict';
-
-var router = require('express').Router();
-var userBiz = require('./../bizs/userBiz');
+const router = require('express').Router();
+const userBiz = require('./../bizs/userBiz');
 
 router.post('/login', userBiz.doLogin);
 

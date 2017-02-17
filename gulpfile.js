@@ -71,7 +71,8 @@ gulp.task('assets.js', () => {
 
 gulp.task('assets.css', () => {
   return gulp.src([
-    './node_modules/normalize.css/normalize.css'
+    './node_modules/normalize.css/normalize.css',
+    './static/vendor/layui/css/layui.css'
   ])
     .pipe(concat('assets.css', { newLine: '\n\n' }))
     .pipe(gulp.dest('dist/static/css'));

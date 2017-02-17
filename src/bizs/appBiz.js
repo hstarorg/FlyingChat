@@ -5,7 +5,7 @@ const getHomePage = (req, res, next) => {
 };
 
 const getLoginPage = (req, res, next) => {
-  res.render('user/login');
+  res.render('user/login', { title: 'Welcome' });
 };
 
 const doLogin = (req, res, next) => {

@@ -4,11 +4,98 @@
 <script src="static/js/login-page.js"></script>
 {{/section}}
 
-<div class="login-div">
-  <input type="text" name="username">
-  <br>
-  <input type="password" name="password">
-  <br>
+<style>
+  .layui-tab {
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 400px;
+    border-radius: 10px;
+    background: #fff;
+    padding: 0px 60px 20px 0;
+  }
+  
+  .red-star::after {
+    content: '*';
+    color: red;
+  }
+</style>
 
-  <button type="submit" class="btn btn-default">Login</button>
+<div class="page-container">
+  <div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title">
+      <li class="layui-this">登录</li>
+      <li>注册</li>
+    </ul>
+    <div class="layui-tab-content">
+      <div class="layui-tab-item layui-show">
+        <div class="login-div layui-form">
+          <div class="layui-form-item">
+            <label class="layui-form-label">账户名</label>
+            <div class="layui-input-block">
+              <input type="text" style="display: none;">
+              <input type="text" autocomplete="off" placeholder="请输入账户名" class="layui-input" v-model="user.username">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+              <input type="password" autocomplete="off" placeholder="请输入密码" class="layui-input" v-model="user.password">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">记住我</label>
+            <div class="layui-input-block">
+              <layui-switch v-model="rememberMe"></layui-switch>
+            </div>
+          </div>
+          <div class="layui-form-item" style="text-align: center;">
+            <div class="layui-input-block">
+              <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" style="width: 100%;" @click="doLogin()">登录</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="layui-tab-item">
+        <div class="layui-form-item">
+          <label class="layui-form-label red-star">昵称</label>
+          <div class="layui-input-block">
+            <input type="text" autocomplete="off" placeholder="" class="layui-input" v-model="user.username">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">账户名</label>
+          <div class="layui-input-block">
+            <input type="text" style="display: none;">
+            <input type="text" autocomplete="off" placeholder="若填写，可以用账户名登录" class="layui-input" v-model="user.username">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label red-star">密码</label>
+          <div class="layui-input-block">
+            <input type="text" style="display: none;">
+            <input type="text" autocomplete="off" placeholder="请输入登录密码" class="layui-input" v-model="user.username">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label red-star">确认密码</label>
+          <div class="layui-input-block">
+            <input type="text" style="display: none;">
+            <input type="text" autocomplete="off" placeholder="请再次输入登录密码" class="layui-input" v-model="user.username">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">邮箱</label>
+          <div class="layui-input-block">
+            <input type="text" style="display: none;">
+            <input type="text" autocomplete="off" placeholder="找回密码时需要" class="layui-input" v-model="user.username">
+          </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center;">
+          <div class="layui-input-block">
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" style="width: 100%;" @click="doRegister()">注册账户</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
