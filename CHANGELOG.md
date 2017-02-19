@@ -1,10 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 0.5.0 (2017-02-x)
+## 0.5.0 (2017-02-19)
 
 - 将CoffeeScript切换到JS(ES6)
 - 优化构建代码
+- 修改聊天界面
+- 改进服务端存储
 
 ## 0.3.0 (2015-12-02)
 
