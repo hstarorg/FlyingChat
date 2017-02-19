@@ -1,6 +1,6 @@
 {
   "name": "flyingchat",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Online chat system",
   "main": "index.js",
   "scripts": {
