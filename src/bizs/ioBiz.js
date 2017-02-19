@@ -2,7 +2,7 @@ const cookie = require('cookie');
 const session = require('express-session');
 const config = require('./../config');
 const memoryStore = require('./../common/memoryStore');
-const db = require('./../common/db');
+const groupBiz = require('./groupBiz');
 const logger = require('./../common/logger');
 const types = require('./event-types');
 const USER_COLLECTION = 'users';
@@ -64,7 +64,10 @@ const initSocketIO = () => {
       io.to('default').emit(types.CLIENT_USER_OFFLINE, buildMsg(socket.user));
     });
     socket.on(types.SERVER_ON_MESSAGE, msg => {
-      io.to('default').emit(types.CLIENT_USER_MESSAGE, buildMsg(socket.user, { content: msg }));
+      groupBiz.pushMessage(socket.user.userId, msg)
+        .then(() => {
+          io.to('default').emit(types.CLIENT_USER_MESSAGE, buildMsg(socket.user, { content: msg }));
+        });
     });
     socket.on(types.SERVER_GET_USERLIST, () => {
       io.of('/').clients((err, clients) => {

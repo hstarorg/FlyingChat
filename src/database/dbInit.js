@@ -1,13 +1,23 @@
+const fs = require('fs');
 const Datastore = require('nedb');
 const util = require('./../common/util');
 const db = {};
+
+
+const files = ['users.db', 'groups.db'];
+
+files.forEach(f => {
+  if (fs.existsSync(f)) {
+    fs.unlinkSync(f);
+  };
+});
 
 //------------------------------初始化用户列表-------------------------------
 db.users = new Datastore({ filename: 'users.db', autoload: true });
 db.groups = new Datastore({ filename: 'groups.db', autoload: true });
 
 const group = {
-  groupId: util.getShortId(), // 聊天组ID
+  groupId: 'default', // 聊天组ID
   groupName: 'default', // 组名
   groupDescription: 'default group', // 组介绍
   groupAvatorUrl: '', // 组logo
@@ -42,12 +52,18 @@ const users = [{
 }];
 
 
-db.groups.insert(group);
+db.groups.insert([group], (err, newDocs) => {
+  if (err) {
+    console.log(err);
+    return;
+  }
+  console.log(`初始化 groups 成功，影响数据：${newDocs.length}`);
+});
 
 db.users.insert(users, (err, newDocs) => {
   if (err) {
     console.log(err);
     return;
   }
-  console.log(`初始化用户列表成功，影响数据：${newDocs.length}`);
+  console.log(`初始化 users 成功，影响数据：${newDocs.length}`);
 });
