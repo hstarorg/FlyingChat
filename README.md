@@ -13,4 +13,10 @@ npm i
 
 # Run
 npm run dev
+
+# Build（生成压缩版本代码，不运行）
+npm run build 
+
+# Release（build之后，再安装运行时依赖）
+npm run release
 ```

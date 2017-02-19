@@ -32,8 +32,8 @@ const group = {
 const users = [{
   userId: 1000, // 用户编号，从1000开始
   nickname: '幻', // 昵称
-  username: 'jay', // 用户名
-  password: 'jay', // 密码
+  username: 'humin', // 用户名
+  password: 'humin', // 密码
   emailAddress: 'hm910705@163.com', // 邮箱
   createDate: Date.now(), // 注册时间
   isEnable: true, // 是否启用
@@ -42,8 +42,8 @@ const users = [{
 }, {
   userId: 1001, // 用户编号，从1000开始
   nickname: '胖胖', // 昵称
-  username: 'fei', // 用户名
-  password: 'fei', // 密码
+  username: 'deng', // 用户名
+  password: 'deng', // 密码
   emailAddress: '', // 邮箱
   createDate: Date.now(), // 注册时间
   isEnable: true, // 是否启用

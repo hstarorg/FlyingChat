@@ -4,7 +4,9 @@
   "description": "Online chat system",
   "main": "index.js",
   "scripts": {
-    "dev": "gulp4 dev"
+    "dev": "gulp4 dev",
+    "build": "gulp4 build -r",
+    "release": "npm run build & gulp4 install-dep"
   },
   "repository": {
     "type": "git",

@@ -5,10 +5,12 @@ const notifier = require('node-notifier');
 const concat = require('gulp-concat');
 const babel = require('gulp-babel');
 
+const isMinify = process.argv.indexOf('-r') >= 0;
+
 const babelOption = {
   presets: ['es2015'],
   comments: false,
-  minified: process.argv.indexOf('-r') >= 0
+  minified: isMinify
 };
 
 const notify = (msg, autoRun = false) => {
@@ -121,4 +123,17 @@ gulp.task('watch', done => {
   done();
 });
 
+gulp.task('copy-package', () => {
+  return gulp.src('package.json')
+    .pipe(gulp.dest('dist'));
+});
+
 gulp.task('dev', gulp.series('clean', gulp.parallel('copy', 'assets', 'app'), gulp.parallel('serve', 'watch')));
+
+gulp.task('build', gulp.series('clean', gulp.parallel('copy', 'assets', 'app', 'copy-package')));
+
+gulp.task('install-dep', done => {
+  cd('dist');
+  exec('npm i --production');
+  done();
+});
