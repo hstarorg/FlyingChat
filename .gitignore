@@ -2,6 +2,7 @@
 .idea/
 dist/
 .vscode/
+src/database/*.db
 
 # Logs
 # logs

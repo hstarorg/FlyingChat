@@ -46,7 +46,6 @@ const initSocketIO = () => {
     let user = socket.handshake.user;
     let tmpSocket = getSocketByUserId(user.userId);
     if (tmpSocket) {
-      console.log('zhaodao');
       tmpSocket.forceDisconnect = true;
       tmpSocket.emit(types.CLIENT_FORCE_DISCONNECT);
       tmpSocket.disconnect(true);

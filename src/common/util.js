@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const NodeRSA = require('node-rsa');
 const key = new NodeRSA({ b: 512 });
+const shortId = require('shortid');
 
 const processDesCrypto = (cipher, encoding, data) => {
   var buffer1 = cipher.update(data, encoding);
@@ -37,10 +38,15 @@ const buildKeyPair = () => {
   };
 };
 
+const getShortId = () => {
+  return shortId.generate();
+};
+
 module.exports = {
   desEncrypt,
   desDecrypt,
   buildKeyPair,
   rsaPrivateEncrypt,
-  rsaPublicDecrypt
+  rsaPublicDecrypt,
+  getShortId
 };
