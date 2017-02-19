@@ -1,3 +1,13 @@
+*{
+  box-sizing: border-box;
+}
+html,body{
+  height: 100%;
+}
+body{
+  position: relative;
+  min-width: 1190px;
+}
 .chat-main {
   z-index: 19891015;
   width: 260px;
@@ -6,4 +16,25 @@
   left: auto !important;
   right: 0;
   bottom: 0;
+  display: none;
+}
+.chat-box-main{
+  position: absolute;
+  width: 800px;
+  left: calc(50vw - 400px);
+  top: 100px;
+  bottom: 100px;
+  min-height: 420px;
+  background-color: transparent !important;
+}
+.chat-box-main .layim-chat-list{
+  display: block;
+  top: 0;
+}
+.chat-box-main .layim-chat-main{
+  height: calc(100vh - 460px);
+  min-height: 162px;
+}
+.chat-box-main .layui-layer-content{
+  padding-left: 200px;
 }

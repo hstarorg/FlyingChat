@@ -2,6 +2,9 @@ const cookie = require('cookie');
 const session = require('express-session');
 const config = require('./../config');
 const memoryStore = require('./../common/memoryStore');
+const db = require('./../common/db');
+const types = require('./event-types');
+const USER_COLLECTION = 'users';
 let io;
 const init = _io => {
   io = _io;
@@ -9,6 +12,10 @@ const init = _io => {
 };
 
 const userMap = new Map();
+
+const buildMsg = (user, data = {}) => {
+  return Object.assign({}, user, { date: Date.now() }, data);
+};
 
 const initSocketIO = () => {
   io.use((socket, next) => {
@@ -27,10 +34,17 @@ const initSocketIO = () => {
   io.on('connection', socket => {
     let user = socket.handshake.user;
     userMap.set(user.userId, socket);
+    socket.user = user;
+    socket.emit(types.CLIENT_SET_USER, buildMsg(socket.user));
     socket.join('default', err => {
-      console.error(err);
-      io.to('default').emit('msg', { userId: socket.handshake.user.userId, message: 'hello', time: Date.now() });
+      io.to('default').emit(types.CLIENT_USER_ONLINE, buildMsg(socket.user));
     });
+    socket.on('disconnecting', reason => {
+      io.to('default').emit(types.CLIENT_USER_OFFLINE, buildMsg(socket.user));
+    });
+    socket.on(types.SERVER_ON_MESSAGE, msg => {
+      io.to('default').emit(types.CLIENT_USER_MESSAGE, buildMsg(socket.user, { content: msg }));
+    })
   });
 };
 

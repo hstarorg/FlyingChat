@@ -62,26 +62,35 @@
     </span>
   </div>
   <!-- 对话窗体 -->
-  <div class="layui-layer layui-layer-page layui-box layui-layim-chat layer-anim" id="layui-layer13" type="page" times="13"
-    showtime="0" contype="string" style="z-index: 19891027; width: 600px; top: 56.5px; left: 648px; min-width: 500px; min-height: 420px; background-image: url(&quot;http://res.layui.com/layui/build/css/modules/layim/skin/3.jpg&quot;);">
+  <div class="layui-layer layui-layer-page layui-box layui-layim-chat layer-anim chat-box-main">
     <div class="layui-layer-title" style="cursor: move;">​</div>
-    <div id="layui-layim-chat" class="layui-layer-content">
-      <ul class="layui-unselect layim-chat-list">
-        <li class="layim-chatlist-friend1008612 layim-this" layim-event="tabChat"><img src="http://tva3.sinaimg.cn/crop.0.0.180.180.180/7f5f6861jw1e8qgp5bmzyj2050050aa8.jpg"><span>胖胖</span>
-          <i class="layui-icon" layim-event="closeChat">ဇ</i>
-        </li>
-      </ul>
+    <ul class="layui-unselect layim-chat-list">
+      <li class="layim-chatlist-friend1008612 layim-this"><img src="http://tva3.sinaimg.cn/crop.61.15.269.269.180/005DomB3gw1elc70qswv0j30aw08jmxx.jpg"><span>胖胖</span>
+        <i class="layui-icon" layim-event="closeChat">ဇ</i>
+      </li>
+    </ul>
+    <div class="layui-layer-content">
       <div class="layim-chat-box">
         <div class="layim-chat layim-chat-friend layui-show">
           <div class="layui-unselect layim-chat-title">
-            <div class="layim-chat-other"><img src="http://tva3.sinaimg.cn/crop.0.0.180.180.180/7f5f6861jw1e8qgp5bmzyj2050050aa8.jpg">
-              <span class="layim-chat-username" layim-event=""> 胖胖 </span>
+            <div class="layim-chat-other"><img :src="chatMain.user.avatorUrl">
+              <span class="layim-chat-username"> {{ chatMain.user.nickname }} </span>
               <p class="layim-chat-status"></p>
             </div>
           </div>
           <div class="layim-chat-main">
             <ul>
-              <li>第一条信息</li>
+              <template v-for="msg in msgList">
+                <li class="layim-chat-system" v-if="msg.type === 'system'"><span>{{msg.content}}</span></li>
+                <li class="layim-chat-mine" v-else-if="msg.type === 'mine'">
+                  <div class="layim-chat-user"><img :src="msg.user.avatorUrl"><cite><i>{{msg.date}}</i>{{msg.user.nickname}}</cite></div>
+                  <div class="layim-chat-text">{{msg.content}}</div>
+                </li>
+                <li v-else>
+                  <div class="layim-chat-user"><img :src="msg.user.avatorUrl"><cite>{{msg.user.nickname}}<i>{{msg.date}}</i></cite></div>
+                  <div class="layim-chat-text">{{msg.content}}</div>
+                </li>
+              </template>
             </ul>
           </div>
           <div class="layim-chat-footer">
@@ -92,11 +101,10 @@
               <span class="layui-icon layim-tool-code" title="代码"></span>
               <span class="layim-tool-log"><i class="layui-icon"></i>聊天记录</span>
             </div>
-            <div class="layim-chat-textarea"><textarea></textarea></div>
+            <div class="layim-chat-textarea"><textarea v-model="inputMessage" @keypress.enter="sendMessage()"></textarea></div>
             <div class="layim-chat-bottom">
               <div class="layim-chat-send">
-                <span class="layim-send-close">关闭</span>
-                <span class="layim-send-btn">发送</span>
+                <span class="layim-send-btn" @click="sendMessage()">发送</span>
                 <span class="layim-send-set"><em class="layui-edge"></em></span>
                 <ul class="layui-anim layim-menu-box">
                   <li class="layim-this"><i class="layui-icon"></i>按Enter键发送消息</li>
@@ -109,10 +117,10 @@
       </div>
     </div>
     <span class="layui-layer-setwin">
-      <a class="layui-layer-min" href="javascript:;"><cite></cite></a>
+      <!--<a class="layui-layer-min" href="javascript:;"><cite></cite></a>
       <a class="layui-layer-ico layui-layer-max" href="javascript:;"></a>
-      <a class="layui-layer-ico layui-layer-close layui-layer-close1" href="javascript:;"></a>
+      <a class="layui-layer-ico layui-layer-close layui-layer-close1" href="javascript:;"></a>-->
     </span>
     <span class="layui-layer-resize"></span>
-</div>
+  </div>
 </div>
