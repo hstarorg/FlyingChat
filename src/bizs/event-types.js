@@ -4,8 +4,10 @@ const event_types = {
   CLIENT_USER_MESSAGE: 'CLIENT_USER_MESSAGE', // 用户发消息
   CLIENT_SET_USER: 'CLIENT_SET_USER', // 设置用户信息
   CLIENT_SET_USERLIST: 'CLIENT_SET_USERLIST', // 设置在线用户列表
+  CLIENT_FORCE_DISCONNECT: 'CLIENT_FORCE_DISCONNECT', // 强制下线
 
   SERVER_ON_MESSAGE: 'SERVER_ON_MESSAGE', // 服务端收到消息
+  SERVER_GET_USERLIST: 'SERVER_GET_USERLIST', // 服务端返回用户列表
 };
 
 module.exports = event_types;

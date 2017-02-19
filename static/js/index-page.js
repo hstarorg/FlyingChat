@@ -4,8 +4,11 @@
     CLIENT_USER_OFFLINE: 'CLIENT_USER_OFFLINE', // 用户下线
     CLIENT_USER_MESSAGE: 'CLIENT_USER_MESSAGE', // 用户发消息
     CLIENT_SET_USER: 'CLIENT_SET_USER', // 设置用户信息
+    CLIENT_SET_USERLIST: 'CLIENT_SET_USERLIST', // 设置在线用户列表
+    CLIENT_FORCE_DISCONNECT: 'CLIENT_FORCE_DISCONNECT', // 强制下线
 
     SERVER_ON_MESSAGE: 'SERVER_ON_MESSAGE', // 服务端收到消息
+    SERVER_GET_USERLIST: 'SERVER_GET_USERLIST', // 服务端返回用户列表
   };
 
   let client;
@@ -32,6 +35,9 @@
     if (msg) {
       msgObj.content = msg;
     }
+    if (type === 'system') {
+      client.emit(event_types.SERVER_GET_USERLIST);
+    }
     vm.msgList.push(msgObj);
   };
 
@@ -41,7 +47,7 @@
     client.on(event_types.CLIENT_USER_ONLINE, data => {
       showMessage('system', data, `系统消息：${data.nickname} 加入聊天`);
     });
-    client.on(event_types.CLIENT_USER_ONLINE, data => {
+    client.on(event_types.CLIENT_USER_OFFLINE, data => {
       showMessage('system', data, `系统消息：${data.nickname} 离开聊天`);
     });
     client.on(event_types.CLIENT_USER_MESSAGE, data => {
@@ -49,6 +55,12 @@
     });
     client.on(event_types.CLIENT_SET_USER, user => {
       vm.chatMain.user = user;
+    });
+    client.on(event_types.CLIENT_SET_USERLIST, data => {
+      vm.onlineUserList = data.users;
+    });
+    client.on(event_types.CLIENT_FORCE_DISCONNECT, () => {
+      showMessage('system', {}, `系统消息：您的账号在其他地方登录，请检查！`);
     });
     const events = ['connect', 'connect_error', 'connect_timeout', 'error', 'disconnect', 'reconnect', 'reconnect_attempt',
       'reconnecting', 'reconnect_error', 'reconnect_failed', 'msg'];
@@ -72,7 +84,16 @@
           tabName: 'friend'
         },
         inputMessage: '',
-        msgList: []
+        msgList: [],
+        onlineUserList: []
+      },
+      watch: {
+        msgList() {
+          this.$nextTick(() => {
+            let msgContainer = document.querySelector('.layim-chat-main');
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+          });
+        }
       },
       methods: {
         sendMessage() {

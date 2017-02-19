@@ -65,8 +65,9 @@
   <div class="layui-layer layui-layer-page layui-box layui-layim-chat layer-anim chat-box-main">
     <div class="layui-layer-title" style="cursor: move;">​</div>
     <ul class="layui-unselect layim-chat-list">
-      <li class="layim-chatlist-friend1008612 layim-this"><img src="http://tva3.sinaimg.cn/crop.61.15.269.269.180/005DomB3gw1elc70qswv0j30aw08jmxx.jpg"><span>胖胖</span>
-        <i class="layui-icon" layim-event="closeChat">ဇ</i>
+      <li v-for="user in onlineUserList">
+        <img :src="user.avatorUrl">
+        <span>{{user.nickname}}</span>
       </li>
     </ul>
     <div class="layui-layer-content">
