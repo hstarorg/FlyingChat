@@ -105,6 +105,7 @@
             <div class="layim-chat-textarea"><textarea v-model="inputMessage" @keypress.enter="sendMessage()"></textarea></div>
             <div class="layim-chat-bottom">
               <div class="layim-chat-send">
+                <span class="layim-btn layim-btn-primary" @click="clearMsgList()">清空聊天记录</span>
                 <span class="layim-send-btn" @click="sendMessage()">发送</span>
                 <span class="layim-send-set"><em class="layui-edge"></em></span>
                 <ul class="layui-anim layim-menu-box">

@@ -39,6 +39,12 @@
       client.emit(event_types.SERVER_GET_USERLIST);
     }
     vm.msgList.push(msgObj);
+    if (!vm.tabActive) {
+      vm.unreadMsgCount += 1;
+      if (!vm.intervalId) {
+        vm.startNotify();
+      }
+    }
   };
 
   const initIO = () => {
@@ -85,7 +91,13 @@
         },
         inputMessage: '',
         msgList: [],
-        onlineUserList: []
+        onlineUserList: [],
+        tabActive: true,
+        unreadMsgCount: 0,
+        intervalId: null
+      },
+      mounted() {
+        this.initBrowserTab();
       },
       watch: {
         msgList() {
@@ -96,11 +108,39 @@
         }
       },
       methods: {
+        initBrowserTab() {
+          window.jBrowserTab.on('visibilitychange', isActive => {
+            this.tabActive = isActive;
+            if (this.tabActive) {
+              window.clearInterval(this.intervalId);
+              this.intervalId = null;
+              this.unreadMsgCount = 0;
+              document.title = 'Home :: Flying Chat';
+            }
+          });
+        },
+        startNotify() {
+          this.toggleTitle();
+          this.intervalId = window.setInterval(() => {
+            this.toggleTitle();
+          }, 200);
+        },
+        toggleTitle() {
+          console.log('togg');
+          if (document.title === '新提醒') {
+            document.title = `您有 ${this.unreadMsgCount} 条未读消息`;
+          } else {
+            document.title = '新提醒';
+          }
+        },
         sendMessage() {
           if (this.inputMessage.trim()) {
             client.emit(event_types.SERVER_ON_MESSAGE, this.inputMessage);
             this.inputMessage = '';
           }
+        },
+        clearMsgList() {
+          this.msgList = [];
         }
       }
     });
