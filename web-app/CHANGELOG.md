@@ -1,14 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 0.6.0 (2017-04-05)
+## 0.7.0 (2018-xx-xx)
+
+
+## 0.5.1 (2017-04-05)
 
 - 增加未读信息提醒功能
 - 增加清空聊天信息的功能
-
-## 0.5.1 (2017-02-19)
-
-- 修复CSS路径异常
 
 ## 0.5.0 (2017-02-19)
 
