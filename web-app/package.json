@@ -1,5 +1,5 @@
 {
-  "name": "flyingchat",
+  "name": "flyingchat-web-app",
   "version": "0.6.0",
   "description": "Online chat system",
   "main": "index.js",
@@ -12,10 +12,7 @@
     "type": "git",
     "url": "https://github.com/hstarorg/FlyingChat.git"
   },
-  "keywords": [
-    "Chat",
-    "socket.io"
-  ],
+  "keywords": ["Chat", "socket.io"],
   "author": "Jay.M.Hu",
   "license": "MIT",
   "bugs": {
