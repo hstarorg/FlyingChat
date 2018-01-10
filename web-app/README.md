@@ -1,22 +1,21 @@
-# FlyingChat
+# flyingchat-web-app
 
-FlyingChat是基于Express和Socket.io搭建的聊天服务Server。
+> The web app for flyingchat.
 
-# How to run?
+## Build Setup
 
-```bash
-# Clone the project
-git clone git clone https://github.com/hstarorg/FlyingChat.git
+``` bash
+# install dependencies
+npm install
 
-# Initial dependencies
-npm i
-
-# Run
+# serve with hot reload at localhost:7411
 npm run dev
 
-# Build（生成压缩版本代码，不运行）
-npm run build 
+# build for production with minification
+npm run build
 
-# Release（build之后，再安装运行时依赖）
-npm run release
+# build for production and view the bundle analyzer report
+npm run build --report
 ```
+
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
