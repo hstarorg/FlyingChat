@@ -11,7 +11,7 @@
 export default {
   name: 'app',
   mounted() {
-    const imgArr = new Array(6).fill(0).map((x, i) => `static/images/bg${i}.jpg`);
+    const imgArr = new Array(5).fill(0).map((x, i) => `static/images/bg${i}.jpg`);
     imgArr.sort(() => Math.random() - Math.random());
     $.backstretch(imgArr, {
       fade: 2000,
