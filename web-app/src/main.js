@@ -1,3 +1,6 @@
+import 'normalize.css';
+import './styl/all.styl';
+
 import Vue from 'vue';
 import App from './App';
 import { router } from './router.config';

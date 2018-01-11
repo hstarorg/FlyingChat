@@ -1,0 +1,92 @@
+.page-login {
+  .login-box {
+    width: 430px;
+    height: 330px;
+    margin: 0 auto;
+    margin-top: calc((50vh - 165px) * 0.618);
+    border-radius: 5px;
+    box-shadow: 0 0 5px #333;
+    overflow: hidden;
+  }
+
+  .login-box-header {
+    height: 180px;
+    background: linear-gradient(to bottom, #0776d1, #33469d);
+
+    p {
+      line-height: 180px;
+      font-size: 50px;
+      color: #fff;
+      font-family: '宋体';
+    }
+  }
+
+  .login-box-body {
+    padding-top: 15px;
+    background-color: rgb(235, 242, 249);
+    height: 150px;
+
+    .left-section {
+      width: 130px;
+      padding-right: 15px;
+
+      img {
+        width: 80px;
+        float: right;
+        border-radius: 50%;
+      }
+    }
+
+    .center-section {
+      width: 200px;
+
+      .checkbox {
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+    }
+
+    .right-cection {
+      left: 100px;
+      padding-left: 15px;
+
+      a {
+        line-height: 30px;
+        font-size: 12px;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .login-input-group {
+    border: 1px solid #ccc;
+    overflow: hidden;
+
+    &:hover {
+      border-color: #1583dd;
+    }
+
+    &.username-group {
+      border-radius: 5px 5px 0 0;
+    }
+
+    &.password-group {
+      border-radius: 0 0 5px 5px;
+      margin-top: -1px;
+      border-top-color: transparent;
+
+      &:hover {
+        border-top-color: #1583dd;
+        margin-top: -1px;
+      }
+    }
+
+    input {
+      font-size: 14px;
+      border: none;
+      outline: none;
+      width: 100%;
+      padding: 7px;
+    }
+  }
+}
