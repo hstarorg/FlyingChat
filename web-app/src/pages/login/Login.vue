@@ -9,8 +9,7 @@
       </div>
       <div class="login-box-body">
         <div class="pull-left left-section">
-          <img src="https://avatars0.githubusercontent.com/u/4043284?s=460&v=4" alt="logo">
-          &nbsp;
+          <img src="https://avatars0.githubusercontent.com/u/4043284?s=460&v=4" alt="logo"> &nbsp;
         </div>
         <div class="pull-left center-section">
           <div class="login-input-group username-group">
@@ -29,9 +28,9 @@
           </div>
         </div>
         <div class="pull-left right-cection">
-          <a href="">注册账号</a>
+          <router-link to="/register">注册账号</router-link>
           <br>
-          <a href="">找回密码</a>
+          <router-link to="/reset_pwd">找回密码</router-link>
         </div>
       </div>
     </div>

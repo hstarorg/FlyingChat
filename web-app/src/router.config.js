@@ -6,7 +6,11 @@ Vue.use(Router);
 
 const router = new Router({
   mode: 'history',
-  routes: [{ path: '/login', component: pages.Login }, { path: '/', component: pages.Main }]
+  routes: [
+    { path: '/login', component: pages.Login },
+    { path: '/register', component: pages.Register },
+    { path: '/', component: pages.Main }
+  ]
 });
 
 router.beforeEach((to, from, next) => {
