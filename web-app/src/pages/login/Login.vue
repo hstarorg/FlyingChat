@@ -13,18 +13,18 @@
         </div>
         <div class="pull-left center-section">
           <div class="login-input-group username-group">
-            <input type="text" class="name-input" placeholder="飞聊号码/账户">
+            <input type="text" class="name-input" placeholder="账号" v-model="user.userName">
           </div>
           <div class="login-input-group password-group">
-            <input type="password" class="pwd-input" placeholder="密码">
+            <input type="password" class="pwd-input" placeholder="密码" v-model="user.password">
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox"> 记住账户
+              <input type="checkbox" v-model="rememberMe"> 记住账户
             </label>
           </div>
           <div class="">
-            <button class="btn btn-primary btn-block">登录</button>
+            <button class="btn btn-primary btn-block" @click="handleLogin">登录</button>
           </div>
         </div>
         <div class="pull-left right-cection">
@@ -36,10 +36,4 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  data() {
-    return {};
-  }
-};
-</script>
+<script src="./Login.controller.js"></script>
