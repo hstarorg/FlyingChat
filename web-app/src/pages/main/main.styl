@@ -1,0 +1,45 @@
+.page-main {
+  .chat-main {
+    width: 900px;
+    height: 650px;
+    margin: 0 auto;
+    background-color: #fff;
+    margin-top: calc((50vh - 325px) * 0.618);
+    border-radius: 5px;
+    box-shadow: 0 0 5px #333;
+    overflow: hidden;
+  }
+
+  .chat-main-header {
+    height: 55px;
+    padding: 10px;
+    background: linear-gradient(to right, #2c9ae9, #1086f1, #3e57c9, #3448a1);
+
+    >div {
+      line-height: 35px;
+    }
+  }
+
+  .chat-main-body {
+    position: relative;
+    height: 595px;
+
+    .left-panel {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 230px;
+      background: green;
+    }
+
+    .right-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 230px;
+      background: purple;
+    }
+  }
+}

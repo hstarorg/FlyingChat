@@ -9,7 +9,8 @@ const router = new Router({
   routes: [
     { path: '/login', component: pages.Login },
     { path: '/register', component: pages.Register },
-    { path: '/', component: pages.Main }
+    { path: '/', component: pages.Main },
+    { path: '*', redirect: '/' }
   ]
 });
 
