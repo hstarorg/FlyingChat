@@ -1,5 +1,30 @@
 # 数据表设计
 
+为了提高可用性和性能，也考虑到IM的具体场景，该项目选用 `MongoDB` 作为后端存储。
+
+# Collections（集合，对应关系型DB中的表）
+
+## users（用户集合，存储用户相关信息）
+
+```json
+{
+  _id: ObjectId, // 集合主键
+  userId: number, // 用户编号，从10000开始，依次递增
+  userName: string, // 用户名，唯一，注册时填写的用户名
+  nickName: string, // 昵称，不唯一，注册时填写的昵称
+  password: string, // 用户密码，采用hash加密存储
+  email: string, // 用户的邮件地址，可用于找回密码
+  phone: string, // 用户手机号，可用于找回密码
+  avatarUrl: string, // 用户头像地址
+  createDate: long, // 用户注册时间
+  userStatus: string // 用户状态，默认Active，可选InActive(禁用)
+}
+```
+
+---------------------------------------
+
+# Old，等待处理
+
 ### 前置对象申明
 
 ```
@@ -7,21 +32,6 @@ type MsgObj {
   userId: number, // 发送者
   createDate: long, // 发送时间,
   message: string, // 消息内容
-}
-```
-
-### 用户信息记录(users)
-```
-{
-  userId: number, // 用户编号，从1000开始
-  nickname: string, // 昵称
-  username: string, // 用户名
-  password: string, // 密码
-  emailAddress: string, // 邮箱
-  createDate: long, // 注册时间
-  isEnable: boolean, // 是否启用
-  avatorUrl: string, // 头像地址
-  groups: Array<number> // 所在的Group, groupId
 }
 ```
 

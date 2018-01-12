@@ -1,1 +1,5 @@
-module.exports = {};
+const AccountSchemas = require('./AccountSchemas');
+
+module.exports = {
+  AccountSchemas
+};

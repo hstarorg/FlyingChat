@@ -8,5 +8,12 @@ module.exports = {
   dbConfig: {
     uri: 'mongodb://192.168.1.200:27017',
     dbName: 'flyingchat'
+  },
+  socketOpt: {
+    serveClient: false, // 不提供socket.io-client
+    origins: '*',
+    pingTimeout: 10 * 1000, // 多少毫秒没有响应，认为连接关闭，默认60000
+    pingInterval: 5 * 1000, // 间隔多少毫秒发送ping，默认25000
+    cookie: true
   }
 };
