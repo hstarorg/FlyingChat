@@ -1,4 +1,4 @@
-import { storage } from '@/common';
+import { ajax, storage } from '@/common';
 export default {
   data() {
     return {
@@ -18,6 +18,17 @@ export default {
   },
   methods: {
     handleLogin() {
+      ajax
+        .post('/account/login', { ...this.user })
+        .then(() => {
+          this._setStorage();
+          this.$router.push('/');
+        })
+        .catch(res => {
+          alert(res.message);
+        });
+    },
+    _setStorage() {
       if (this.rememberMe) {
         storage.local.set('$$userName', this.user.userName);
       } else {
