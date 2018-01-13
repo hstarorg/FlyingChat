@@ -9,6 +9,7 @@ module.exports = {
     uri: 'mongodb://192.168.1.200:27017',
     dbName: 'flyingchat'
   },
+  sha256Secret: 'flyingchatForSiPangZi7410!!',
   socketOpt: {
     serveClient: false, // 不提供socket.io-client
     origins: '*',

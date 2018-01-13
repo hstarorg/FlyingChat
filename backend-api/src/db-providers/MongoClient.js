@@ -54,7 +54,12 @@ class MongoClient {
    */
   async insertOne(collectionName, doc, options = {}) {
     const collection = await this._getCollection(collectionName);
-    return await collection.insertOne(doc, options);
+    const commandResult = await collection.insertOne(doc, options);
+    return {
+      ops: commandResult.ops,
+      insertedCount: commandResult.insertedCount,
+      insertedId: commandResult.insertedId
+    };
   }
 
   /**

@@ -4,6 +4,16 @@
 
 # Collections（集合，对应关系型DB中的表）
 
+## sequences （序列表，用于存储一些自增编号啥的）
+
+```json
+{
+  _id: ObjectId, // 集合主键
+  key: string, // Key
+  value: number // Value
+}
+```
+
 ## users（用户集合，存储用户相关信息）
 
 ```json

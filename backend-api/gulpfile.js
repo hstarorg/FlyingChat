@@ -6,7 +6,7 @@ const notifier = require('node-notifier');
 
 const notify = message => {
   notifier.notify({
-    title: 'pm-backend-api notify!',
+    title: 'FlyingChat notify!',
     message
   });
 };
