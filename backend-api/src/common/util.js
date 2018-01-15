@@ -29,10 +29,6 @@ module.exports = {
     return uuid.v4();
   },
 
-  generateUuidV5() {
-    return uuid.v5();
-  },
-
   /**
    * 数据验证
    * @param {*} data 要验证的数据

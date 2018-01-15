@@ -8,6 +8,7 @@ const router = new Router({
 
 router.post('/register', accountBiz.doRegister);
 router.post('/login', accountBiz.doLogin);
+router.post('/autologin', accountBiz.doAutoLogin);
 router.get('/logout', accountBiz.doLogout);
 
 module.exports = router;
