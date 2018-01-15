@@ -3,10 +3,10 @@ class WebStorage {
     this.storage = storage;
   }
   get(key) {
-    return this.storage.getItem(key);
+    return JSON.parse(this.storage.getItem(key));
   }
   set(key, value) {
-    return this.storage.setItem(key, value);
+    return this.storage.setItem(key, JSON.stringify(value));
   }
   remove(key) {
     return this.storage.removeItem(key);

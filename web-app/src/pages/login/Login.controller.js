@@ -1,4 +1,6 @@
 import { ajax, storage } from '@/common';
+import { authService } from '../../services';
+
 export default {
   data() {
     return {
@@ -18,8 +20,8 @@ export default {
   },
   methods: {
     handleLogin() {
-      ajax
-        .post('/account/login', { ...this.user })
+      authService
+        .doLogin({ ...this.user })
         .then(() => {
           this._setStorage();
           this.$router.push('/');
