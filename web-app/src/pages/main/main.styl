@@ -1,6 +1,6 @@
 .page-main {
   .chat-main {
-    width: 900px;
+    width: 980px;
     height: 650px;
     margin: 0 auto;
     background-color: #fff;
@@ -11,12 +11,57 @@
   }
 
   .chat-main-header {
+    position: relative;
     height: 55px;
     padding: 10px;
     background: linear-gradient(to right, #2c9ae9, #1086f1, #3e57c9, #3448a1);
 
     >div {
       line-height: 35px;
+    }
+
+    .user-avatar {
+      width: 200px;
+    }
+
+    .center-ul {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      text-align: center;
+      padding: 0;
+
+      li {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        list-style: none;
+        line-height: 55px;
+        cursor: pointer;
+        color: #fff;
+        font-weight: bold;
+        opacity: 0.8;
+
+        &:hover {
+          opacity: .9;
+        }
+
+        &.active {
+          opacity: 1;
+        }
+
+        &.active::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          display: block;
+          left: 25px;
+          border: 5px solid transparent;
+          border-bottom-color: #fff;
+        }
+      }
     }
   }
 
@@ -30,7 +75,7 @@
       bottom: 0;
       left: 0;
       width: 230px;
-      background: green;
+      background: #fafafa;
     }
 
     .right-panel {
@@ -39,7 +84,7 @@
       right: 0;
       bottom: 0;
       left: 230px;
-      background: purple;
+      background: #fff;
     }
   }
 }

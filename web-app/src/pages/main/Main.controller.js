@@ -4,7 +4,9 @@ import io from 'socket.io-client';
 export default {
   data() {
     return {
-      conn: null
+      conn: null,
+      selectedPanelName: 'message',
+      xxx: 'users'
     };
   },
   created() {
@@ -35,6 +37,9 @@ export default {
   },
   mounted() {},
   methods: {
+    selectPanel(panelName) {
+      this.selectedPanelName = panelName;
+    },
     onConnect() {
       console.log(this);
     }
