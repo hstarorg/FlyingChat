@@ -1,12 +1,18 @@
 import { storage } from '@/common';
 import io from 'socket.io-client';
+import { mapActions } from 'vuex';
+import { chatPanel, contactPanel, sessionPanel } from './components';
 
 export default {
+  components: {
+    chatPanel,
+    contactPanel,
+    sessionPanel
+  },
   data() {
     return {
       conn: null,
-      selectedPanelName: 'message',
-      xxx: 'users'
+      sessions: ['', '', '']
     };
   },
   created() {
@@ -32,16 +38,20 @@ export default {
     });
     this.conn.on('connect_error', err => console.log('connect_error', err.message));
     this.conn.on('test', msg => {
-      alert(msg);
+      console.log(msg);
     });
   },
   mounted() {},
-  methods: {
-    selectPanel(panelName) {
-      this.selectedPanelName = panelName;
-    },
-    onConnect() {
-      console.log(this);
+  computed: {
+    topLevel() {
+      return this.$store.state.topLevel;
     }
+  },
+  methods: {
+    ...mapActions(['updateTopLevel']),
+    selectPanel(panelName) {
+      this.updateTopLevel(panelName);
+    },
+    onConnect() {}
   }
 };

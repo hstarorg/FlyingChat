@@ -7,6 +7,7 @@ import Vue from 'vue';
 import App from './App';
 import { COMPONENTS } from './components';
 import { router } from './router.config';
+import { store } from './store';
 
 COMPONENTS.forEach(comp => Vue.component(comp.name, comp));
 
@@ -18,5 +19,6 @@ Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 });
