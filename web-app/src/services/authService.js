@@ -20,6 +20,7 @@ export const authService = {
     let user = storage.session.get('user');
     if (needLogin && !user) {
       if (!this.autologin) {
+        this.autologin = true;
         await this.doAutoLogin();
       }
       user = storage.session.get('user');
