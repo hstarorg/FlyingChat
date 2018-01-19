@@ -1,1 +1,1 @@
-module.exports = { USERS: 'users', SEQUENCES: 'sequences' };
+module.exports = { USERS: 'users', SEQUENCES: 'sequences', GROUPS: 'groups' };

@@ -40,6 +40,7 @@ class MongoClient {
    * @param {number} pageObj.size Size of page
    */
   _getPagingInfo(pageObj) {
+    pageObj = pageObj || {};
     const index = this._getPositiveInteger(pageObj.index, 1);
     const size = this._getPositiveInteger(pageObj.size, 20);
     const skip = size * (index - 1);
@@ -88,7 +89,7 @@ class MongoClient {
     const collection = await this._getCollection(collectionName);
     const { skip, limit } = this._getPagingInfo(pageObj);
     options = Object.assign({}, options, { sort: sortObj, projection: fields, skip, limit });
-    return await collection.find(query, options);
+    return await collection.find(query, options).toArray();
   }
 
   /**

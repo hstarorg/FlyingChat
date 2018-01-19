@@ -1,4 +1,4 @@
-const io = require('socket.io')(); // for code hints
+// const io = require('socket.io')(); // for code hints
 const { util, crypto, db, DbCollections, UserStatus, tokenStore } = require('../common');
 const { AccountSchemas } = require('./schemas');
 const config = require('../config');
