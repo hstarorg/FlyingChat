@@ -27,7 +27,34 @@
   phone: string, // 用户手机号，可用于找回密码
   avatarUrl: string, // 用户头像地址
   createDate: long, // 用户注册时间
-  userStatus: string // 用户状态，默认Active，可选InActive(禁用)
+  userStatus: string, // 用户状态，默认Active，可选InActive(禁用)
+  groups: Array<{ // 用户加入的组
+    tagName: string, // 标签名称
+    groupList: Array<number> // groupId集合
+  }>
+}
+```
+
+## groups（群集合，存储群信息）
+
+```json
+{
+  _id: ObjectId, // 集合主键
+  groupId: string, // 群ID
+  groupName: string, // 群名称
+  avatarUrl: string, // 群头像地址
+  createDate: long, // 群创建时间
+  groupStatus: string, // 群状态
+  ownerId: number, // 群主ID
+  maxCount: number, // 群规模（成员人数）
+  joinMode: string, // 加群方式（Public, NeedApprove, Private->允许所有人，需要认证，不允许加群）
+  members: Array<number>, // 群成员
+  isPrivate: boolean, // 是否是内部群（把两个人私聊做成一个两人群）
+  chatRecords: Array<{ // 聊天记录数组
+    userId: string, // 发言人
+    createDate: long, // 发言时间
+    content: string // 消息内容
+  }> 
 }
 ```
 
