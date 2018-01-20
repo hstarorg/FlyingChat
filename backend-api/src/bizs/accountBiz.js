@@ -14,7 +14,7 @@ const _getUserId = async () => {
   if (!value) {
     await db.insertOne(DbCollections.SEQUENCES, { key, value: defaultVal });
   }
-  return value || defaultVal;
+  return value ? value.value : defaultVal;
 };
 
 const _buildLoginUser = (token, user) => {

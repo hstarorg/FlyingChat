@@ -31,6 +31,13 @@
   groups: Array<{ // 用户加入的组
     tagName: string, // 标签名称
     groupList: Array<number> // groupId集合
+  }>,
+  friends: Array<{ // 好友列表
+    userId: number, // 用户ID
+    createDate: number // 创建时间
+  }>,
+  sessions: Array<{
+    groupId: string, // groupId
   }>
 }
 ```
@@ -42,6 +49,7 @@
   _id: ObjectId, // 集合主键
   groupId: string, // 群ID
   groupName: string, // 群名称
+  groupDescription: string, // 群介绍
   avatarUrl: string, // 群头像地址
   createDate: long, // 群创建时间
   groupStatus: string, // 群状态
@@ -55,45 +63,5 @@
     createDate: long, // 发言时间
     content: string // 消息内容
   }> 
-}
-```
-
----------------------------------------
-
-# Old，等待处理
-
-### 前置对象申明
-
-```
-type MsgObj {
-  userId: number, // 发送者
-  createDate: long, // 发送时间,
-  message: string, // 消息内容
-}
-```
-
-### 讨论组（群聊）实体(groups)
-```
-{
-  groupId: string, // 聊天组ID
-  groupName: string, // 组名
-  groupDescription: string, // 组介绍
-  groupAvatorUrl: string, // 组logo
-  ownerId: number, // 创建人
-  createDate: long, // 创建时间
-  isEnable: boolean, // 是否启用
-  members: Array<number>, // 组成员，userId,
-  messages: Array<MsgObj> // 聊天信息
-}
-```
-
-### 历史聊天信息存储(historyMsgs)
-
-```
-{
-  groupId: string, // 组ID
-  messageYear: number, // 年
-  messageMonth: number, // 月
-  messages: Array<MsgObj> // 消息对象
 }
 ```

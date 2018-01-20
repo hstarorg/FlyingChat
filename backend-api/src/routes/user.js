@@ -7,5 +7,7 @@ const router = new Router({
 });
 
 router.get('/:userId/groups', userBiz.getUserGroupList);
+router.get('/:userId/friends', userBiz.getUserFriendList);
+router.get('/:userId/sessions', userBiz.getUserSessionList);
 
 module.exports = router;
