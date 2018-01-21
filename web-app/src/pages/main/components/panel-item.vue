@@ -1,28 +1,27 @@
 <style lang="stylus">
-  .group-item {
+  .panel-item {
     height: 60px;
     display: flex;
-    .group-item-avatar {
+    .panel-item-avatar {
       flex: 0;
       padding: 10px 8px 10px 12px;
       img {
         width: 40px;
         height: 40px;
-        display:inline-block;
         border-radius: 50%;
       }
     }
-    .group-item-content {
+    .panel-item-content {
       flex: 1;
       padding: 10px 10px 10px 0;
       p {
         margin: 0;
       }
-      .group-item-title {
+      .panel-item-title {
         font-size: 16px;
         color: #000;
       }
-      .group-item-subtitle {
+      .panel-item-subtitle {
         line-height: 18px;
         color: #767676;
       }
@@ -37,21 +36,21 @@
   }
 </style>
 <template>
-  <div class="group-item" :class="{active: selected}">
-    <div class="group-item-avatar">
-      <img :src="group.avatarUrl" alt="">
+  <div class="panel-item" :class="{active: selected}">
+    <div class="panel-item-avatar">
+      <img :src="model.imgUrl" alt="">
     </div>
-    <div class="group-item-content">
-      <p class="group-item-title">{{group.groupName}}</p>
-      <p class="group-item-subtitle"></p>
+    <div class="panel-item-content">
+      <p class="panel-item-title">{{model.title}}</p>
+      <p class="panel-item-subtitle">{{model.subtitle}}</p>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'group-item',
+  name: 'panel-item',
   props: {
-    group: { type: Object },
+    model: { type: Object }, // {imgUrl, title, subtitle}
     selected: { type: Boolean, default: false }
   },
   data() {

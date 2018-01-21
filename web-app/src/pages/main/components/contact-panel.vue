@@ -5,23 +5,21 @@
   <div class="contact-panel">
     <fc-tabset :selected.sync="contactShowType">
       <fc-tab-item name='users' header="好友">
-        <user-item v-for="friend in friends" :key="friend.userId" :user="friend"></user-item>
+        <panel-item v-for="friend in friends" :key="friend.userId" :model="getUserModel(friend)"></panel-item>
       </fc-tab-item>
       <fc-tab-item name="groups" header="群">
-        <group-item v-for="group in groups" :key="group.groupId" :group="group"></group-item>
+        <panel-item v-for="group in groups" :key="group.groupId" :model="getGroupModel(group)"></panel-item>
       </fc-tab-item>
     </fc-tabset>
   </div>
 </template>
 <script>
 import { mapActions } from 'vuex';
-import userItem from './user-item.vue';
-import groupItem from './group-item.vue';
+import panelItem from './panel-item.vue';
 export default {
   name: 'contact-panel',
   components: {
-    groupItem,
-    userItem
+    panelItem
   },
   props: {
     friends: { type: Array, default: () => [] },
@@ -41,7 +39,21 @@ export default {
     return {};
   },
   methods: {
-    ...mapActions(['updateContactShowType'])
+    ...mapActions(['updateContactShowType']),
+    getUserModel(item) {
+      return {
+        imgUrl: item.avatarUrl,
+        title: item.nickName,
+        subtitle: ''
+      };
+    },
+    getGroupModel(item) {
+      return {
+        imgUrl: item.avatarUrl,
+        title: item.groupName,
+        subtitle: ''
+      };
+    }
   }
 };
 </script>

@@ -5,15 +5,15 @@
 </style>
 <template>
   <div class="session-panel">
-    <session-item v-for="(se, idx) in sessions" :key="idx"></session-item>
+    <panel-item v-for="(session, idx) in sessions" :key="idx" :model="getModel(session)"></panel-item>
   </div>
 </template>
 <script>
-import sessionItem from './session-item.vue';
+import panelItem from './panel-item.vue';
 export default {
   name: 'session-panel',
   components: {
-    sessionItem
+    panelItem
   },
   props: {
     sessions: { type: Array, default: () => [] }
@@ -21,6 +21,14 @@ export default {
   data() {
     return {};
   },
-  methods: {}
+  methods: {
+    getModel(item) {
+      return {
+        imgUrl: item.xxx,
+        title: 'xxx',
+        subtitle: 'xxx'
+      };
+    }
+  }
 };
 </script>
