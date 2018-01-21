@@ -11,6 +11,7 @@ const isDebug = process.env.NODE_ENV !== 'production';
 const state = {
   user: {
     // 用户信息
+    userId: 0,
     userName: '',
     nickName: '',
     avatarUrl: '',
