@@ -1,5 +1,6 @@
 const { util, crypto, db, DbCollections, UserStatus } = require('../common');
 const { UserSchemas } = require('./schemas');
+const { userDal } = require('./dal');
 const config = require('../config');
 
 /**
@@ -8,11 +9,7 @@ const config = require('../config');
  */
 const getUserGroupList = async ctx => {
   const userId = +ctx.params.userId;
-  const groups = await db.find(
-    DbCollections.GROUPS,
-    { members: userId },
-    { groupId: true, groupName: true, avatarUrl: true, ownerId: true }
-  );
+  const groups = await userDal.getUserGroupList(userId);
   ctx.body = groups;
 };
 
@@ -22,17 +19,7 @@ const getUserGroupList = async ctx => {
  */
 const getUserFriendList = async ctx => {
   const userId = +ctx.params.userId;
-  const findUser = await db.findOne(DbCollections.USERS, { userId }, { friends: true });
-  let friends = [];
-  if (findUser) {
-    friends = findUser.friends || [];
-  }
-  const friendIds = friends.map(x => x.userId);
-  const friendList = await db.find(
-    DbCollections.USERS,
-    { userId: { $in: friendIds } },
-    { userId: true, userName: true, nickName: true }
-  );
+  const friendList = await userDal.getUserFriendList(userId);
   ctx.body = friendList;
 };
 
@@ -42,22 +29,23 @@ const getUserFriendList = async ctx => {
  */
 const getUserSessionList = async ctx => {
   const userId = +ctx.params.userId;
-  const findUser = await db.findOne(DbCollections.USERS, { userId }, { friends: true });
-  let userSessions = [];
-  if (findUser) {
-    userSessions = findUser.sessions || [];
-  }
-  const groupIdList = userSessions.map(x => x.groupId);
-  const sessionList = await db.find(
-    DbCollections.GROUPS,
-    { groupId: { $in: groupIdList } },
-    { groupId: true, groupName: true, avatarUrl: true }
-  );
+  const sessionList = await userDal.getUserSessionList(userId);
   ctx.body = sessionList;
+};
+
+const getMainUIData = async ctx => {
+  const userId = 10000;
+  const resBody = {
+    friends: await userDal.getUserFriendList(userId),
+    groups: await userDal.getUserGroupList(userId),
+    sessions: await userDal.getUserSessionList(userId)
+  };
+  ctx.body = resBody;
 };
 
 module.exports = {
   getUserGroupList,
   getUserFriendList,
-  getUserSessionList
+  getUserSessionList,
+  getMainUIData
 };
