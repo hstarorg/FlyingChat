@@ -5,25 +5,27 @@
   <div class="contact-panel">
     <fc-tabset :selected.sync="contactShowType">
       <fc-tab-item name='users' header="好友">
-        <session-item></session-item>
-        <session-item :selected="true"></session-item>
+        <user-item v-for="friend in friends" :key="friend.userId" :user="friend"></user-item>
       </fc-tab-item>
       <fc-tab-item name="groups" header="群">
-        这是群
+        <group-item v-for="group in groups" :key="group.groupId" :group="group"></group-item>
       </fc-tab-item>
     </fc-tabset>
   </div>
 </template>
 <script>
 import { mapActions } from 'vuex';
-import sessionItem from './session-item.vue';
+import userItem from './user-item.vue';
+import groupItem from './group-item.vue';
 export default {
   name: 'contact-panel',
   components: {
-    sessionItem
+    groupItem,
+    userItem
   },
   props: {
-    sessions: { type: Array, default: () => [] }
+    friends: { type: Array, default: () => [] },
+    groups: { type: Array, default: () => [] }
   },
   computed: {
     contactShowType: {

@@ -17,7 +17,7 @@
       <div class="chat-main-body">
         <div class="left-panel pull-left">
           <session-panel v-if="topLevel === 'session'" :sessions="sessions"></session-panel>
-          <contact-panel v-if="topLevel === 'contact'"></contact-panel>
+          <contact-panel v-if="topLevel === 'contact'" :friends="friends" :groups="groups"></contact-panel>
         </div>
         <div class="right-panel">
           <chat-panel></chat-panel>

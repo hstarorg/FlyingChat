@@ -1,7 +1,9 @@
-import { storage } from '@/common';
 import io from 'socket.io-client';
 import { mapActions } from 'vuex';
+import { storage } from '@/common';
+import { types } from '../../store';
 import { chatPanel, contactPanel, sessionPanel } from './components';
+import { getMainUIData } from './main.service';
 
 export default {
   components: {
@@ -11,8 +13,7 @@ export default {
   },
   data() {
     return {
-      conn: null,
-      sessions: ['', '', '']
+      conn: null
     };
   },
   created() {
@@ -20,6 +21,7 @@ export default {
     if (!user) {
       return this.$router.push('/login');
     }
+    this._loadInitData();
     this.conn = io('http://localhost:7410', {
       transportOptions: {
         polling: {
@@ -45,10 +47,25 @@ export default {
   computed: {
     topLevel() {
       return this.$store.state.topLevel;
+    },
+    friends() {
+      return this.$store.state.friends;
+    },
+    groups() {
+      return this.$store.state.groups;
+    },
+    sessions() {
+      return this.$store.state.sessions;
     }
   },
   methods: {
     ...mapActions(['updateTopLevel']),
+    async _loadInitData() {
+      const uiData = await getMainUIData();
+      this.$store.commit(types.UPDATE_FRIENDS, uiData.friends);
+      this.$store.commit(types.UPDATE_GROUPS, uiData.groups);
+      this.$store.commit(types.UPDATE_SESSIONS, uiData.sessions);
+    },
     selectPanel(panelName) {
       this.updateTopLevel(panelName);
     },
