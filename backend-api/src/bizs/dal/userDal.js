@@ -1,10 +1,28 @@
-const { db, DbCollections } = require('../../common');
+const { db, DbCollections, crypto, UserStatus } = require('../../common');
 const config = require('../../config');
+
+const createUser = async user => {
+  const newUser = {
+    userId: user.userId,
+    userName: user.userName,
+    nickName: user.nickName,
+    password: crypto.hmac_sha256(user.password, config.sha256Secret),
+    email: '',
+    phone: '',
+    avatarUrl: '',
+    createDate: Date.now(),
+    userStatus: UserStatus.Active,
+    groups: [],
+    friends: [],
+    sessions: []
+  };
+  await db.insertOne(DbCollections.USERS, newUser);
+};
 
 const getUserGroupList = async userId => {
   return await db.find(
     DbCollections.GROUPS,
-    { members: userId },
+    { members: userId, isPrivate: false },
     { groupId: true, groupName: true, avatarUrl: true, ownerId: true }
   );
 };
@@ -19,7 +37,7 @@ const getUserFriendList = async userId => {
   return await db.find(
     DbCollections.USERS,
     { userId: { $in: friendIds } },
-    { userId: true, userName: true, nickName: true }
+    { userId: true, userName: true, nickName: true, avatarUrl: true }
   );
 };
 
@@ -38,6 +56,7 @@ const getUserSessionList = async userId => {
 };
 
 module.exports = {
+  createUser,
   getUserGroupList,
   getUserFriendList,
   getUserSessionList

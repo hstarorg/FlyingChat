@@ -1,6 +1,7 @@
 // const io = require('socket.io')(); // for code hints
 const { util, crypto, db, DbCollections, UserStatus, tokenStore } = require('../common');
 const { AccountSchemas } = require('./schemas');
+const { userDal } = require('./dal');
 const config = require('../config');
 
 const _findUser = async userName => {
@@ -19,6 +20,7 @@ const _getUserId = async () => {
 
 const _buildLoginUser = (token, user) => {
   return {
+    userId: user.userId,
     userName: user.userName,
     nickName: user.nickName,
     avatarUrl: user.avatarUrl,
@@ -34,18 +36,7 @@ const doRegister = async ctx => {
     util.throwError('用户已存在，请更换账号后重试');
   }
   const userId = await _getUserId();
-  const newUser = {
-    userId,
-    userName: body.userName,
-    nickName: body.nickName,
-    password: crypto.hmac_sha256(body.password, config.sha256Secret),
-    email: '',
-    phone: '',
-    avatarUrl: '',
-    createDate: Date.now(),
-    userStatus: UserStatus.Active
-  };
-  await db.insertOne(DbCollections.USERS, newUser);
+  await userDal.createUser(Object.assign({}, body, { userId }));
   ctx.status = 201;
   ctx.body = '';
 };
@@ -66,15 +57,12 @@ const doLogin = async ctx => {
 };
 
 const doAutoLogin = async ctx => {
-  const token = ctx.request.headers[config.tokenName];
-  if (!token) {
-    util.throwError('请提供token');
-  }
-  const userInfo = await tokenStore.get(token);
-  if (!userInfo) {
+  const user = ctx.state.user;
+  if (!user) {
     util.throwError('token已失效，请重新登录');
   }
-  ctx.body = _buildLoginUser(token, userInfo);
+  const token = ctx.request.headers[config.tokenName];
+  ctx.body = _buildLoginUser(token, user);
 };
 
 const doLogout = async ctx => {

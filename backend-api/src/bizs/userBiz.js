@@ -34,7 +34,7 @@ const getUserSessionList = async ctx => {
 };
 
 const getMainUIData = async ctx => {
-  const userId = 10000;
+  const userId = ctx.state.user.userId;
   const resBody = {
     friends: await userDal.getUserFriendList(userId),
     groups: await userDal.getUserGroupList(userId),

@@ -9,7 +9,7 @@ const logger = require('koa-logger');
 const { errorHandler } = require('./middlewares');
 const { util } = require('./common');
 const config = require('./config');
-const { socketIOBiz } = require('./bizs');
+const { commonBiz, socketIOBiz } = require('./bizs');
 
 const app = new Koa();
 app.keys = [config.sessionSecret];
@@ -20,6 +20,7 @@ app.use(helmet());
 app.use(cors());
 app.use(body({ multipart: true }));
 
+app.use(commonBiz.setUser);
 // Load routes
 util.loadRoutes(app, config.routesPath);
 

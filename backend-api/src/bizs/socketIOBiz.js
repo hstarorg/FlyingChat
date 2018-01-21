@@ -19,7 +19,7 @@ const initSocketIOBiz = () => {
         return next();
       }
     }
-    return next(new Error('未授权的连接，请先登录'));
+    return next(new Error('401'));
   });
   io.on('connection', socket => {
     socket.emit('test', 'hello');
