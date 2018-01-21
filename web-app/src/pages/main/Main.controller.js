@@ -1,8 +1,9 @@
 import io from 'socket.io-client';
 import { mapActions } from 'vuex';
-import { storage } from '@/common';
+import { messageBox, storage } from '@/common';
 import { types } from '../../store';
 import { chatPanel, contactPanel, sessionPanel } from './components';
+import { SocketStatus } from './enums/SocketStatus';
 import { getMainUIData } from './main.service';
 
 export default {
@@ -13,38 +14,22 @@ export default {
   },
   data() {
     return {
-      conn: null
+      conn: null,
+      status: SocketStatus.WAITING_CONNECT
     };
   },
   created() {
-    const user = storage.session.get('user');
-    if (!user) {
+    if (!this.userToken) {
       return this.$router.push('/login');
     }
     this._loadInitData();
-    this.conn = io('http://localhost:7410', {
-      transportOptions: {
-        polling: {
-          extraHeaders: {
-            'x-fc-token': user.token
-          }
-        }
-      }
-    });
-    this.conn.on('connect', this.onConnect.bind(this));
-    this.conn.on('error', msg => {
-      console.log('errer', msg);
-      if (msg === '未授权的连接，请先登录') {
-        this.$router.push('/login');
-      }
-    });
-    this.conn.on('connect_error', err => console.log('connect_error', err.message));
-    this.conn.on('test', msg => {
-      console.log(msg);
-    });
+    this._connectSocketIO();
   },
   mounted() {},
   computed: {
+    userToken() {
+      return this.$store.state.user.token;
+    },
     topLevel() {
       return this.$store.state.topLevel;
     },
@@ -66,9 +51,66 @@ export default {
       this.$store.commit(types.UPDATE_GROUPS, uiData.groups);
       this.$store.commit(types.UPDATE_SESSIONS, uiData.sessions);
     },
+    async _connectSocketIO() {
+      window.io = io;
+      this.conn = io(AppConf.socketHost, {
+        transportOptions: { polling: { extraHeaders: { 'x-fc-token': this.userToken } } }
+      });
+      window.conn = this.conn;
+
+      this.conn.on('connect', this.onConnect.bind(this));
+      this.conn.on('connect_error', this.onConnectError.bind(this));
+      this.conn.on('connect_timeout', this.onConnectTimeout.bind(this));
+      this.conn.on('error', this.onError.bind(this));
+      this.conn.on('disconnect', this.onDisconnect.bind(this));
+      this.conn.on('reconnect', this.onReconnect.bind(this));
+      this.conn.on('reconnect_attempt', this.onReconnectAttempt.bind(this));
+      this.conn.on('reconnecting', this.onReconnecting.bind(this));
+      this.conn.on('reconnect_error', this.onReconnectError.bind(this));
+      this.conn.on('reconnect_failed', this.onReconnectFailed.bind(this));
+    },
     selectPanel(panelName) {
       this.updateTopLevel(panelName);
     },
-    onConnect() {}
+    // Socket事件
+    onConnect() {
+      this.status = SocketStatus.CONNECTED;
+      console.log('onConnect');
+    },
+    onConnectError(error) {
+      console.log('onConnectError', error);
+    },
+    onConnectTimeout() {
+      console.log('onConnectTimeout');
+    },
+    onError(error) {
+      if (error === '401') {
+        this.conn.close();
+        messageBox.alert('授权失败，请登录后再试', () => {
+          this.$router.push('/login');
+        });
+      }
+      console.log('onError', error);
+    },
+    onDisconnect(reason) {
+      this.status = SocketStatus.DISCONNECTED;
+      console.log('onDisconnect', reason);
+    },
+    onReconnect(attempt) {
+      console.log('onReconnect', attempt);
+    },
+    onReconnectAttempt(attempt) {
+      console.log('onReconnectAttempt', attempt);
+    },
+    onReconnecting(attempt) {
+      this.status = SocketStatus.RECONNECTING;
+      console.log('onReconnecting', attempt);
+    },
+    onReconnectError(error) {
+      console.log('onReconnectError', error);
+    },
+    onReconnectFailed() {
+      console.log('onReconnectFailed');
+    }
   }
 };

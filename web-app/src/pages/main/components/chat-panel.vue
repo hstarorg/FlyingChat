@@ -40,6 +40,10 @@
         margin-right: 8px;
       }
     }
+    .status-text {
+      font-size: 12px;
+      color: red;
+    }
   }
 </style>
 
@@ -47,6 +51,7 @@
   <div class="chat-panel">
     <div class="chat-panel-header">
       死胖子
+      <span class="status-text">{{statusText}}</span>
     </div>
     <div class="chat-panel-body">
 
@@ -63,9 +68,28 @@
   </div>
 </template>
 <script>
+import { SocketStatus } from '../enums/SocketStatus';
 export default {
+  props: {
+    status: { type: String, default: '' }
+  },
   data() {
     return {};
+  },
+  computed: {
+    statusText() {
+      switch (this.status) {
+        case SocketStatus.WAITING_CONNECT:
+          return '正在准备连接...';
+        case SocketStatus.CONNECTED:
+          return '';
+        case SocketStatus.DISCONNECTED:
+          return '连接已断开';
+        case SocketStatus.RECONNECTING:
+          return '网络异常，正在重新连接...';
+      }
+      return '';
+    }
   }
 };
 </script>

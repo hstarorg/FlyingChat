@@ -20,7 +20,7 @@
           <contact-panel v-if="topLevel === 'contact'" :friends="friends" :groups="groups"></contact-panel>
         </div>
         <div class="right-panel">
-          <chat-panel></chat-panel>
+          <chat-panel :status="status"></chat-panel>
         </div>
       </div>
     </div>

@@ -5,10 +5,10 @@
   <div class="contact-panel">
     <fc-tabset :selected.sync="contactShowType">
       <fc-tab-item name='users' header="好友">
-        <panel-item v-for="friend in friends" :key="friend.userId" :model="getUserModel(friend)"></panel-item>
+        <panel-item v-for="friend in friends" :key="friend.userId" :model="getUserModel(friend)" @dblclick.native="handleFriendDblClick(friend)"></panel-item>
       </fc-tab-item>
       <fc-tab-item name="groups" header="群">
-        <panel-item v-for="group in groups" :key="group.groupId" :model="getGroupModel(group)"></panel-item>
+        <panel-item v-for="group in groups" :key="group.groupId" :model="getGroupModel(group)" @dblclick.native="handleGroupDblClick(group)"></panel-item>
       </fc-tab-item>
     </fc-tabset>
   </div>
@@ -39,7 +39,7 @@ export default {
     return {};
   },
   methods: {
-    ...mapActions(['updateContactShowType']),
+    ...mapActions(['updateContactShowType', 'setActivedSession']),
     getUserModel(item) {
       return {
         imgUrl: item.avatarUrl,
@@ -53,6 +53,12 @@ export default {
         title: item.groupName,
         subtitle: ''
       };
+    },
+    handleFriendDblClick(friend) {
+      this.setActivedSession(friend);
+    },
+    handleGroupDblClick(group) {
+      this.setActivedSession(group);
     }
   }
 };

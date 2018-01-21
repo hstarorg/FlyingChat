@@ -15,5 +15,11 @@ export const mutations = {
   },
   [types.UPDATE_SESSIONS](state, sessions) {
     state.sessions = sessions;
+  },
+  [types.SET_ACTIVED_SESSION_ID](state, sessionId) {
+    state.activedSessionId = sessionId;
+  },
+  [types.SET_USER_INFO](state, user) {
+    state.user = user;
   }
 };
