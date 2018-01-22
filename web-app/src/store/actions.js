@@ -19,7 +19,7 @@ export const actions = {
   async setActivedSession({ commit, state }, payload) {
     const isGroup = !!payload.groupId;
     const userId = state.user.userId;
-    const sessions = state.sessions;
+    const newSession = state.sessions.slice();
     let groupId;
     if (!isGroup) {
       // 好友聊天（私聊）
@@ -30,12 +30,14 @@ export const actions = {
       // 群聊天
       groupId = payload.groupId;
     }
-    const groupInfo = await getGroupInfo(groupId);
-    commit(types.SET_ACTIVED_SESSION_ID, groupId);
-    let newSession = sessions.slice();
-    if (sessions.filter(x => x.groupId === groupId).length === 0) {
+    // 如果找不到该Session
+    if (newSession.filter(x => x.groupId === groupId).length === 0) {
+      // 获取到，并塞入Session
+      const groupInfo = await getGroupInfo(groupId);
       newSession.push(groupInfo);
     }
+    commit(types.SET_ACTIVED_SESSION_ID, groupId);
     commit(types.UPDATE_SESSIONS, newSession);
+    commit(types.UPDATE_TOP_LEVEL, 'session');
   }
 };

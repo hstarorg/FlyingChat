@@ -7,25 +7,25 @@
       <div class="panel-heading">
         注册 · 飞聊
       </div>
-      <form class="register-form">
+      <form class="register-form" @submit.prevent="handleSubmit">
         <div class="input-group">
           <span class="input-group-addon reg-label">账号</span>
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" v-model="user.userName">
         </div>
         <br>
         <div class="input-group">
           <span class="input-group-addon reg-label">昵称</span>
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" v-model="user.nickName">
         </div>
         <br>
         <div class="input-group">
           <span class="input-group-addon reg-label">密码</span>
-          <input type="text" class="form-control">
+          <input type="password" class="form-control" v-model="user.password">
         </div>
         <br>
         <div class="input-group">
           <span class="input-group-addon reg-label">确认密码</span>
-          <input type="text" class="form-control">
+          <input type="password" class="form-control" v-model="user.password2">
         </div>
         <br>
         <div>
@@ -39,10 +39,5 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  data() {
-    return {};
-  }
-};
+<script src="./Register.controller.js">
 </script>

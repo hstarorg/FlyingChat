@@ -5,7 +5,7 @@
 </style>
 <template>
   <div class="session-panel">
-    <panel-item v-for="(session, idx) in sessions" :key="idx" :model="getModel(session)"></panel-item>
+    <panel-item v-for="(session, idx) in sessions" :key="idx" :model="getModel(session)" :selected="session.groupId === activedSessionId"></panel-item>
   </div>
 </template>
 <script>
@@ -21,12 +21,17 @@ export default {
   data() {
     return {};
   },
+  computed: {
+    activedSessionId() {
+      return this.$store.state.activedSessionId;
+    }
+  },
   methods: {
     getModel(item) {
       return {
-        imgUrl: item.xxx,
-        title: 'xxx',
-        subtitle: 'xxx'
+        imgUrl: item.avatarUrl,
+        title: item.groupName,
+        subtitle: ''
       };
     }
   }

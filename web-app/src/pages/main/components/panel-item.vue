@@ -6,6 +6,7 @@
       flex: 0;
       padding: 10px 8px 10px 12px;
       img {
+        display: inline-block;
         width: 40px;
         height: 40px;
         border-radius: 50%;
