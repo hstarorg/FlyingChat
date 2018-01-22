@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import { mapActions } from 'vuex';
-import { messageBox, storage } from '@/common';
+import { messageBox } from '@/common';
 import { types } from '../../store';
 import { chatPanel, contactPanel, sessionPanel } from './components';
 import { SocketStatus } from './enums/SocketStatus';
@@ -27,6 +27,9 @@ export default {
   },
   mounted() {},
   computed: {
+    user(){
+      return this.$store.state.user;
+    },
     userToken() {
       return this.$store.state.user.token;
     },

@@ -6,8 +6,8 @@
     <div class="chat-main">
       <div class="chat-main-header">
         <div class="user-avatar">
-          <img src="https://avatars0.githubusercontent.com/u/4043284?s=460&v=4" alt="">
-          <span>幻☆精灵</span>
+          <img :src="user.avatarUrl" alt="">
+          <span>{{user.nickName}}</span>
         </div>
         <ul class="center-ul">
           <li :class="{active: topLevel === 'session'}" @click="selectPanel('session')">消息</li>
