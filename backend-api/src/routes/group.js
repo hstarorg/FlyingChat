@@ -1,6 +1,6 @@
 const Router = require('koa-router');
 const config = require('../config');
-const { userBiz, commonBiz, groupBiz } = require('../bizs');
+const { commonBiz, groupBiz } = require('../bizs');
 
 const router = new Router({
   prefix: `${config.apiPrefix}/groups`

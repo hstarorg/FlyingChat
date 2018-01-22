@@ -1,6 +1,15 @@
 {
+  "extends": "eslint:recommended",
   "parserOptions": {
     "ecmaVersion": 2017,
     "sourceType": "module"
+  },
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "no-undef": "warn",
+    "no-unused-vars": "warn",
+    "no-console": "off"
   }
 }

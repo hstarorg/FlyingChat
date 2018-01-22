@@ -1,7 +1,4 @@
-const { util, crypto, db, DbCollections, UserStatus } = require('../common');
-const { UserSchemas } = require('./schemas');
 const { userDal } = require('./dal');
-const config = require('../config');
 
 /**
  * 通过查询组成员包含userId的组，来查出用户加入的组

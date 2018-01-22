@@ -1,6 +1,5 @@
-const { util, crypto, db, DbCollections, UserStatus } = require('../common');
-const { groupDal } = require('./dal');
-const config = require('../config');
+const { util } = require('../common');
+const { groupDal, userDal } = require('./dal');
 
 const _checkGroupId = async (groupId, userId) => {
   const prefix = 'user';
@@ -13,7 +12,7 @@ const _checkGroupId = async (groupId, userId) => {
   const otherUserId = idArr.find(x => x !== prefix && x !== userIdStr);
   // 除了user前缀和当前userId之外，还能找到一个userId
   if (otherUserId) {
-    const findUser = await db.findOne(DbCollections.USERS, { userId, 'friends.userId': +otherUserId });
+    const findUser = await userDal.findUserByUserIdAndFriendId(userId, otherUserId);
     // 其他人必须是当前用户的好友
     if (findUser) {
       return true;
@@ -29,7 +28,7 @@ const getGroupInfo = async ctx => {
   if (!isValidGroupId) {
     util.throwError('非法请求');
   }
-  let findGroup = await db.findOne(DbCollections.GROUPS, { groupId, members: userId });
+  let findGroup = await groupDal.findGroupByGroupIdAndUserId(groupId, userId);
   if (!findGroup) {
     // create group
     const group = {
@@ -40,7 +39,7 @@ const getGroupInfo = async ctx => {
       isPrivate: true
     };
     await groupDal.createGroup(group, userId);
-    findGroup = await db.findOne(DbCollections.GROUPS, { groupId, members: userId });
+    findGroup = await groupDal.findGroupByGroupIdAndUserId(groupId, userId);
   }
   ctx.body = findGroup;
 };

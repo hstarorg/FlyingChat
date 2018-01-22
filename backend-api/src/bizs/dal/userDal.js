@@ -55,9 +55,19 @@ const getUserSessionList = async userId => {
   );
 };
 
+const findUserByUserIdAndFriendId = async (userId, friendId) => {
+  return await db.findOne(DbCollections.USERS, { userId, 'friends.userId': +friendId });
+};
+
+const findUserByUserName = async userName => {
+  return await db.findOne(DbCollections.USERS, { userName });
+};
+
 module.exports = {
   createUser,
   getUserGroupList,
   getUserFriendList,
-  getUserSessionList
+  getUserSessionList,
+  findUserByUserIdAndFriendId,
+  findUserByUserName
 };

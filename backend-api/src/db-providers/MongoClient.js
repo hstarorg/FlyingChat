@@ -1,4 +1,4 @@
-const Collection = require('mongodb/lib/collection');
+// const Collection = require('mongodb/lib/collection');
 class MongoClient {
   constructor(clientPromise, dbName) {
     this.clientPromise = clientPromise;

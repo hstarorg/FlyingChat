@@ -1,5 +1,4 @@
-const { util, crypto, db, DbCollections, UserStatus, tokenStore } = require('../common');
-const { AccountSchemas } = require('./schemas');
+const { tokenStore } = require('../common');
 const config = require('../config');
 
 const setUser = async (ctx, next) => {

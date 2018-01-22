@@ -18,6 +18,11 @@ const createGroup = async (group, ownerId) => {
   return await db.insertOne(DbCollections.GROUPS, newGroup);
 };
 
+const findGroupByGroupIdAndUserId = async (groupId, userId) => {
+  return await db.findOne(DbCollections.GROUPS, { groupId, members: userId });
+};
+
 module.exports = {
-  createGroup
+  createGroup,
+  findGroupByGroupIdAndUserId
 };
