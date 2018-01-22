@@ -11,7 +11,7 @@ const createGroup = async (group, ownerId) => {
     ownerId, // 群主ID
     maxCount: 200, // 群规模（成员人数）
     joinMode: 'Public', // 加群方式（Public, NeedApprove, Private->允许所有人，需要认证，不允许加群）
-    members: [ownerId], // 群成员
+    members: group.members || [], // 群成员
     isPrivate: group.isPrivate,
     chatRecords: []
   };

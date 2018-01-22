@@ -16,7 +16,7 @@ const _checkGroupId = async (groupId, userId) => {
     const findUser = await userDal.findUser({ userId, 'friends.userId': +otherUserId }, { userId: true });
     // 其他人必须是当前用户的好友
     if (findUser) {
-      return true;
+      return otherUserId;
     }
   }
   return false;
@@ -25,9 +25,10 @@ const _checkGroupId = async (groupId, userId) => {
 const getGroupInfo = async ctx => {
   const { groupId } = ctx.params;
   const { userId } = ctx.state.user;
+  let otherUserId;
   if (groupId.startsWith('user_')) {
-    const isValidGroupId = await _checkGroupId(groupId, userId);
-    if (!isValidGroupId) {
+    otherUserId = await _checkGroupId(groupId, userId);
+    if (!otherUserId) {
       util.throwError('非法请求');
     }
   }
@@ -39,7 +40,8 @@ const getGroupInfo = async ctx => {
       groupName: groupId,
       groupDescription: '',
       avatarUrl: '',
-      isPrivate: true
+      isPrivate: true,
+      members: [+userId, +otherUserId]
     };
     await groupDal.createGroup(group, userId);
     findGroup = await groupDal.findGroupByGroupIdAndUserId(groupId, userId);
