@@ -2,20 +2,21 @@ import io from 'socket.io-client';
 import { mapActions } from 'vuex';
 import { messageBox } from '@/common';
 import { types } from '../../store';
-import { chatPanel, contactPanel, sessionPanel } from './components';
+import { contactPanel, sessionPanel } from './components';
 import { SocketStatus } from './enums/SocketStatus';
 import { getMainUIData } from './main.service';
 
 export default {
   components: {
-    chatPanel,
     contactPanel,
     sessionPanel
   },
   data() {
     return {
       conn: null,
-      status: SocketStatus.WAITING_CONNECT
+      status: SocketStatus.WAITING_CONNECT,
+      inputMessage: '',
+      messageList: []
     };
   },
   created() {
@@ -27,7 +28,7 @@ export default {
   },
   mounted() {},
   computed: {
-    user(){
+    user() {
       return this.$store.state.user;
     },
     userToken() {
@@ -44,6 +45,27 @@ export default {
     },
     sessions() {
       return this.$store.state.sessions;
+    },
+    statusText() {
+      switch (this.status) {
+        case SocketStatus.WAITING_CONNECT:
+          return '正在准备连接...';
+        case SocketStatus.CONNECTED:
+          return '';
+        case SocketStatus.DISCONNECTED:
+          return '连接已断开';
+        case SocketStatus.RECONNECTING:
+          return '网络异常，正在重新连接...';
+      }
+      return '';
+    }
+  },
+  watch: {
+    messageList() {
+      this.$nextTick(() => {
+        const chatPanelBody = this.$refs.chatPanelBody;
+        chatPanelBody.scrollTop = chatPanelBody.scrollHeight;
+      });
     }
   },
   methods: {
@@ -71,9 +93,59 @@ export default {
       this.conn.on('reconnecting', this.onReconnecting.bind(this));
       this.conn.on('reconnect_error', this.onReconnectError.bind(this));
       this.conn.on('reconnect_failed', this.onReconnectFailed.bind(this));
+      this.conn.on('message', this.onMessage.bind(this));
+    },
+    handleSendMessage() {
+      if (!this.inputMessage) {
+        return;
+      }
+      const msg = {
+        type: 'SEND_MESSAGE',
+        message: {
+          from: this.user.userId,
+          to: 'xxx',
+          message: this.inputMessage
+        }
+      };
+      this.conn.emit('message', msg);
+      const clientMsgBody = {
+        type: 'user',
+        user: this.user,
+        date: Date.now(),
+        content: this.inputMessage,
+        isMine: true
+      };
+      this.messageList.push(clientMsgBody);
+      this.$nextTick(() => (this.inputMessage = ''));
     },
     selectPanel(panelName) {
       this.updateTopLevel(panelName);
+    },
+    onMessage(msg) {
+      if (!msg || !msg.type) {
+        return;
+      }
+      console.log(msg);
+      const { type, message } = msg;
+      switch (type) {
+        case 'FORCED_DISCONNECT': // 被挤下线
+          // this.conn.close();
+          messageBox.alert(message, () => {
+            this.$router.push('/login');
+          });
+          break;
+        case 'NEW_MESSAGE': // 收到新消息
+          {
+            const clientMsgBody = {
+              type: 'user',
+              user: { avatorUrl: message.avatorUrl, nickname: message.nickname },
+              date: Date.now(),
+              content: message.message
+            };
+            this.messageList.push(clientMsgBody);
+          }
+          break;
+      }
     },
     // Socket事件
     onConnect() {

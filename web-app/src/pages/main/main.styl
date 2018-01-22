@@ -104,4 +104,136 @@
       background: #fff;
     }
   }
+
+  .chat-panel {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    .chat-panel-header {
+      height: 41px;
+      margin-left: 3px;
+      padding-left: 12px;
+      border-bottom: 1px solid #eaeaea;
+      line-height: 40px;
+      font-size: 18px;
+    }
+
+    .chat-panel-footer {
+      position: absolute;
+      height: 160px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin-left: 3px;
+      border-top: 1px solid #eaeaea;
+
+      .footer-toolbar {
+        height: 30px;
+        line-height: 30px;
+        padding-left: 5px;
+        border-bottom: 1px solid #eaeaea;
+      }
+
+      textarea {
+        height: 93px;
+        width: 100%;
+        border: none;
+        outline: none;
+        resize: none;
+        padding: 5px;
+      }
+
+      .btn-send {
+        line-height: 12px;
+        margin-right: 8px;
+      }
+    }
+
+    .status-text {
+      font-size: 12px;
+      color: red;
+    }
+
+    .chat-panel-body {
+      padding: 10px;
+      overflow-y: auto;
+      height: 394px;
+
+      .chat-panel-body-item {
+        position: relative;
+        padding-left: 50px;
+        padding-top: 25px;
+
+        .chat-item-user {
+          position: absolute;
+          left: 0;
+          top: 0;
+
+          cite {
+            position: absolute;
+            left: 50px;
+            top: -2px;
+            width: 500px;
+            line-height: 24px;
+            font-size: 12px;
+            white-space: nowrap;
+            color: #999;
+            text-align: left;
+            font-style: normal;
+          }
+        }
+
+        .chat-item-content {
+          position: relative;
+          line-height: 22px;
+          padding: 8px 15px;
+          background-color: #e2e2e2;
+          border-radius: 3px;
+          color: #333;
+          word-break: break-all;
+          display: inline-block;
+
+          &::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 13px;
+            width: 0;
+            height: 0;
+            border-style: solid dashed dashed;
+            border-color: #e2e2e2 transparent transparent;
+            overflow: hidden;
+            border-width: 10px;
+          }
+        }
+
+        &.chat-body-item-right {
+          text-align: right;
+          padding-right: 50px;
+          padding-left: 0;
+
+          .chat-item-user {
+            right: 0;
+            left: auto;
+
+            cite {
+              right: 50px;
+              left: auto;
+              text-align: right;
+            }
+          }
+
+          .chat-item-content {
+            &::after {
+              right: -10px;
+              left: auto;
+            }
+          }
+        }
+      }
+    }
+  }
 }
