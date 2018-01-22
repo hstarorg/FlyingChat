@@ -1,5 +1,6 @@
 const { util } = require('../common');
 const { groupDal, userDal } = require('./dal');
+const userBiz = require('./userBiz');
 
 const _checkGroupId = async (groupId, userId) => {
   const prefix = 'user';
@@ -12,7 +13,7 @@ const _checkGroupId = async (groupId, userId) => {
   const otherUserId = idArr.find(x => x !== prefix && x !== userIdStr);
   // 除了user前缀和当前userId之外，还能找到一个userId
   if (otherUserId) {
-    const findUser = await userDal.findUserByUserIdAndFriendId(userId, otherUserId);
+    const findUser = await userDal.findUser({ userId, 'friends.userId': +otherUserId }, { userId: true });
     // 其他人必须是当前用户的好友
     if (findUser) {
       return true;
@@ -24,9 +25,11 @@ const _checkGroupId = async (groupId, userId) => {
 const getGroupInfo = async ctx => {
   const { groupId } = ctx.params;
   const { userId } = ctx.state.user;
-  const isValidGroupId = await _checkGroupId(groupId, userId);
-  if (!isValidGroupId) {
-    util.throwError('非法请求');
+  if (groupId.startsWith('user_')) {
+    const isValidGroupId = await _checkGroupId(groupId, userId);
+    if (!isValidGroupId) {
+      util.throwError('非法请求');
+    }
   }
   let findGroup = await groupDal.findGroupByGroupIdAndUserId(groupId, userId);
   if (!findGroup) {
@@ -41,6 +44,7 @@ const getGroupInfo = async ctx => {
     await groupDal.createGroup(group, userId);
     findGroup = await groupDal.findGroupByGroupIdAndUserId(groupId, userId);
   }
+  await userBiz._createSession(userId, groupId);
   ctx.body = findGroup;
 };
 

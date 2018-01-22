@@ -17,7 +17,7 @@ const _buildLoginUser = (token, user) => {
 const doRegister = async ctx => {
   const { body } = ctx.request;
   await util.validate(body, AccountSchemas.REGISTER_SCHEMA);
-  const findUser = await userDal.findUserByUserName(body.userName);
+  const findUser = await userDal.findUser({ userName: body.userName });
   if (findUser) {
     util.throwError('用户已存在，请更换账号后重试');
   }
@@ -30,7 +30,7 @@ const doRegister = async ctx => {
 const doLogin = async ctx => {
   const { body } = ctx.request;
   await util.validate(body, AccountSchemas.LOGIN_SCHEMA);
-  const findUser = await userDal.findUserByUserName(body.userName);
+  const findUser = await userDal.findUser({ userName: body.userName });
   if (findUser.password !== crypto.hmac_sha256(body.password, config.sha256Secret)) {
     util.throwError('登录失败，账号密码不匹配');
   }

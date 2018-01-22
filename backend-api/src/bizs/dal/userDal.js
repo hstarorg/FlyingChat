@@ -55,12 +55,16 @@ const getUserSessionList = async userId => {
   );
 };
 
-const findUserByUserIdAndFriendId = async (userId, friendId) => {
-  return await db.findOne(DbCollections.USERS, { userId, 'friends.userId': +friendId });
+const findUser = async (query, fields) => {
+  return await db.findOne(DbCollections.USERS, query, fields);
 };
 
-const findUserByUserName = async userName => {
-  return await db.findOne(DbCollections.USERS, { userName });
+const findUserList = async (query, fields) => {
+  return await db.find(DbCollections.USERS, query, fields);
+};
+
+const updateUserSession = async (userId, sessions) => {
+  return await db.updateOne(DbCollections.USERS, { userId }, { $set: { sessions } });
 };
 
 module.exports = {
@@ -68,6 +72,7 @@ module.exports = {
   getUserGroupList,
   getUserFriendList,
   getUserSessionList,
-  findUserByUserIdAndFriendId,
-  findUserByUserName
+  findUser,
+  findUserList,
+  updateUserSession
 };
