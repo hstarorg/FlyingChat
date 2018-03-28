@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "build": "cd android && ./gradlew assembleRelease",
     "test": "jest"
   },
   "dependencies": {
@@ -11,10 +14,15 @@
     "react-native": "0.52.0"
   },
   "devDependencies": {
+    "@types/react": "^16.1.0",
+    "@types/react-native": "^0.52.20",
     "babel-jest": "22.0.4",
     "babel-preset-react-native": "4.0.0",
     "jest": "22.0.5",
-    "react-test-renderer": "16.2.0"
+    "metro-bundler": "^0.22.1",
+    "react-test-renderer": "16.2.0",
+    "source-map": "^0.7.2",
+    "typescript": "^2.8.1"
   },
   "jest": {
     "preset": "react-native"
