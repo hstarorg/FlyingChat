@@ -19,9 +19,8 @@
     "babel-jest": "22.0.4",
     "babel-preset-react-native": "4.0.0",
     "jest": "22.0.5",
-    "metro-bundler": "^0.22.1",
+    "react-native-typescript-transformer": "^1.2.3",
     "react-test-renderer": "16.2.0",
-    "source-map": "^0.7.2",
     "typescript": "^2.8.1"
   },
   "jest": {

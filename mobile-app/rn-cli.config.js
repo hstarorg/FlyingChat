@@ -1,18 +1,8 @@
-const path = require('path');
-const blacklist = require('metro-bundler/src/blacklist');
-
-const config = {
-  getBlacklistRE() {
-    return blacklist([/\.idea[\/\\].*/]);
-  },
-
-  getSourceExts() {
-    return ['js', 'json', 'ts', 'tsx'];
-  },
-
+module.exports = {
   getTransformModulePath() {
-    return require.resolve('./utils/ts-transformer');
+    return require.resolve('react-native-typescript-transformer');
+  },
+  getSourceExts() {
+    return ['ts', 'tsx'];
   }
 };
-
-module.exports = config;
