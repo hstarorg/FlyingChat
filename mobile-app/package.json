@@ -10,9 +10,14 @@
     "test": "jest"
   },
   "dependencies": {
+    "prop-types": "^15.6.1",
     "react": "16.2.0",
     "react-native": "0.52.0",
-    "react-navigation": "^1.5.8"
+    "react-native-device-info": "^0.21.4",
+    "react-native-splash-screen": "^3.0.6",
+    "react-native-swipe-list-view": "^1.0.7",
+    "react-navigation": "^1.5.8",
+    "url-parse": "^1.2.0"
   },
   "devDependencies": {
     "@types/react": "^16.1.0",
