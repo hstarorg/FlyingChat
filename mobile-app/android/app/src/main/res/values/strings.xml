@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">飞聊</string>
     <string name="reactNativeCodePush_androidDeploymentKey">oWm8OifeO44qSgQ0WCHJyFBA3RzrtD9LKKVna</string>
-    <string name="reactNativeCodePush_host">http://192.168.1.4:3000/</string>
+    <string name="reactNativeCodePush_host">http://localhost:3000/</string>
 </resources>

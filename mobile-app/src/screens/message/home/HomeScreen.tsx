@@ -1,13 +1,22 @@
 import * as React from 'react';
-import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import codePush, { StatusReport, SyncOptions } from 'react-native-code-push';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
 export class HomeScreen extends React.Component<{}> {
   state = {
-    listViewData: Array(20)
+    listViewData: Array(200)
       .fill('')
-      .map((_, i) => ({ key: `${i}`, text: `item #${i}` }))
+      .map((_, i) => ({ key: `${i}`, text: `item #${i}` })),
+    totalBytes: -1,
+    status: -1,
+    receivedBytes: -1
   };
+
+  constructor(props) {
+    super(props);
+    this.checkAppUpgrade = this.checkAppUpgrade.bind(this);
+  }
 
   onRowDidOpen() {}
   closeRow(rowMap, rowKey) {
@@ -24,43 +33,69 @@ export class HomeScreen extends React.Component<{}> {
     this.setState({ listViewData: newData });
   }
 
+  checkAppUpgrade() {
+    codePush.sync(
+      {
+        installMode: codePush.InstallMode.ON_NEXT_RESTART,
+        updateDialog: {
+          appendReleaseDescription: true,
+          title: '更新信息'
+        }
+      },
+      status => {
+        this.setState({ status });
+      },
+      a => {
+        this.setState({ receivedBytes: a.receivedBytes, totalBytes: a.totalBytes });
+      }
+    );
+  }
+
   render() {
     return (
-      <SwipeListView
-        useFlatList
-        data={this.state.listViewData}
-        disableRightSwipe={true}
-        leftOpenValue={0}
-        rightOpenValue={-150}
-        onRowDidOpen={this.onRowDidOpen}
-        renderItem={(data, rowMap) => (
-          <TouchableHighlight
-            onPress={_ => console.log('You touched me')}
-            style={styles.rowFront}
-            underlayColor={'#AAA'}
-          >
-            <View>
-              <Text>I am {data.item.text} in a SwipeListView</Text>
+      <View>
+        <View>
+          <Text>{'当前状态：' + this.state.status}</Text>
+          <Text>{'更新包总大小：' + this.state.totalBytes}</Text>
+          <Text>{'当前下载大小：' + this.state.receivedBytes}</Text>
+          <Button title="点我更新" onPress={this.checkAppUpgrade} />
+        </View>
+        <SwipeListView
+          useFlatList
+          data={this.state.listViewData}
+          disableRightSwipe={true}
+          leftOpenValue={0}
+          rightOpenValue={-150}
+          onRowDidOpen={this.onRowDidOpen}
+          renderItem={(data, rowMap) => (
+            <TouchableHighlight
+              onPress={_ => console.log('You touched me')}
+              style={styles.rowFront}
+              underlayColor={'#AAA'}
+            >
+              <View>
+                <Text>I am {data.item.text} in a SwipeListView</Text>
+              </View>
+            </TouchableHighlight>
+          )}
+          renderHiddenItem={(data, rowMap) => (
+            <View style={styles.rowBack}>
+              <TouchableOpacity
+                style={[styles.backRightBtn, styles.backRightBtnLeft]}
+                onPress={_ => this.closeRow(rowMap, data.item.key)}
+              >
+                <Text style={styles.backTextWhite}>标记未读</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.backRightBtn, styles.backRightBtnRight]}
+                onPress={_ => this.deleteRow(rowMap, data.item.key)}
+              >
+                <Text style={styles.backTextWhite}>删除</Text>
+              </TouchableOpacity>
             </View>
-          </TouchableHighlight>
-        )}
-        renderHiddenItem={(data, rowMap) => (
-          <View style={styles.rowBack}>
-            <TouchableOpacity
-              style={[styles.backRightBtn, styles.backRightBtnLeft]}
-              onPress={_ => this.closeRow(rowMap, data.item.key)}
-            >
-              <Text style={styles.backTextWhite}>标记未读</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.backRightBtn, styles.backRightBtnRight]}
-              onPress={_ => this.deleteRow(rowMap, data.item.key)}
-            >
-              <Text style={styles.backTextWhite}>删除</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      />
+          )}
+        />
+      </View>
     );
   }
 }
