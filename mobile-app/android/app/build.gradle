@@ -115,6 +115,14 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
+    signingConfigs {
+      myConfig {
+          storeFile file("apk_sign.jks")
+          storePassword "**" // 将这里的"**"换成对应的密码
+          keyAlias "key0"
+          keyPassword "**" // 将这里的"**"换成对应的密码
+      }
+    }
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
