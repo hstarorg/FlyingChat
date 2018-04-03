@@ -8,7 +8,8 @@
     "ios": "react-native run-ios",
     "build": "cd android && ./gradlew assembleRelease",
     "build:win": "cd android && gradlew assembleRelease --console plain",
-    "test": "jest"
+    "test": "jest",
+    "test:e2e": "detox build && detox test"
   },
   "dependencies": {
     "prop-types": "^15.6.1",
@@ -26,6 +27,7 @@
     "@types/react-native": "^0.52.20",
     "babel-jest": "22.0.4",
     "babel-preset-react-native": "4.0.0",
+    "detox": "^7.3.2",
     "jest": "22.0.5",
     "react-native-typescript-transformer": "^1.2.3",
     "react-test-renderer": "16.2.0",
@@ -33,6 +35,17 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/flyingchat.app",
+        "build":
+          "xcodebuild -project ios/flyingchat.xcodeproj -scheme flyingchat -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone 6"
+      }
+    }
   },
   "importSort": {
     ".js, .jsx, .es6, .es, .ts": {
