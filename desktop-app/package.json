@@ -4,15 +4,23 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "dev": "electron .",
-    "pack": "electron-builder --dir",
+    "start": "npm run dev",
+    "dev:serve": "webpack-dev-server --config build/webpack.dev.conf.js --hot",
+    "dev:electron": "electron .",
+    "dev": "concurrently \"npm run dev:serve\"  \"npm run dev:electron\"",
+    "build": "webpack --config build/webpack.prod.conf.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "electron": "1.7.10",
-    "electron-builder": "^19.52.1"
+    "concurrently": "^4.0.1",
+    "electron": "^3.0.0",
+    "typescript": "^3.0.3",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.8",
+    "webpack-merge": "^4.1.4"
   }
 }
