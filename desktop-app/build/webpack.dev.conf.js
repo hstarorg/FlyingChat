@@ -5,8 +5,12 @@ const buildConfig = require('./build-config');
 
 module.exports = webpackMerge(baseConf, {
   mode: 'development',
+  target: 'electron-renderer',
   output: {
     publicPath: `http://localhost:${buildConfig.devPort}/`
   },
-  target: 'electron-renderer'
+  devServer: {
+    port: buildConfig.devPort,
+    hot: true
+  }
 });
