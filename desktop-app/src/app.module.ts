@@ -14,7 +14,5 @@ import { PAGES, AppComponent } from './pages';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor() {
-    console.log('abc');
-  }
+  constructor() {}
 }

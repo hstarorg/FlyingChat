@@ -21,6 +21,7 @@
     "concurrently": "^4.0.1",
     "css-loader": "^1.0.0",
     "electron": "^3.0.0",
+    "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.3",
     "raw-loader": "^0.5.1",

@@ -1,5 +1,6 @@
 import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
+import './less/all.less';
 
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
